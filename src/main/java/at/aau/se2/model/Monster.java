@@ -13,7 +13,11 @@ public abstract class Monster extends Tower{
         this.zone = zone % 4; // 0-3
         this.ring = ring % 4; // 0-3
     }
-    public void doesDmg(Tower tower){
-        tower.takeDamage(1);
+    public int doesDmg(Tower tower){
+        if(tower.lifepoints >= 1) {
+            tower.takeDamage(1);
+            return 0;
+        }
+        return -1;
     }
 }

@@ -6,5 +6,6 @@ public class Slime extends Monster {
     public Slime(int zone, int ring){
         super(zone, ring);
         this.name = "Schleim";
+        this.lifepoints = 1;
     }
 }

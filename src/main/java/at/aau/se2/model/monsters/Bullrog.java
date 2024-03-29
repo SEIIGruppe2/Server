@@ -6,5 +6,6 @@ public class Bullrog extends Monster {
     public Bullrog(int zone, int ring){
         super(zone, ring);
         this.name = "Bullrog";
+        this.lifepoints = 3;
     }
 }
