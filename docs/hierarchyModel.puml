@@ -1,0 +1,48 @@
+@startuml
+'https://plantuml.com/class-diagram
+!theme carbon-gray
+abstract class Monster{
+    # name: String
+    # zone: int
+    # ring: int
+    --Methods--
+    + doesDmg(): void
+}
+abstract class Tower{
+    # lifepoints: int
+    --Methods--
+    + takeDamage(): int
+}
+abstract class Actioncard{
+    # name: String
+    # dmg: final int
+    # zonePlayed: int
+    --Methods--
+    + doesDmg(): void
+    + setZonePlayed(): void
+}
+
+class Archer
+class Knight
+class Hero
+class Fighter
+class Bullrog
+class Slime
+class Sphinx
+class TowerImpl
+class Wall
+
+Tower <|-- Monster
+Tower <|-- Wall
+Tower <|-- TowerImpl
+
+Monster <|-- Bullrog
+Monster <|-- Sphinx
+Monster <|-- Slime
+
+Actioncard <|-- Archer
+Actioncard <|-- Knight
+Actioncard <|-- Hero
+Actioncard <|-- Fighter
+
+@enduml
