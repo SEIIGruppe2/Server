@@ -7,4 +7,7 @@ public abstract class Monster extends Tower{
     String name;
     @Setter
     int zone;
+    public void doesDmg(Tower tower){
+        tower.takeDamage(1);
+    }
 }

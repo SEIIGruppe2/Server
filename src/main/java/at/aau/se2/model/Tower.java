@@ -4,6 +4,9 @@ import lombok.Getter;
 
 @Getter
 public abstract class Tower {
-    int lifepoints;
-    abstract int takeDamage(int dmg);
+    protected int lifepoints;
+    public int takeDamage(int dmg){
+        this.lifepoints -= dmg;
+        return (lifepoints > 0) ? 1 : -1;
+    }
 }
