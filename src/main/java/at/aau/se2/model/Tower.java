@@ -7,6 +7,6 @@ public abstract class Tower {
     protected int lifepoints;
     public int takeDamage(int dmg){
         this.lifepoints -= dmg;
-        return (lifepoints > 0) ? 1 : -1;
+        return (lifepoints > 0) ? 0 : -1;
     }
 }
