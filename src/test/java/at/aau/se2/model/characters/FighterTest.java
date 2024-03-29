@@ -30,6 +30,8 @@ public class FighterTest {
         assertEquals(-1, fighter.doesDmg(monster));
         monster.setZone(1);
         assertEquals(-1, fighter.doesDmg(monster));
-
+        fighter.setZone(1);
+        monster.setRing(3);
+        assertEquals(0, fighter.doesDmg(monster));
     }
 }

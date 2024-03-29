@@ -30,6 +30,8 @@ public class ArcherTest {
         assertEquals(-1, archer.doesDmg(monster));
         monster.setZone(1);
         assertEquals(-1, archer.doesDmg(monster));
-
+        archer.setZone(1);
+        monster.setRing(1);
+        assertEquals(0, archer.doesDmg(monster));
     }
 }
