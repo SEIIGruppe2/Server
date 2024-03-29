@@ -35,5 +35,7 @@ public class HeroTest {
         hero.setZone(1);
         monster.setRing(1);
         assertEquals(0, hero.doesDmg(monster));
+        monster.setRing(4);
+        assertEquals(-1, hero.doesDmg(monster));
     }
 }
