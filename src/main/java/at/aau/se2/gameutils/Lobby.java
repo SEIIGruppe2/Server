@@ -6,11 +6,10 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public class Lobby {
-    @Getter
     @Setter
     private List<Player> players;
-    @Getter
     private final GameState gameState;
     public Lobby(GameState gameState){
         this.gameState = gameState;

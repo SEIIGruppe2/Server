@@ -1,12 +1,10 @@
 package at.aau.se2.gameutils;
 
 import at.aau.se2.model.Actioncard;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.socket.WebSocketSession;
 
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
