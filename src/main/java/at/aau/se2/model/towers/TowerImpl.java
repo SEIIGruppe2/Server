@@ -7,3 +7,4 @@ public class TowerImpl extends Tower {
         this.lifepoints = 3;
     }
 }
+
