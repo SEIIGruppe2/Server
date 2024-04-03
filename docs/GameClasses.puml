@@ -5,6 +5,7 @@ class GameState{
     - monsters: List<Monster>
     - towers: List<Tower>
     - actioncards: List<Actioncard>
+    - round: int
 }
 
 class Player{
@@ -31,7 +32,6 @@ class GameHandler{
 class Lobby{
     - players: List<Player>
     - gameState: GameState
-    - round: int
 }
 
 GameState "1" -- "1" Lobby
