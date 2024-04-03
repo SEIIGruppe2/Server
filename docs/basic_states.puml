@@ -1,0 +1,38 @@
+@startuml
+'https://plantuml.com/state-diagram
+!theme carbon-gray
+
+
+state CallWebSocket{
+    state OpenConnection{
+        Oc1 : add session to sessions list
+        Oc2 : assign sessions to lobby
+        Oc1 --> Oc2
+    }
+
+    state MessageHandling{
+        Mh1 : get type of message
+        Mh2 : perform action according to type
+        Mh3 : update GameState
+        Mh4 : Broadcast GameState to players
+
+        Mh1 --> Mh2
+        Mh2 --> Mh3
+        Mh3 --> Mh4
+        Mh4 --> MessageHandling
+    }
+
+    state CloseConnection{
+        Cc1 : remove session from lobby
+        Cc2 : close lobby
+        Cc3 : remove session from sessions list
+
+        Cc1 --> Cc2
+        Cc2 --> Cc3
+    }
+}
+[*] --> CallWebSocket
+OpenConnection --> MessageHandling
+MessageHandling --> CloseConnection
+CloseConnection --> [*]
+@enduml
