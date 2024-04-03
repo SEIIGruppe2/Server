@@ -13,7 +13,7 @@ public class HeroTest {
     @BeforeEach
     public void setupTests(){
         hero = new Hero(2);
-        monster = new Bullrog(2, 1);
+        monster = new Bullrog(2, 1, 1);
     }
 
     @Test

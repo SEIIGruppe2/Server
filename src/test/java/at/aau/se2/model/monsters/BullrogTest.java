@@ -11,7 +11,7 @@ public class BullrogTest {
     TowerImpl tower;
     @BeforeEach
     public void setupTests(){
-        bullrog = new Bullrog(2,1);
+        bullrog = new Bullrog(2,1, 1);
         tower = new TowerImpl();
     }
 

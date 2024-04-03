@@ -11,7 +11,7 @@ public class SphinxTest {
     TowerImpl tower;
     @BeforeEach
     public void setupTests(){
-        sphinx = new Sphinx(2,1);
+        sphinx = new Sphinx(2,1, 1);
         tower = new TowerImpl();
     }
 

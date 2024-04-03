@@ -11,7 +11,7 @@ public class SlimeTest {
     TowerImpl tower;
     @BeforeEach
     public void setupTests(){
-        slime = new Slime(2,1);
+        slime = new Slime(2,1, 1);
         tower = new TowerImpl();
     }
 

@@ -3,7 +3,7 @@ package at.aau.se2.model.characters;
 import at.aau.se2.model.Actioncard;
 import at.aau.se2.model.Monster;
 
-public class Knight extends Actioncard {
+public final class Knight extends Actioncard {
     public Knight(int zone){
         super(zone);
         this.name = "Ritter";

@@ -13,7 +13,7 @@ public class KnightTest {
     @BeforeEach
     public void setupTests(){
         knight = new Knight(2);
-        monster = new Bullrog(2, 2);
+        monster = new Bullrog(2, 2, 1);
     }
 
     @Test
