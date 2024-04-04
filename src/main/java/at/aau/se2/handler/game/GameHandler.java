@@ -8,6 +8,7 @@ import at.aau.se2.model.Actioncard;
 import at.aau.se2.model.Monster;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.lang.NonNullApi;
 import org.springframework.web.socket.*;
 
 import java.io.IOException;
@@ -17,14 +18,17 @@ import java.util.List;
 import java.util.Map;
 
 public class GameHandler implements WebSocketHandler {
-    private Map<String, WebSocketSession> sessions = new HashMap<>();
-    private Map<String, ActionHandler> handlers = new HashMap();
-    private List<String> connectionOrder = new ArrayList<>();
-    private List<Lobby> lobbies = new ArrayList<>();
-    private List<Player> players = new ArrayList<>();
+    private final Map<String, WebSocketSession> sessions = new HashMap<>();
+    private final Map<String, ActionHandler> handlers = new HashMap<>();
+    private final List<String> connectionOrder = new ArrayList<>();
+    private final List<Lobby> lobbies = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
     public GameHandler(){
         handlers.put("DRAW_CARD", new DrawCardHandler());
         handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler());
+        handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayer());
+        handlers.put("PLAYER_ATTACK", new PlayerAttackHandler());
+        handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
     }
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -48,20 +52,15 @@ public class GameHandler implements WebSocketHandler {
         JsonNode node = mapper.readTree(msg);
         String type = node.path("type").asText();
         type = type.toUpperCase();
-        switch(type){
-            case "DRAW_CARD" -> {
-                DrawCardHandler handler = new DrawCardHandler();
-                handler.handleMessage(session, node);
-            }
-            default -> { break; }
-        }
+        ActionHandler handler = handlers.get(type);
+        handler.handleMessage(session, node);
         broadcastChangedGameState(session);
-
     }
 
     @Override
     public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
         // No Transport Error Handling yet
+        throw new Exception();
     }
 
     @Override
@@ -111,9 +110,5 @@ public class GameHandler implements WebSocketHandler {
         players.add(player);
         lobby.getPlayers().add(player);
         session.sendMessage(new TextMessage("You have been loaded into a lobby!"));
-    }
-
-    public void handlePlayerAttack(Monster monster, Actioncard card){
-        card.doesDmg(monster);
     }
 }
