@@ -21,7 +21,6 @@ public class GameHandler implements WebSocketHandler {
     private final Map<String, WebSocketSession> sessions = new HashMap<>();
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     private final List<String> connectionOrder = new ArrayList<>();
-    private final List<Lobby> lobbies = new ArrayList<>();
     private final List<Player> players = new ArrayList<>();
     public GameHandler(){
         handlers.put("DRAW_CARD", new DrawCardHandler());
@@ -36,7 +35,6 @@ public class GameHandler implements WebSocketHandler {
         sessions.put(session.getId(), session);
         if(connectionOrder.size() % 4 == 0){
             Lobby lobby = createLobby();
-            lobbies.add(lobby);
             for(int i = 0; i < 4; i++){
                 movePlayerToLobby(sessions.get(connectionOrder.remove(0)), lobby);
             }
@@ -72,7 +70,6 @@ public class GameHandler implements WebSocketHandler {
                 sessions.remove(player.getPlayerID());
                 players.remove(player);
             }
-            lobbies.remove(lobby);
         }
     }
 
