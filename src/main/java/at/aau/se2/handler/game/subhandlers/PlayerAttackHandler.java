@@ -3,7 +3,6 @@ package at.aau.se2.handler.game.subhandlers;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.socket.WebSocketSession;
 
-import javax.swing.*;
 
 public class PlayerAttackHandler implements ActionHandler {
     @Override
