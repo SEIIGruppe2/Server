@@ -1,5 +1,7 @@
 package at.aau.se2.handler.game;
 
+import at.aau.se2.exceptions.LobbyNotFoundException;
+import at.aau.se2.exceptions.PlayerNotFoundException;
 import at.aau.se2.gameutils.GameState;
 import at.aau.se2.gameutils.Lobby;
 import at.aau.se2.gameutils.Player;
@@ -36,8 +38,9 @@ public class GameHandler implements WebSocketHandler {
                 movePlayerToLobby(sessions.get(connectionOrder.remove(0)), lobby);
             }
         }
-        else
+        else {
             session.sendMessage(new TextMessage("Waiting for other players to connect."));
+        }
     }
 
     @Override
@@ -45,10 +48,15 @@ public class GameHandler implements WebSocketHandler {
         String msg = (String)message.getPayload();
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(msg);
-        String type = node.path("type").asText();
-        type = type.toUpperCase();
-        ActionHandler handler = handlers.get(type);
-        handler.handleMessage(session, node);
+        if(findPlayer(session).getCards().size() < 5){
+            handlers.get("DRAW_CARD").handleMessage(session, node, findLobby(session));
+        }
+        else {
+            String type = node.path("type").asText();
+            type = type.toUpperCase();
+            ActionHandler handler = handlers.get(type);
+            handler.handleMessage(session, node, findLobby(session));
+        }
         broadcastChangedGameState(session);
     }
 
@@ -74,7 +82,7 @@ public class GameHandler implements WebSocketHandler {
     public boolean supportsPartialMessages() {
         return false;
     }
-    public void broadcastChangedGameState(WebSocketSession session) throws IOException {
+    public void broadcastChangedGameState(WebSocketSession session) throws IOException, LobbyNotFoundException {
         //String gameStateJson = gameStateToJson()
         Lobby lobby = findLobby(session);
         if(lobby != null) {
@@ -87,13 +95,22 @@ public class GameHandler implements WebSocketHandler {
             session.sendMessage(new TextMessage("GameStatus Update nicht möglich"));
     }
 
-    private Lobby findLobby(WebSocketSession session) {
+    private Player findPlayer(WebSocketSession session) throws PlayerNotFoundException {
+        for(Player player : players){
+            if(player.getSession() == session){
+                return player;
+            }
+        }
+        throw new PlayerNotFoundException();
+    }
+
+    private Lobby findLobby(WebSocketSession session) throws LobbyNotFoundException {
         for(Player player : players){
             if(player.getSession() == session){
                 return player.getLobby();
             }
         }
-        return null;
+        throw new LobbyNotFoundException();
     }
 
     public Lobby createLobby(){

@@ -11,6 +11,8 @@ public class Lobby {
     @Setter
     private List<Player> players;
     private final GameState gameState;
+    @Setter
+    private int roundCount;
     public Lobby(GameState gameState){
         this.gameState = gameState;
         this.players = new ArrayList<>();
