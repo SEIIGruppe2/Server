@@ -9,6 +9,7 @@ import at.aau.se2.handler.game.subhandlers.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 
 import java.io.IOException;
@@ -19,7 +20,9 @@ import java.util.Map;
 
 import static at.aau.se2.utils.UtilityMethods.findPlayer;
 
+@Component
 public class GameHandler implements WebSocketHandler {
+    private static GameHandler GAMEHANDLER;
     private final Map<String, WebSocketSession> sessions = new HashMap<>();
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     private final List<String> connectionOrder = new ArrayList<>();
@@ -27,7 +30,7 @@ public class GameHandler implements WebSocketHandler {
     @Getter
     private final static List<String> usernames = new ArrayList<>();
 
-    public GameHandler(){
+    private GameHandler(){
         handlers.put("DRAW_CARD", new DrawCardHandler());
         handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler());
         handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayerHandler());
@@ -36,6 +39,14 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
         handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
     }
+
+    public static GameHandler getInstance(){
+        if(GAMEHANDLER == null)
+            GAMEHANDLER = new GameHandler();
+        return GAMEHANDLER;
+    }
+
+
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
