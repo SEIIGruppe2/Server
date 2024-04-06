@@ -8,6 +8,7 @@ import at.aau.se2.utils.UtilityMethods;
 import at.aau.se2.handler.game.subhandlers.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Getter;
 import org.springframework.web.socket.*;
 
 import java.io.IOException;
@@ -23,6 +24,8 @@ public class GameHandler implements WebSocketHandler {
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     private final List<String> connectionOrder = new ArrayList<>();
     private final List<Player> players = new ArrayList<>();
+    @Getter
+    private final static List<String> usernames = new ArrayList<>();
 
     public GameHandler(){
         handlers.put("DRAW_CARD", new DrawCardHandler());
@@ -30,6 +33,8 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayerHandler());
         handlers.put("PLAYER_ATTACK", new PlayerAttackHandler());
         handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
+        handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
+        handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
     }
 
     @Override
@@ -54,9 +59,9 @@ public class GameHandler implements WebSocketHandler {
         JsonNode node = mapper.readTree(msg);
         String type = node.path("type").asText();
         type = type.toUpperCase();
-        if(findPlayer(session, players).getCards().size() < 5){
+        if(type.equals("DRAW_CARD")){
             for(int i = findPlayer(session, players).getCards().size()-1;i < 5; i++) {
-                handlers.get("DRAW_CARD").handleMessage(session, node, UtilityMethods.findLobby(session, players));
+                handlers.get(type).handleMessage(session, node, UtilityMethods.findLobby(session, players));
             }
         }
         else if (type.equals("ROUND_END")){

@@ -2,6 +2,7 @@ package at.aau.se2.utils;
 
 import at.aau.se2.exceptions.LobbyNotFoundException;
 import at.aau.se2.exceptions.PlayerNotFoundException;
+import at.aau.se2.handler.game.GameHandler;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.List;
@@ -30,5 +31,12 @@ public class UtilityMethods {
             }
         }
         throw new LobbyNotFoundException();
+    }
+
+    public static boolean checkUsername(String username){
+        for(String u : GameHandler.getUsernames()){
+            if(username.equals(u)) return true;
+        }
+        return false;
     }
 }
