@@ -42,19 +42,29 @@ public class GameState implements JsonSerializable{
 
     public String convertToJson(){
         StringBuilder builder = new StringBuilder();
+
         builder.append("{ 'type':'GAME_STATE_UPDATE', 'monsters': [");
-        for(int i = 0; i < monsters.size()-1; i++){
-            builder.append(monsters.get(i).convertToJson())
-                    .append(",");
+        if(!monsters.isEmpty()) {
+            for (int i = 0; i < monsters.size() - 1; i++) {
+                builder.append(monsters.get(i).convertToJson())
+                        .append(",");
+
+                builder.append(monsters.get(monsters.size() - 1).convertToJson())
+                        .append("],");
+            }
         }
-        builder.append(monsters.get(monsters.size()-1).convertToJson())
-                .append("],");
-        for(int i = 0; i < towers.size()-1; i++){
-            builder.append(towers.get(i).convertToJson())
-                    .append(",");
+        else {
+            builder.append("],");
         }
-        builder.append(towers.get(towers.size()-1).convertToJson())
-                .append("],");
+        if(!towers.isEmpty()) {
+            for (int i = 0; i < towers.size() - 1; i++) {
+                builder.append(towers.get(i).convertToJson())
+                        .append(",");
+            }
+            builder.append(towers.get(towers.size() - 1).convertToJson())
+                    .append("],");
+        }
+        builder.append("],");
         builder.append("'round':'")
                 .append(this.round)
                 .append("'}");
