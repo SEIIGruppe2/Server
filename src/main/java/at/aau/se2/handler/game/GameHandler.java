@@ -1,10 +1,10 @@
 package at.aau.se2.handler.game;
 
 import at.aau.se2.exceptions.LobbyNotFoundException;
-import at.aau.se2.gameutils.GameState;
-import at.aau.se2.gameutils.Lobby;
-import at.aau.se2.gameutils.Player;
-import at.aau.se2.gameutils.UtilityMethods;
+import at.aau.se2.utils.GameState;
+import at.aau.se2.utils.Lobby;
+import at.aau.se2.utils.Player;
+import at.aau.se2.utils.UtilityMethods;
 import at.aau.se2.handler.game.subhandlers.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static at.aau.se2.gameutils.UtilityMethods.findPlayer;
+import static at.aau.se2.utils.UtilityMethods.findPlayer;
 
 public class GameHandler implements WebSocketHandler {
     private final Map<String, WebSocketSession> sessions = new HashMap<>();
@@ -27,15 +27,16 @@ public class GameHandler implements WebSocketHandler {
     public GameHandler(){
         handlers.put("DRAW_CARD", new DrawCardHandler());
         handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler());
-        handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayer());
+        handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayerHandler());
         handlers.put("PLAYER_ATTACK", new PlayerAttackHandler());
         handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
     }
+
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         connectionOrder.add(session.getId());
         sessions.put(session.getId(), session);
-        if(connectionOrder.size() % 4 == 0){
+        if(connectionOrder.size() >= 4){
             Lobby lobby = createLobby();
             for(int i = 0; i < 4; i++){
                 movePlayerToLobby(sessions.get(connectionOrder.remove(0)), lobby);
@@ -54,13 +55,14 @@ public class GameHandler implements WebSocketHandler {
         String type = node.path("type").asText();
         type = type.toUpperCase();
         if(findPlayer(session, players).getCards().size() < 5){
-            handlers.get("DRAW_CARD").handleMessage(session, node, UtilityMethods.findLobby(session, players));
+            for(int i = findPlayer(session, players).getCards().size()-1;i < 5; i++) {
+                handlers.get("DRAW_CARD").handleMessage(session, node, UtilityMethods.findLobby(session, players));
+            }
         }
         else if (type.equals("ROUND_END")){
             findPlayer(session, players).getLobby().getGameState().increaseRound();
         }
         else {
-
             ActionHandler handler = handlers.get(type);
             handler.handleMessage(session, node, UtilityMethods.findLobby(session, players));
         }
@@ -79,6 +81,7 @@ public class GameHandler implements WebSocketHandler {
         if(lobby != null){
             for(Player player : lobby.getPlayers()){
                 player.getSession().sendMessage(new TextMessage("The game has finished, you will be disconnected"));
+                player.getSession().close();
                 sessions.remove(player.getPlayerID());
                 players.remove(player);
             }
@@ -89,26 +92,24 @@ public class GameHandler implements WebSocketHandler {
     public boolean supportsPartialMessages() {
         return false;
     }
+
     public void broadcastChangedGameState(WebSocketSession session) throws IOException, LobbyNotFoundException {
         //String gameStateJson = gameStateToJson()
         Lobby lobby = UtilityMethods.findLobby(session, players);
         if(lobby != null) {
             for (Player player : lobby.getPlayers()) {
                 //player.getSession().sendMessage(new TextMessage(gameStateJson));
-                player.getSession().sendMessage(new TextMessage("GameStatus Update"));
+                player.getSession().sendMessage(new TextMessage(lobby.getGameState().convertToJson()));
             }
         }
         else
             session.sendMessage(new TextMessage("GameStatus Update nicht möglich"));
     }
 
-
-
-
-
     public Lobby createLobby(){
         return new Lobby(new GameState());
     }
+
     public void movePlayerToLobby(WebSocketSession session, Lobby lobby) throws IOException {
         Player player = new Player(session, lobby);
         players.add(player);

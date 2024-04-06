@@ -1,4 +1,4 @@
-package at.aau.se2.gameutils;
+package at.aau.se2.utils;
 
 import lombok.Getter;
 import lombok.Setter;

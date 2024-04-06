@@ -1,4 +1,4 @@
-package at.aau.se2.gameutils;
+package at.aau.se2.utils;
 
 import at.aau.se2.model.Actioncard;
 import lombok.Getter;
@@ -18,14 +18,15 @@ public class Player {
     @Getter
     @Setter
     private int points;
+    // TODO username
 //    @Getter
-//    private final String playerName;
+//    private final String username;
     @Getter
     private final String playerID; // Session ID
     @Getter
     private List<Actioncard> cards;
     public Player(WebSocketSession session, Lobby lobby){
-//        this.playerName = playerName;
+        //this.username = username;
         this.playerID = session.getId();
         this.session = session;
         this.lobby = lobby;
