@@ -7,8 +7,10 @@ public abstract class Actioncard {
     protected String name;
     protected final int dmg = 1;
     protected int zone;
-    public Actioncard(int zone){
+    protected final int id;
+    public Actioncard(int zone, int id){
         this.zone = zone % 4;
+        this.id = id;
     }
     public abstract int doesDmg(Monster monster);
     public void setZone(int zone){

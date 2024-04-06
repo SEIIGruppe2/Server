@@ -4,8 +4,8 @@ import at.aau.se2.model.Actioncard;
 import at.aau.se2.model.Monster;
 
 public final class Archer extends Actioncard {
-    public Archer(int zone){
-        super(zone);
+    public Archer(int zone, int id){
+        super(zone, id);
         this.name = "Bogenschütze";
     }
 

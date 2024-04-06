@@ -12,7 +12,7 @@ public class ArcherTest {
     Monster monster;
     @BeforeEach
     public void setupTests(){
-        archer = new Archer(2);
+        archer = new Archer(2,1);
         monster = new Bullrog(2, 1, 1);
     }
 
