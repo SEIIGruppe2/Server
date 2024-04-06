@@ -56,10 +56,10 @@ public class GameHandler implements WebSocketHandler {
             for(int i = 0; i < 4; i++){
                 movePlayerToLobby(sessions.get(connectionOrder.remove(0)), lobby);
             }
-        }
+        }/*
         else {
             session.sendMessage(new TextMessage("Waiting for other players to connect."));
-        }
+        }*/
     }
 
     @Override
