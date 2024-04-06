@@ -1,6 +1,5 @@
-package at.aau.se2.gameutils;
+package at.aau.se2.utils;
 
-import at.aau.se2.model.Actioncard;
 import at.aau.se2.model.Monster;
 import at.aau.se2.model.Tower;
 import lombok.Data;
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class GameState {
+public class GameState implements JsonSerializable{
     private List<Monster> monsters;
     private List<Tower> towers;
     private int round;
@@ -27,6 +26,7 @@ public class GameState {
     public void increaseCardAmount(int i){
         cardTypeAmount[i] += 1;
     }
+    public void decreaseCardAmount(int i){cardTypeAmount[i] -= 1;}
 
     public int getIndexMinimumCardAmount(){
         int min = Integer.MAX_VALUE;

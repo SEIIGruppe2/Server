@@ -1,9 +1,10 @@
 package at.aau.se2.model;
 
+import at.aau.se2.utils.JsonSerializable;
 import lombok.Getter;
 
 @Getter
-public abstract class Tower {
+public abstract class Tower  implements JsonSerializable {
     protected final int id;
     protected int lifepoints;
     public Tower(int id){
