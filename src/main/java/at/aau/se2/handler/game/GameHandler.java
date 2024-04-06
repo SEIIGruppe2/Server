@@ -16,11 +16,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static at.aau.se2.utils.UtilityMethods.findPlayer;
 
 
 public class GameHandler implements WebSocketHandler {
+    private Logger logger;
     private static GameHandler GAMEHANDLER;
     private final Map<String, WebSocketSession> sessions = new HashMap<>();
     private final Map<String, ActionHandler> handlers = new HashMap<>();
@@ -28,8 +30,10 @@ public class GameHandler implements WebSocketHandler {
     private final List<Player> players = new ArrayList<>();
     @Getter
     private final static List<String> usernames = new ArrayList<>();
+    private final Lobby lobby = new Lobby(new GameState());
 
     private GameHandler(){
+        logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
         handlers.put("DRAW_CARD", new DrawCardHandler());
         handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler());
         handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayerHandler());
@@ -51,7 +55,9 @@ public class GameHandler implements WebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         connectionOrder.add(session.getId());
         sessions.put(session.getId(), session);
-        if(connectionOrder.size() >= 4){
+        logger.info("Connection established");
+        movePlayerToLobby(session, lobby);
+       /* if(connectionOrder.size() >= 4){
             Lobby lobby = createLobby();
             for(int i = 0; i < 4; i++){
                 movePlayerToLobby(sessions.get(connectionOrder.remove(0)), lobby);
@@ -59,7 +65,7 @@ public class GameHandler implements WebSocketHandler {
         }
         else {
             session.sendMessage(new TextMessage("Waiting for other players to connect."));
-        }
+        }*/
     }
 
     @Override
@@ -82,6 +88,7 @@ public class GameHandler implements WebSocketHandler {
             handler.handleMessage(session, node, UtilityMethods.findLobby(session, players));
         }
         broadcastChangedGameState(session);
+        logger.info("HandleMessage processed");
     }
 
     @Override
@@ -92,7 +99,8 @@ public class GameHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        Lobby lobby = UtilityMethods.findLobby(session, players);
+        logger.info("Connection closed");
+        /*Lobby lobby = UtilityMethods.findLobby(session, players);
         if(lobby != null){
             for(Player player : lobby.getPlayers()){
                 player.getSession().sendMessage(new TextMessage("The game has finished, you will be disconnected"));
@@ -100,7 +108,7 @@ public class GameHandler implements WebSocketHandler {
                 sessions.remove(player.getPlayerID());
                 players.remove(player);
             }
-        }
+        }*/
     }
 
     @Override
