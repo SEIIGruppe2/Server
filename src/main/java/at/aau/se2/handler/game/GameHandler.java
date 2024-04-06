@@ -16,11 +16,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static at.aau.se2.utils.UtilityMethods.findPlayer;
 
 
 public class GameHandler implements WebSocketHandler {
+    private Logger logger;
     private static GameHandler GAMEHANDLER;
     private final Map<String, WebSocketSession> sessions = new HashMap<>();
     private final Map<String, ActionHandler> handlers = new HashMap<>();
@@ -31,6 +33,7 @@ public class GameHandler implements WebSocketHandler {
     private final Lobby lobby = new Lobby(new GameState());
 
     private GameHandler(){
+        logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
         handlers.put("DRAW_CARD", new DrawCardHandler());
         handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler());
         handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayerHandler());
@@ -52,7 +55,7 @@ public class GameHandler implements WebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         connectionOrder.add(session.getId());
         sessions.put(session.getId(), session);
-        System.out.println("Connection established");
+        logger.info("Connection established");
         movePlayerToLobby(session, lobby);
        /* if(connectionOrder.size() >= 4){
             Lobby lobby = createLobby();
@@ -85,7 +88,7 @@ public class GameHandler implements WebSocketHandler {
             handler.handleMessage(session, node, UtilityMethods.findLobby(session, players));
         }
         broadcastChangedGameState(session);
-        System.out.println("HandleMessage processed");
+        logger.info("HandleMessage processed");
     }
 
     @Override
@@ -96,7 +99,7 @@ public class GameHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        System.out.println("Connection closed");
+        logger.info("Connection closed");
         /*Lobby lobby = UtilityMethods.findLobby(session, players);
         if(lobby != null){
             for(Player player : lobby.getPlayers()){
