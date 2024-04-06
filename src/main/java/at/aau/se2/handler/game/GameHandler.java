@@ -51,12 +51,13 @@ public class GameHandler implements WebSocketHandler {
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
         connectionOrder.add(session.getId());
         sessions.put(session.getId(), session);
-        if(connectionOrder.size() >= 4){
+        System.out.println("Connection established");
+        /*if(connectionOrder.size() >= 4){
             Lobby lobby = createLobby();
             for(int i = 0; i < 4; i++){
                 movePlayerToLobby(sessions.get(connectionOrder.remove(0)), lobby);
             }
-        }/*
+        }*//*
         else {
             session.sendMessage(new TextMessage("Waiting for other players to connect."));
         }*/
@@ -69,7 +70,7 @@ public class GameHandler implements WebSocketHandler {
         JsonNode node = mapper.readTree(msg);
         String type = node.path("type").asText();
         type = type.toUpperCase();
-        if(type.equals("DRAW_CARD")){
+        /*if(type.equals("DRAW_CARD")){
             for(int i = findPlayer(session, players).getCards().size()-1;i < 5; i++) {
                 handlers.get(type).handleMessage(session, node, UtilityMethods.findLobby(session, players));
             }
@@ -81,7 +82,9 @@ public class GameHandler implements WebSocketHandler {
             ActionHandler handler = handlers.get(type);
             handler.handleMessage(session, node, UtilityMethods.findLobby(session, players));
         }
-        broadcastChangedGameState(session);
+        broadcastChangedGameState(session);*/
+        session.sendMessage(new TextMessage(type));
+        System.out.println("HandleMessage processed");
     }
 
     @Override
@@ -92,7 +95,8 @@ public class GameHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        Lobby lobby = UtilityMethods.findLobby(session, players);
+        System.out.println("Connection closed");
+        /*Lobby lobby = UtilityMethods.findLobby(session, players);
         if(lobby != null){
             for(Player player : lobby.getPlayers()){
                 player.getSession().sendMessage(new TextMessage("The game has finished, you will be disconnected"));
@@ -100,7 +104,7 @@ public class GameHandler implements WebSocketHandler {
                 sessions.remove(player.getPlayerID());
                 players.remove(player);
             }
-        }
+        }*/
     }
 
     @Override
