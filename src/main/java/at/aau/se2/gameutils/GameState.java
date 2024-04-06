@@ -10,13 +10,11 @@ import java.util.List;
 
 @Data
 public class GameState {
-    private List<Actioncard> actioncards;
     private List<Monster> monsters;
     private List<Tower> towers;
     private int round;
     private int[] cardTypeAmount;
     public GameState(){
-        actioncards = new ArrayList<>();
         monsters = new ArrayList<>();
         towers = new ArrayList<>();
         cardTypeAmount = new int[4];
@@ -40,5 +38,27 @@ public class GameState {
             }
         }
         return index;
+    }
+
+    public String convertToJson(){
+        StringBuilder builder = new StringBuilder();
+        builder.append("{ 'type':'GAME_STATE_UPDATE', 'monsters': [");
+        for(int i = 0; i < monsters.size()-1; i++){
+            builder.append(monsters.get(i).convertToJson())
+                    .append(",");
+        }
+        builder.append(monsters.get(monsters.size()-1).convertToJson())
+                .append("],");
+        for(int i = 0; i < towers.size()-1; i++){
+            builder.append(towers.get(i).convertToJson())
+                    .append(",");
+        }
+        builder.append(towers.get(towers.size()-1).convertToJson())
+                .append("],");
+        builder.append("'round':'")
+                .append(this.round)
+                .append("'}");
+
+        return builder.toString();
     }
 }
