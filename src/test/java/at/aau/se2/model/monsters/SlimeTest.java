@@ -12,7 +12,7 @@ public class SlimeTest {
     @BeforeEach
     public void setupTests(){
         slime = new Slime(2,1, 1);
-        tower = new TowerImpl();
+        tower = new TowerImpl(1);
     }
 
     @Test

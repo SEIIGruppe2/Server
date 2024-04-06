@@ -9,7 +9,7 @@ public class TowerImplTest {
     TowerImpl tower;
     @BeforeEach
     public void setupTests(){
-        tower = new TowerImpl();
+        tower = new TowerImpl(1);
     }
 
     @Test

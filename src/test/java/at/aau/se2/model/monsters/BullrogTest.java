@@ -12,7 +12,7 @@ public class BullrogTest {
     @BeforeEach
     public void setupTests(){
         bullrog = new Bullrog(2,1, 1);
-        tower = new TowerImpl();
+        tower = new TowerImpl(1);
     }
 
     @Test

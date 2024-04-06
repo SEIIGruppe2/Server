@@ -1,8 +1,5 @@
 package at.aau.se2.model.towers;
 
-import at.aau.se2.model.Monster;
-import at.aau.se2.model.characters.Archer;
-import at.aau.se2.model.monsters.Bullrog;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +9,7 @@ public class WallTest {
     Wall wall;
     @BeforeEach
     public void setupTests(){
-        wall = new Wall();
+        wall = new Wall(1);
     }
 
     @Test

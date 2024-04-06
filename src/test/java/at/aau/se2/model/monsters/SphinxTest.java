@@ -12,7 +12,7 @@ public class SphinxTest {
     @BeforeEach
     public void setupTests(){
         sphinx = new Sphinx(2,1, 1);
-        tower = new TowerImpl();
+        tower = new TowerImpl(1);
     }
 
     @Test
