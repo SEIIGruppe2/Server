@@ -9,7 +9,6 @@ import at.aau.se2.handler.game.subhandlers.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
-import org.springframework.stereotype.Component;
 import org.springframework.web.socket.*;
 
 import java.io.IOException;
@@ -20,7 +19,7 @@ import java.util.Map;
 
 import static at.aau.se2.utils.UtilityMethods.findPlayer;
 
-@Component
+
 public class GameHandler implements WebSocketHandler {
     private static GameHandler GAMEHANDLER;
     private final Map<String, WebSocketSession> sessions = new HashMap<>();
