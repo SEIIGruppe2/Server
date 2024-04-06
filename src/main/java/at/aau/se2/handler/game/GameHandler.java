@@ -28,6 +28,7 @@ public class GameHandler implements WebSocketHandler {
     private final List<Player> players = new ArrayList<>();
     @Getter
     private final static List<String> usernames = new ArrayList<>();
+    private final Lobby lobby = new Lobby(new GameState());
 
     private GameHandler(){
         handlers.put("DRAW_CARD", new DrawCardHandler());
@@ -52,12 +53,13 @@ public class GameHandler implements WebSocketHandler {
         connectionOrder.add(session.getId());
         sessions.put(session.getId(), session);
         System.out.println("Connection established");
-        /*if(connectionOrder.size() >= 4){
+        movePlayerToLobby(session, lobby);
+       /* if(connectionOrder.size() >= 4){
             Lobby lobby = createLobby();
             for(int i = 0; i < 4; i++){
                 movePlayerToLobby(sessions.get(connectionOrder.remove(0)), lobby);
             }
-        }*//*
+        }
         else {
             session.sendMessage(new TextMessage("Waiting for other players to connect."));
         }*/
@@ -70,7 +72,7 @@ public class GameHandler implements WebSocketHandler {
         JsonNode node = mapper.readTree(msg);
         String type = node.path("type").asText();
         type = type.toUpperCase();
-        /*if(type.equals("DRAW_CARD")){
+        if(type.equals("DRAW_CARD")){
             for(int i = findPlayer(session, players).getCards().size()-1;i < 5; i++) {
                 handlers.get(type).handleMessage(session, node, UtilityMethods.findLobby(session, players));
             }
@@ -82,8 +84,7 @@ public class GameHandler implements WebSocketHandler {
             ActionHandler handler = handlers.get(type);
             handler.handleMessage(session, node, UtilityMethods.findLobby(session, players));
         }
-        broadcastChangedGameState(session);*/
-        session.sendMessage(new TextMessage(type));
+        broadcastChangedGameState(session);
         System.out.println("HandleMessage processed");
     }
 
