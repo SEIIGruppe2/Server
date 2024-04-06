@@ -1,10 +1,10 @@
 package at.aau.se2.handler.game;
 
 import at.aau.se2.exceptions.LobbyNotFoundException;
-import at.aau.se2.exceptions.PlayerNotFoundException;
 import at.aau.se2.gameutils.GameState;
 import at.aau.se2.gameutils.Lobby;
 import at.aau.se2.gameutils.Player;
+import at.aau.se2.gameutils.UtilityMethods;
 import at.aau.se2.handler.game.subhandlers.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,11 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static at.aau.se2.gameutils.UtilityMethods.findPlayer;
+
 public class GameHandler implements WebSocketHandler {
     private final Map<String, WebSocketSession> sessions = new HashMap<>();
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     private final List<String> connectionOrder = new ArrayList<>();
     private final List<Player> players = new ArrayList<>();
+
     public GameHandler(){
         handlers.put("DRAW_CARD", new DrawCardHandler());
         handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler());
@@ -48,14 +51,18 @@ public class GameHandler implements WebSocketHandler {
         String msg = (String)message.getPayload();
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(msg);
-        if(findPlayer(session).getCards().size() < 5){
-            handlers.get("DRAW_CARD").handleMessage(session, node, findLobby(session));
+        String type = node.path("type").asText();
+        type = type.toUpperCase();
+        if(findPlayer(session, players).getCards().size() < 5){
+            handlers.get("DRAW_CARD").handleMessage(session, node, UtilityMethods.findLobby(session, players));
+        }
+        else if (type.equals("ROUND_END")){
+            findPlayer(session, players).getLobby().getGameState().increaseRound();
         }
         else {
-            String type = node.path("type").asText();
-            type = type.toUpperCase();
+
             ActionHandler handler = handlers.get(type);
-            handler.handleMessage(session, node, findLobby(session));
+            handler.handleMessage(session, node, UtilityMethods.findLobby(session, players));
         }
         broadcastChangedGameState(session);
     }
@@ -68,7 +75,7 @@ public class GameHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        Lobby lobby = findLobby(session);
+        Lobby lobby = UtilityMethods.findLobby(session, players);
         if(lobby != null){
             for(Player player : lobby.getPlayers()){
                 player.getSession().sendMessage(new TextMessage("The game has finished, you will be disconnected"));
@@ -84,7 +91,7 @@ public class GameHandler implements WebSocketHandler {
     }
     public void broadcastChangedGameState(WebSocketSession session) throws IOException, LobbyNotFoundException {
         //String gameStateJson = gameStateToJson()
-        Lobby lobby = findLobby(session);
+        Lobby lobby = UtilityMethods.findLobby(session, players);
         if(lobby != null) {
             for (Player player : lobby.getPlayers()) {
                 //player.getSession().sendMessage(new TextMessage(gameStateJson));
@@ -95,23 +102,9 @@ public class GameHandler implements WebSocketHandler {
             session.sendMessage(new TextMessage("GameStatus Update nicht möglich"));
     }
 
-    private Player findPlayer(WebSocketSession session) throws PlayerNotFoundException {
-        for(Player player : players){
-            if(player.getSession() == session){
-                return player;
-            }
-        }
-        throw new PlayerNotFoundException();
-    }
 
-    private Lobby findLobby(WebSocketSession session) throws LobbyNotFoundException {
-        for(Player player : players){
-            if(player.getSession() == session){
-                return player.getLobby();
-            }
-        }
-        throw new LobbyNotFoundException();
-    }
+
+
 
     public Lobby createLobby(){
         return new Lobby(new GameState());
