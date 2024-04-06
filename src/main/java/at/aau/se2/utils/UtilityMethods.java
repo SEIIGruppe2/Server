@@ -1,4 +1,4 @@
-package at.aau.se2.gameutils;
+package at.aau.se2.utils;
 
 import at.aau.se2.exceptions.LobbyNotFoundException;
 import at.aau.se2.exceptions.PlayerNotFoundException;
