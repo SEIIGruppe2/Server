@@ -11,6 +11,8 @@ import at.aau.se2.utils.UtilityMethods;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.socket.WebSocketSession;
 
+import java.util.logging.Logger;
+
 
 public class PlayerAttackHandler implements ActionHandler {
     @Override
@@ -32,7 +34,8 @@ public class PlayerAttackHandler implements ActionHandler {
                 lobby.getGameState().decreaseCardAmount(3);
         }
         catch(PlayerNotFoundException p){
-            System.out.println(p.getMessage());
+            Logger.getLogger("global")
+                    .info("PLAYERN NOT IN LOBBY (PlayerAttackHandler)");
         }
     }
     public String[] readInfosFromMessage(JsonNode msg){
