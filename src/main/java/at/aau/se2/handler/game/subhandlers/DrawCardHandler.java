@@ -15,6 +15,7 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.security.SecureRandom;
+import java.util.logging.Logger;
 
 @Data
 public class DrawCardHandler implements ActionHandler {
@@ -30,21 +31,18 @@ public class DrawCardHandler implements ActionHandler {
             session.sendMessage(new TextMessage(convertToJson(card)));
         }
         catch(PlayerNotFoundException p){
-            System.out.println(p.getMessage() + "PLAYER NOT IN LOBBY");
+            Logger.getLogger("global")
+                    .info("PLAYER NOT IN LOBBY (DrawCardHandler)");
         }
         catch(IOException i){
-            System.out.println(i.getMessage());
+            Logger.getLogger("global")
+                    .info(i.getMessage() + " (DrawCardHandler)");
         }
     }
 
     public String convertToJson(Actioncard card){
-        return "{ 'type' : 'DRAW_CARD', 'id': '" +
-                card.getId() +
-                "', 'name': '" +
-                card.getName() +
-                "', 'zone': '" +
-                card.getZone() +
-                "'}";
+        return "{ 'type' : 'DRAW_CARD', " +
+                card.convertToJson() + "}";
     }
 
     public Actioncard drawRandomCard(Lobby lobby){
