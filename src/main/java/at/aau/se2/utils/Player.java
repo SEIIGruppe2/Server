@@ -10,10 +10,8 @@ import java.util.List;
 
 public class Player {
     @Getter
-    @Setter
     private Lobby lobby;
     @Getter
-    @Setter
     private WebSocketSession session;
     @Getter
     @Setter
