@@ -2,12 +2,12 @@ package at.aau.se2.utils;
 
 import at.aau.se2.model.Monster;
 import at.aau.se2.model.Tower;
-import lombok.Data;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
 public class GameState implements JsonSerializable{
     private List<Monster> monsters;
     private List<Tower> towers;
@@ -44,31 +44,27 @@ public class GameState implements JsonSerializable{
         StringBuilder builder = new StringBuilder();
 
         builder.append("{ 'type':'GAME_STATE_UPDATE', 'monsters': [");
-        if(!monsters.isEmpty()) {
-            for (int i = 0; i < monsters.size() - 1; i++) {
-                builder.append(monsters.get(i).convertToJson())
-                        .append(",");
-
-                builder.append(monsters.get(monsters.size() - 1).convertToJson())
-                        .append("],");
-            }
-        }
-        else {
-            builder.append("],");
-        }
-        if(!towers.isEmpty()) {
-            for (int i = 0; i < towers.size() - 1; i++) {
-                builder.append(towers.get(i).convertToJson())
-                        .append(",");
-            }
-            builder.append(towers.get(towers.size() - 1).convertToJson())
-                    .append("],");
-        }
-        builder.append("],");
+        buildListJson(builder, monsters);
+        builder.append("'towers':[");
+        buildListJson(builder, towers);
         builder.append("'round':'")
                 .append(this.round)
                 .append("'}");
 
         return builder.toString();
+    }
+
+    public void buildListJson(StringBuilder builder, List<? extends Tower> list){
+        if(!list.isEmpty()){
+            for(int i = 0; i < list.size() - 1; i++){
+                builder.append(list.get(i).convertToJson())
+                        .append(",");
+            }
+            builder.append(list.get(list.size()-1).convertToJson())
+                    .append("],");
+        }
+        else{
+            builder.append("],");
+        }
     }
 }
