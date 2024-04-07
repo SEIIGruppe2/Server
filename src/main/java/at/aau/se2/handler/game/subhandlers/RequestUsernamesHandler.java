@@ -8,6 +8,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class RequestUsernamesHandler implements ActionHandler, JsonSerializable {
     @Override
@@ -15,7 +16,8 @@ public class RequestUsernamesHandler implements ActionHandler, JsonSerializable 
         try{
             session.sendMessage(new TextMessage(convertToJson()));
         }catch(IOException i){
-            System.out.println(i.getMessage());
+            Logger.getLogger("global")
+                    .info(i.getMessage() + "(RequestUsernamesHandler)");
         }
     }
 

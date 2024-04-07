@@ -8,6 +8,7 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 public class RegisterUsernameHandler implements ActionHandler{
 
@@ -29,7 +30,8 @@ public class RegisterUsernameHandler implements ActionHandler{
                             "'}"));
         }
         catch(IOException i){
-            System.out.println((i.getMessage()));
+            Logger.getLogger("global")
+                    .info(i.getMessage() + "(RegisterUsernameHandler)");
         }
     }
 }
