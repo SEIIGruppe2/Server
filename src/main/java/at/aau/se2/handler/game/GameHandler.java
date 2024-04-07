@@ -22,7 +22,7 @@ import static at.aau.se2.utils.UtilityMethods.findPlayer;
 
 
 public class GameHandler implements WebSocketHandler {
-    private Logger logger;
+    private final Logger logger;
     private static GameHandler GAMEHANDLER;
     private final Map<String, WebSocketSession> sessions = new HashMap<>();
     private final Map<String, ActionHandler> handlers = new HashMap<>();
@@ -137,6 +137,6 @@ public class GameHandler implements WebSocketHandler {
         Player player = new Player(session, lobby);
         players.add(player);
         lobby.getPlayers().add(player);
-        session.sendMessage(new TextMessage("You have been loaded into a lobby!"));
+        session.sendMessage(new TextMessage("{ 'type':'LOBBY_ASSIGNED' }"));
     }
 }
