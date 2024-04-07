@@ -9,10 +9,10 @@ import java.util.List;
 
 @Getter
 public class GameState implements JsonSerializable{
-    private List<Monster> monsters;
-    private List<Tower> towers;
+    private final List<Monster> monsters;
+    private final List<Tower> towers;
     private int round;
-    private int[] cardTypeAmount;
+    private final int[] cardTypeAmount;
     public GameState(){
         monsters = new ArrayList<>();
         towers = new ArrayList<>();

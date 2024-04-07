@@ -2,10 +2,8 @@ package at.aau.se2.utils;
 
 import at.aau.se2.model.monsters.Slime;
 import at.aau.se2.model.towers.TowerImpl;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.testng.annotations.BeforeTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
@@ -14,7 +12,6 @@ import static org.mockito.Mockito.when;
 public class GameStateTest {
 
     private GameState gs;
-    private String resultJson;
     private Slime monster;
     private TowerImpl tower;
     @BeforeEach
@@ -76,7 +73,7 @@ public class GameStateTest {
 
     @Test
     public void testConvertToJson(){
-        resultJson = "{ 'type':'GAME_STATE_UPDATE', 'monsters': [" +
+        String resultJson = "{ 'type':'GAME_STATE_UPDATE', 'monsters': [" +
                     "],'towers':[],'round':'0'}";
         assertEquals(resultJson, gs.convertToJson());
         gs.getMonsters().add(monster);
