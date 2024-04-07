@@ -10,9 +10,9 @@ import java.util.List;
 
 public class Player {
     @Getter
-    private Lobby lobby;
+    private final Lobby lobby;
     @Getter
-    private WebSocketSession session;
+    private final WebSocketSession session;
     @Getter
     @Setter
     private int points;
@@ -22,7 +22,7 @@ public class Player {
     @Getter
     private final String playerID; // Session ID
     @Getter
-    private List<Actioncard> cards;
+    private final List<Actioncard> cards;
     public Player(WebSocketSession session, Lobby lobby){
         //this.username = username;
         this.playerID = session.getId();
