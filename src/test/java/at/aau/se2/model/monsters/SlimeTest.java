@@ -5,14 +5,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SlimeTest {
     Slime slime;
-    TowerImpl tower;
+    TowerImpl tower, tower2;
     @BeforeEach
     public void setupTests(){
         slime = new Slime(2,1, 1);
-        tower = new TowerImpl(1);
+        tower = mock(TowerImpl.class);
+        tower2 = mock(TowerImpl.class);
+        when(tower.getLifepoints()).thenReturn(2);
+        when(tower2.getLifepoints()).thenReturn(0);
     }
 
     @Test
@@ -32,8 +37,6 @@ public class SlimeTest {
     @Test
     public void testDoesDamage(){
         assertEquals(0, slime.doesDmg(tower));
-        slime.doesDmg(tower);
-        slime.doesDmg(tower);
-        assertEquals(-1, slime.doesDmg(tower));
+        assertEquals(-1, slime.doesDmg(tower2));
     }
 }

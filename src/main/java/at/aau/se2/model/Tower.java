@@ -7,7 +7,7 @@ import lombok.Getter;
 public abstract class Tower  implements JsonSerializable {
     protected final int id;
     protected int lifepoints;
-    public Tower(int id){
+    protected Tower(int id){
         this.id = id;
     }
     public int takeDamage(int dmg){
