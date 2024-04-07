@@ -3,9 +3,9 @@ package at.aau.se2.model.characters;
 import at.aau.se2.model.Actioncard;
 import at.aau.se2.model.Monster;
 
-public class Hero extends Actioncard {
-    public Hero(int zone){
-        super(zone);
+public final class Hero extends Actioncard {
+    public Hero(int zone, int id){
+        super(zone, id);
         this.name = "Held";
     }
     @Override

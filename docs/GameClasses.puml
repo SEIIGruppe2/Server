@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/class-diagram
+!theme materia-outline
+class GameState{
+    - monsters: List<Monster>
+    - towers: List<Tower>
+    - actioncards: List<Actioncard>
+    - round: int
+}
+
+class Player{
+    - playerId: String
+    - username: String
+    - points: int
+    - cards: List<Actioncard>
+}
+
+class GameHandler{
+    - sessions: List<WebSocketSession>
+    --Methoden--
+    + handleMessage(): void
+    + afterConnectionEstablished(): void
+    + afterConnectionClosed(): void
+    + handleTransportError(): void
+    + supportsPartialMessage(): void
+    + broadcastChangedGameState(): void
+    + createLobby(): void
+    + movePlayerToLobby(): void
+    + handlePlayerAttack(): void
+}
+
+class Lobby{
+    - players: List<Player>
+    - gameState: GameState
+}
+
+GameState "1" -- "1" Lobby
+Player "4" -- "1" Lobby
+GameHandler "1" -- "n" Lobby : uses >
+
+
+@enduml

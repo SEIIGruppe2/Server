@@ -9,7 +9,7 @@ public class TowerImplTest {
     TowerImpl tower;
     @BeforeEach
     public void setupTests(){
-        tower = new TowerImpl();
+        tower = new TowerImpl(1);
     }
 
     @Test
@@ -23,5 +23,12 @@ public class TowerImplTest {
         assertEquals(2, tower.getLifepoints());
         assertEquals(-1, tower.takeDamage(2));
         assertEquals(0, tower.getLifepoints());
+        assertEquals(1, tower.getId());
+    }
+
+    @Test
+    public void testConvertToJson(){
+        String res = "{ 'id': '1','lifepoints':'3'}";
+        assertEquals(res, tower.convertToJson());
     }
 }

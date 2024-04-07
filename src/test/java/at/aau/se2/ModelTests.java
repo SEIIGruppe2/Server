@@ -1,4 +1,4 @@
-package at.aau.se2.model;
+package at.aau.se2;
 
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectPackages;

@@ -6,14 +6,31 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class FighterTest {
     Fighter fighter;
-    Monster monster;
+    Monster monster, monster1, monster2, monster3;
     @BeforeEach
     public void setupTests(){
-        fighter = new Fighter(2);
-        monster = new Bullrog(2, 3);
+        fighter = new Fighter(2,1);
+        monster = mock(Bullrog.class);
+        monster1 = mock(Bullrog.class);
+        monster2 = mock(Bullrog.class);
+        monster3 = mock(Bullrog.class);
+
+        when(monster.getZone()).thenReturn(2);
+        when(monster.getRing()).thenReturn(3);
+
+        when(monster1.getZone()).thenReturn(2);
+        when(monster1.getRing()).thenReturn(2);
+
+        when(monster2.getZone()).thenReturn(1);
+        when(monster2.getRing()).thenReturn(2);
+
+        when(monster3.getZone()).thenReturn(1);
+        when(monster3.getRing()).thenReturn(3);
     }
 
     @Test
@@ -26,12 +43,9 @@ public class FighterTest {
     @Test
     public void testDoesDmg(){
         assertEquals(0, fighter.doesDmg(monster));
-        monster.setRing(2);
-        assertEquals(-1, fighter.doesDmg(monster));
-        monster.setZone(1);
-        assertEquals(-1, fighter.doesDmg(monster));
+        assertEquals(-1, fighter.doesDmg(monster1));
+        assertEquals(-1, fighter.doesDmg(monster2));
         fighter.setZone(1);
-        monster.setRing(3);
-        assertEquals(0, fighter.doesDmg(monster));
+        assertEquals(0, fighter.doesDmg(monster3));
     }
 }

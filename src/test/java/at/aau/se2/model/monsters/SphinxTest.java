@@ -5,14 +5,19 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 public class SphinxTest {
     Sphinx sphinx;
-    TowerImpl tower;
+    TowerImpl tower, tower2;
     @BeforeEach
     public void setupTests(){
-        sphinx = new Sphinx(2,1);
-        tower = new TowerImpl();
+        sphinx = new Sphinx(2,1, 1);
+        tower = mock(TowerImpl.class);
+        tower2 = mock(TowerImpl.class);
+        when(tower.getLifepoints()).thenReturn(2);
+        when(tower2.getLifepoints()).thenReturn(0);
     }
 
     @Test
@@ -34,8 +39,6 @@ public class SphinxTest {
     @Test
     public void testDoesDamage(){
         assertEquals(0, sphinx.doesDmg(tower));
-        sphinx.doesDmg(tower);
-        sphinx.doesDmg(tower);
-        assertEquals(-1, sphinx.doesDmg(tower));
+        assertEquals(-1, sphinx.doesDmg(tower2));
     }
 }
