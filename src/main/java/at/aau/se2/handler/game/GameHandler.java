@@ -41,6 +41,7 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
         handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
         handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
+        handlers.put("SPAWN_MONSTER", new SpawnMonsterHandler());
         lobby = new Lobby(new GameState());
     }
 
