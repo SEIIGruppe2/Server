@@ -25,14 +25,17 @@ public class SwitchCardPlayerHandler implements ActionHandler {
             for(String a:textfrommessage){
                 System.out.println(a);
             }
+            String usernametoswitchwith=textfrommessage[1];
             List<Actioncard> cards = UtilityMethods.findPlayer(session, lobby).getCards();
             Actioncard currentcard;
 
-            // TODO: karte vom spieler herausfinden, karte an anderen spieler senden mit anfrage zum tausch und dem eigenen usernamen
-            //
+            // TODO: karte aus handkarten von spieler entfernen
+            int cardid=getidofcard(textfrommessage);
+
             for(Actioncard c : cards){
-                if(c.getId() == Integer.parseInt(textfrommessage[3])){
+                if(c.getId() == cardid){
                     //für später gebrauchen wenn karte ersetzt wird cards.add(cards.indexOf(c), newCard);
+                    cards.remove(c);
                     currentcard=c;
                     break;
                 }
@@ -77,5 +80,16 @@ public class SwitchCardPlayerHandler implements ActionHandler {
 
     public String[][] readInfosFromMessage(JsonNode msg){
         return new String[0][0];
+    }
+
+    public int getidofcard(String[] meassage){
+
+        if(meassage[2].equals("null")){
+            return Integer.parseInt(meassage[3]);
+        }
+        else{
+            return Integer.parseInt(meassage[2]);
+        }
+
     }
 }

@@ -57,7 +57,7 @@ public class GameHandler implements WebSocketHandler {
         sessions.put(session.getId(), session);
         logger.info("Connection established");
         movePlayerToLobby(session, lobby);
-      /* if(connectionOrder.size() >= 4){
+      /*if(connectionOrder.size() >= 4){
             Lobby lobby = createLobby();
             for(int i = 0; i < 4; i++){
                 movePlayerToLobby(sessions.get(connectionOrder.remove(0)), lobby);

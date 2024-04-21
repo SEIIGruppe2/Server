@@ -19,6 +19,7 @@ public class RegisterUsernameHandler implements ActionHandler{
         if(!UtilityMethods.checkUsername(username)) {
             GameHandler.getUsernames().add(username);
             response = "accepted";
+
         }
         else{
             response = "denied";

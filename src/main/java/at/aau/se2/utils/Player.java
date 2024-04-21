@@ -31,4 +31,8 @@ public class Player {
         this.points = 0;
         this.cards = new ArrayList<>();
     }
+
+    public List<Actioncard> getCards() {
+        return cards;
+    }
 }
