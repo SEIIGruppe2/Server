@@ -30,7 +30,7 @@ public class GameHandler implements WebSocketHandler {
     private final static List<Player> players = new ArrayList<>();
     @Getter
     private final static List<String> usernames = new ArrayList<>();
-    private final Lobby lobby = new Lobby(new GameState());
+    private final Lobby lobby;
 
     private GameHandler(){
         logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -41,6 +41,7 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
         handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
         handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
+        lobby = new Lobby(new GameState());
     }
 
     public static GameHandler getInstance(){
