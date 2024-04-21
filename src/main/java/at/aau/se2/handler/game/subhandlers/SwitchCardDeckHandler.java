@@ -32,11 +32,11 @@ public class SwitchCardDeckHandler extends DrawCardHandler implements ActionHand
         }
         catch(PlayerNotFoundException p){
             Logger.getLogger("global")
-                    .info("PLAYER NOT IN LOBBY (SwitchCardPlayerHandler)");
+                    .info("PLAYER NOT IN LOBBY (SwitchCardDeckHandler)");
         }
         catch(IOException i){
             Logger.getLogger("global")
-                    .info(i.getMessage() + " (SwitchCardPlayerHandler)");
+                    .info(i.getMessage() + " (SwitchCardDeckHandler)");
         }
 
     }

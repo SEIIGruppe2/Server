@@ -16,47 +16,48 @@ import java.util.logging.Logger;
 
 public class SwitchCardPlayerHandler implements ActionHandler {
 
-    String user ="Testuser";
+
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         try {
             String[] textfrommessage= inhaltvonnachricht(msg);
-            System.out.println("Inhalt von nachricht");
-            for(String a:textfrommessage){
-                System.out.println(a);
-            }
+
             String usernametoswitchwith=textfrommessage[1];
             List<Actioncard> cards = UtilityMethods.findPlayer(session, lobby).getCards();
-            Actioncard currentcard;
+            Actioncard currentcard = null;
+
 
             // TODO: karte aus handkarten von spieler entfernen
             int cardid=getidofcard(textfrommessage);
 
             for(Actioncard c : cards){
                 if(c.getId() == cardid){
-                    //für später gebrauchen wenn karte ersetzt wird cards.add(cards.indexOf(c), newCard);
+
                     cards.remove(c);
                     currentcard=c;
                     break;
                 }
             }
-            List<String> usernames = GameHandler.getUsernames();
+
             List<Player> players = GameHandler.getPlayersofGame();
             for(Player p : players){
-                /*if(p.getUsername == Integer.parseInt(textfrommessage[1])){
-                    //für später gebrauchen wenn karte ersetzt wird cards.add(cards.indexOf(c), newCard);
-                    currentcard=c;
+                if(p.getUsername().equals(usernametoswitchwith)){
+                    p.getCards().add(currentcard);
+                    WebSocketSession sessionofusertoswitchwith= p.getSession();
+                    System.out.println("GETUSERNASME"+UtilityMethods.findusernameofPlayer(session));
+                    sessionofusertoswitchwith.sendMessage(new TextMessage(convertToJSONrequest(currentcard, UtilityMethods.findusernameofPlayer(session))));
                     break;
-                }*/
+                }
             }
-            //session.sendMessage(new TextMessage(convertToJson(currentcard)));
 
         }
         catch(PlayerNotFoundException p){
             Logger.getLogger("global")
                     .info("PLAYER NOT IN LOBBY (SwitchCardDeckHandler)");
+        } catch (IOException e) {
+            Logger.getLogger("global")
+                    .info(e.getMessage() + " (SwitchCardDeckHandler)");
         }
-
 
     }
     public String[]  inhaltvonnachricht(JsonNode msg){
@@ -69,12 +70,12 @@ public class SwitchCardPlayerHandler implements ActionHandler {
     }
 
     public String convertToJson(Actioncard card){
-        return "{'type':'SWITCH_CARD_DECK_RESPONSE', " +
+        return "{'type':'SWITCH_CARD_PLAYER_RESPONSE', " +
                 card.convertToJson() + "}";
     }
 
-    public String convertToJSONrequest(Actioncard card){
-        return "{'type':'SWITCH_CARD_DECK_RESPONSE', 'switchedWith':'"+user+"', " +
+    public String convertToJSONrequest(Actioncard card, String username){
+        return "{'type':'SWITCH_CARD_PLAYER_RESPONSE', 'switchedWith':'"+username+"', " +
                 card.convertToJson() + "}";
     }
 
