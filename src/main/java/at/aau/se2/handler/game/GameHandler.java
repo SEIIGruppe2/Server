@@ -27,7 +27,7 @@ public class GameHandler implements WebSocketHandler {
     private final Map<String, WebSocketSession> sessions = new HashMap<>();
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     private final List<String> connectionOrder = new ArrayList<>();
-    private final List<Player> players = new ArrayList<>();
+    private final static List<Player> players = new ArrayList<>();
     @Getter
     private final static List<String> usernames = new ArrayList<>();
     private final Lobby lobby = new Lobby(new GameState());
@@ -57,7 +57,7 @@ public class GameHandler implements WebSocketHandler {
         sessions.put(session.getId(), session);
         logger.info("Connection established");
         movePlayerToLobby(session, lobby);
-       /* if(connectionOrder.size() >= 4){
+      /* if(connectionOrder.size() >= 4){
             Lobby lobby = createLobby();
             for(int i = 0; i < 4; i++){
                 movePlayerToLobby(sessions.get(connectionOrder.remove(0)), lobby);
@@ -74,6 +74,7 @@ public class GameHandler implements WebSocketHandler {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(msg);
         String type = node.path("type").asText();
+
         type = type.toUpperCase();
         if(type.equals("DRAW_CARD")){
             for(int i = findPlayer(session, players).getCards().size()-1;i < 5; i++) {
@@ -84,7 +85,13 @@ public class GameHandler implements WebSocketHandler {
             findPlayer(session, players).getLobby().getGameState().increaseRound();
         }
         else {
+
+
+            for (Map.Entry<String, ActionHandler> entry : handlers.entrySet()) {
+                System.out.println(entry.getKey() + ": " + entry.getValue());}
             ActionHandler handler = handlers.get(type);
+
+
             handler.handleMessage(session, node, UtilityMethods.findLobby(session, players));
         }
         broadcastChangedGameState(session);
@@ -100,7 +107,7 @@ public class GameHandler implements WebSocketHandler {
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
         logger.info("Connection closed");
-        /*Lobby lobby = UtilityMethods.findLobby(session, players);
+        Lobby lobby = UtilityMethods.findLobby(session, players);
         if(lobby != null){
             for(Player player : lobby.getPlayers()){
                 player.getSession().sendMessage(new TextMessage("The game has finished, you will be disconnected"));
@@ -108,7 +115,7 @@ public class GameHandler implements WebSocketHandler {
                 sessions.remove(player.getPlayerID());
                 players.remove(player);
             }
-        }*/
+        }
     }
 
     @Override
@@ -138,5 +145,13 @@ public class GameHandler implements WebSocketHandler {
         players.add(player);
         lobby.getPlayers().add(player);
         session.sendMessage(new TextMessage("{ 'type':'LOBBY_ASSIGNED' }"));
+    }
+
+    public static List<String> getUsernames() {
+        return usernames;
+    }
+
+    public static List<Player> getPlayersofGame() {
+        return players;
     }
 }

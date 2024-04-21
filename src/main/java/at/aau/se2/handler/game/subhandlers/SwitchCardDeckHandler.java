@@ -19,6 +19,8 @@ public class SwitchCardDeckHandler extends DrawCardHandler implements ActionHand
             String[] infos = readInfosFromMessage(msg);
             List<Actioncard> cards = UtilityMethods.findPlayer(session, lobby).getCards();
             Actioncard newCard = drawRandomCard(lobby);
+            String test = infos[1];
+            System.out.println("Test in der handlemessage"+infos[1]);
             for(Actioncard c : cards){
                 if(c.getId() == Integer.parseInt(infos[1])){
                     cards.add(cards.indexOf(c), newCard);
@@ -30,11 +32,11 @@ public class SwitchCardDeckHandler extends DrawCardHandler implements ActionHand
         }
         catch(PlayerNotFoundException p){
             Logger.getLogger("global")
-                    .info("PLAYER NOT IN LOBBY (SwitchCardDeckHandler)");
+                    .info("PLAYER NOT IN LOBBY (SwitchCardPlayerHandler)");
         }
         catch(IOException i){
             Logger.getLogger("global")
-                    .info(i.getMessage() + " (SwitchCardDeckHandler)");
+                    .info(i.getMessage() + " (SwitchCardPlayerHandler)");
         }
 
     }
