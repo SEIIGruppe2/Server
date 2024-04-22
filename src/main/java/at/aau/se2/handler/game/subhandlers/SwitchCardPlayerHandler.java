@@ -16,15 +16,17 @@ import java.util.logging.Logger;
 
 public class SwitchCardPlayerHandler implements ActionHandler {
 
+    int passiveanswer;
 
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         try {
             String[] textfrommessage= inhaltvonnachricht(msg);
-
+            System.out.println("String handle message ausgeführt");
             String usernametoswitchwith=textfrommessage[1];
             List<Actioncard> cards = UtilityMethods.findPlayer(session, lobby).getCards();
             Actioncard currentcard = null;
+
 
 
             // TODO: karte aus handkarten von spieler entfernen
@@ -39,12 +41,12 @@ public class SwitchCardPlayerHandler implements ActionHandler {
                 }
             }
 
+
             List<Player> players = GameHandler.getPlayersofGame();
             for(Player p : players){
                 if(p.getUsername().equals(usernametoswitchwith)){
                     p.getCards().add(currentcard);
                     WebSocketSession sessionofusertoswitchwith= p.getSession();
-                    System.out.println("GETUSERNASME"+UtilityMethods.findusernameofPlayer(session));
                     sessionofusertoswitchwith.sendMessage(new TextMessage(convertToJSONrequest(currentcard, UtilityMethods.findusernameofPlayer(session))));
                     break;
                 }
@@ -86,9 +88,11 @@ public class SwitchCardPlayerHandler implements ActionHandler {
     public int getidofcard(String[] meassage){
 
         if(meassage[2].equals("null")){
+            passiveanswer=1;
             return Integer.parseInt(meassage[3]);
         }
         else{
+            passiveanswer=0;
             return Integer.parseInt(meassage[2]);
         }
 
