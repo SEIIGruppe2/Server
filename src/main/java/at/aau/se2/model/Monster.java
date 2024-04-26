@@ -12,8 +12,8 @@ public abstract class Monster extends Tower implements JsonSerializable {
     protected int ring;
     protected Monster(int zone, int ring, int id){
         super(id);
-        this.zone = zone % 4; // 0-3
-        this.ring = ring % 4; // 0-3
+        this.zone = zone;
+        this.ring = ring;
     }
     public int doesDmg(Tower tower){
         if(tower.getLifepoints() >= 1) {
