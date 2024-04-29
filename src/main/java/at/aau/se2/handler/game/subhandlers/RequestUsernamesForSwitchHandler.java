@@ -20,7 +20,7 @@ public class RequestUsernamesForSwitchHandler extends RequestUsernamesHandler{
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
         try{
             List<Player> players = GameHandler.getPlayersofGame();
-            //hier dafür sorgen dass eigener username entfernt wird
+
             for(Player a:players){
                 if(!a.getSession().equals(session)){
                     usernames.add(a.getUsername());

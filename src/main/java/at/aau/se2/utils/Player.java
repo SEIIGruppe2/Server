@@ -37,16 +37,9 @@ public class Player {
         return cards;
     }
 
-    public void setusername(String username){
-        this.username = username;
-    }
-
     public String getUsername() {
         return username;
     }
 
-    public WebSocketSession getSession() {
-        return session;
-    }
 
 }

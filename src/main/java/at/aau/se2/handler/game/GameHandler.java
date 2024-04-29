@@ -87,13 +87,7 @@ public class GameHandler implements WebSocketHandler {
             findPlayer(session, players).getLobby().getGameState().increaseRound();
         }
         else {
-
-
-            for (Map.Entry<String, ActionHandler> entry : handlers.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue());}
             ActionHandler handler = handlers.get(type);
-
-
             handler.handleMessage(session, node, UtilityMethods.findLobby(session, players));
         }
         broadcastChangedGameState(session);
