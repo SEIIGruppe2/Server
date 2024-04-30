@@ -25,14 +25,16 @@ import static at.aau.se2.utils.UtilityMethods.findPlayer;
 public class GameHandler implements WebSocketHandler {
     private final Logger logger;
     private static GameHandler GAMEHANDLER;
-//    private final Map<String, WebSocketSession> sessions = new HashMap<>();
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     private final List<WebSocketSession> connectionOrder = new ArrayList<>();
     private final List<Player> players = new ArrayList<>();
     @Getter
     private final static List<String> usernames = new ArrayList<>();
-    private static int nextPlayer;
-//    private final Lobby lobby;
+    private static int nextPlayer = 0;
+
+    public static void setNextPlayer(int val){
+        nextPlayer += val;
+    }
 
     private GameHandler(){
         logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -44,8 +46,6 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
         handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
         handlers.put("SPAWN_MONSTER", new SpawnMonsterHandler(new SecureRandom()));
-        nextPlayer = 0;
-//        lobby = new Lobby(new GameState());
     }
 
     public static GameHandler getInstance(){
@@ -58,17 +58,14 @@ public class GameHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-//        connectionOrder.add(session.getId());
         connectionOrder.add(session);
-//        sessions.put(session.getId(), session);
         logger.info("Connection established; SessionID: " + session.getId());
-//        movePlayerToLobby(session, lobby);
        if(connectionOrder.size() >= 4){
             Lobby lobby = createLobby();
             for(int i = 0; i < 4; i++){
                 // session basierend auf ID ausgeben
-//                movePlayerToLobby(sessions.get(connectionOrder.remove(0)), lobby);
-                movePlayerToLobby(connectionOrder.get(nextPlayer++), lobby);
+                movePlayerToLobby(connectionOrder.get(nextPlayer), lobby);
+                setNextPlayer(1);
             }
         }
         else {
@@ -112,8 +109,7 @@ public class GameHandler implements WebSocketHandler {
         if(lobby != null){
             for(Player player : lobby.getPlayers()){
                 connectionOrder.remove(player.getSession());
-                nextPlayer--;
-//                sessions.remove(player.getPlayerID());
+                setNextPlayer(-1);
                 player.getSession().sendMessage(new TextMessage("The game has finished, you will be disconnected"));
                 player.getSession().close();
 
@@ -128,11 +124,9 @@ public class GameHandler implements WebSocketHandler {
     }
 
     public void broadcastChangedGameState(WebSocketSession session) throws IOException, LobbyNotFoundException {
-        //String gameStateJson = gameStateToJson()
         Lobby lobby = UtilityMethods.findLobby(session, players);
         if(lobby != null) {
             for (Player player : lobby.getPlayers()) {
-                //player.getSession().sendMessage(new TextMessage(gameStateJson));
                 player.getSession().sendMessage(new TextMessage(lobby.getGameState().convertToJson()));
             }
         }

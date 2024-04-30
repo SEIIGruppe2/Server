@@ -37,6 +37,13 @@ public class SpawnMonsterHandlerTest {
     }
 
     @Test
+    public void testIncreaseMonsterId(){
+        assertEquals(0, SpawnMonsterHandler.getMonsterId());
+        SpawnMonsterHandler.increaseMonsterId();
+        assertEquals(1, SpawnMonsterHandler.getMonsterId());
+    }
+
+    @Test
     public void testConvertToJson(){
         Slime slime = new Slime(1,1,1);
         String expected = "{ 'type':'SPAWN_MONSTER', 'monster': " + slime.convertToJson() + "}";
