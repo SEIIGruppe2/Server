@@ -21,16 +21,12 @@ public class SwitchCardPlayerHandler implements ActionHandler {
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         try {
-            String[] textfrommessage= inhaltvonnachricht(msg);
-            System.out.println("String handle message ausgeführt");
+            String[] textfrommessage= messageContent(msg);
             String usernametoswitchwith=textfrommessage[1];
             List<Actioncard> cards = UtilityMethods.findPlayer(session, lobby).getCards();
             Actioncard currentcard = null;
 
-
-
-            // TODO: karte aus handkarten von spieler entfernen
-            int cardid=getidofcard(textfrommessage);
+            int cardid=getIdOfCard(textfrommessage);
 
             for(Actioncard c : cards){
                 if(c.getId() == cardid){
@@ -41,13 +37,12 @@ public class SwitchCardPlayerHandler implements ActionHandler {
                 }
             }
 
-
             List<Player> players = GameHandler.getPlayersofGame();
             for(Player p : players){
                 if(p.getUsername().equals(usernametoswitchwith)){
                     p.getCards().add(currentcard);
                     WebSocketSession sessionofusertoswitchwith= p.getSession();
-                    sessionofusertoswitchwith.sendMessage(new TextMessage(convertToJSONrequest(currentcard, UtilityMethods.findusernameofPlayer(session))));
+                    sessionofusertoswitchwith.sendMessage(new TextMessage(convertToJSONrequest(currentcard, UtilityMethods.findUsernameOfPlayer(session))));
                     break;
                 }
             }
@@ -62,7 +57,7 @@ public class SwitchCardPlayerHandler implements ActionHandler {
         }
 
     }
-    public String[]  inhaltvonnachricht(JsonNode msg){
+    public String[] messageContent(JsonNode msg){
         String[] infos = new String[4];
         infos[0] = msg.path("type").asText();
         infos[1] = msg.path("switchedWith").asText();
@@ -85,7 +80,7 @@ public class SwitchCardPlayerHandler implements ActionHandler {
         return new String[0][0];
     }
 
-    public int getidofcard(String[] meassage){
+    public int getIdOfCard(String[] meassage){
 
         if(meassage[2].equals("null")){
             passiveanswer=1;

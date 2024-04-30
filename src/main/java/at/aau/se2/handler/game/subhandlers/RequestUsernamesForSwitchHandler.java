@@ -19,7 +19,7 @@ public class RequestUsernamesForSwitchHandler extends RequestUsernamesHandler{
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
         try{
-            List<Player> players = GameHandler.getPlayersofGame();
+            List<Player> players = List.copyOf(GameHandler.getPlayersofGame());
 
             for(Player a:players){
                 if(!a.getSession().equals(session)){
@@ -37,9 +37,6 @@ public class RequestUsernamesForSwitchHandler extends RequestUsernamesHandler{
     public String convertToJson() {
         StringBuilder builder = new StringBuilder();
         builder.append("{ 'type': 'REQUEST_USERNAMES_SWITCH', 'usernames': [");
-
-
-
 
         for(String u : usernames){
             if(usernames.get(usernames.size()-1).equals(u))

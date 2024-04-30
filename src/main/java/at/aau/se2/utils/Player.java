@@ -16,6 +16,8 @@ public class Player {
     @Getter
     @Setter
     private int points;
+    @Getter
+    @Setter
     private String username;
     // TODO username
 //    @Getter

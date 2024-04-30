@@ -1,5 +1,6 @@
 package at.aau.se2.handler.game.subhandlers;
 
+import at.aau.se2.exceptions.PlayerNotFoundException;
 import at.aau.se2.handler.game.GameHandler;
 import at.aau.se2.utils.Lobby;
 import at.aau.se2.utils.Player;
@@ -15,18 +16,15 @@ import java.util.logging.Logger;
 public class RegisterUsernameHandler implements ActionHandler{
 
     @Override
-    public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
-        String username = msg.path("username").asText();
+    public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
+        try {String username = msg.path("username").asText();
         String response;
         if(!UtilityMethods.checkUsername(username)) {
             GameHandler.getUsernames().add(username);
            List<Player> players=GameHandler.getPlayersofGame();
-           for(Player a:players){
-               if(a.getSession()==session){
-                   System.out.println("Username wurde zum Player hinzugefügt");
-                   a.setusername(username);
-               }
-            }
+           Player currentplayer= UtilityMethods.findPlayer(session,players);
+           currentplayer.setUsername(username);
+
 
             response = "accepted";
 
@@ -34,11 +32,15 @@ public class RegisterUsernameHandler implements ActionHandler{
         else{
             response = "denied";
         }
-        try {
+
             session.sendMessage(
                     new TextMessage("{ 'type': 'REGISTER_USERNAME', 'response' : '" +
                             response +
                             "'}"));
+        }
+        catch (PlayerNotFoundException e){
+            Logger.getLogger("global")
+                    .info(e.getMessage() + "(PlayerNotFoundException)");
         }
         catch(IOException i){
             Logger.getLogger("global")
