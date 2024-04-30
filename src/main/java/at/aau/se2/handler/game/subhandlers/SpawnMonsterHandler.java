@@ -16,8 +16,8 @@ public class SpawnMonsterHandler implements ActionHandler {
     private final SecureRandom rn;
     public static int monsterId = 0;
 
-    public SpawnMonsterHandler(){
-        rn = new SecureRandom();
+    public SpawnMonsterHandler(SecureRandom rn){
+        this.rn = rn;
     }
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
@@ -30,7 +30,7 @@ public class SpawnMonsterHandler implements ActionHandler {
         }
     }
 
-    private Monster spawnRandomMonster(Lobby lobby){
+    public Monster spawnRandomMonster(Lobby lobby){
         int monstertype = rn.nextInt(1,3);
 
         Monster monster = switch(monstertype){
