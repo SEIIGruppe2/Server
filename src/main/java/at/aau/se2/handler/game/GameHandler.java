@@ -12,6 +12,7 @@ import lombok.Getter;
 import org.springframework.web.socket.*;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,13 +25,16 @@ import static at.aau.se2.utils.UtilityMethods.findPlayer;
 public class GameHandler implements WebSocketHandler {
     private final Logger logger;
     private static GameHandler GAMEHANDLER;
-    private final Map<String, WebSocketSession> sessions = new HashMap<>();
     private final Map<String, ActionHandler> handlers = new HashMap<>();
-    private final List<String> connectionOrder = new ArrayList<>();
+    private final List<WebSocketSession> connectionOrder = new ArrayList<>();
     private final List<Player> players = new ArrayList<>();
     @Getter
     private final static List<String> usernames = new ArrayList<>();
-    private final Lobby lobby = new Lobby(new GameState());
+    private static int nextPlayer = 0;
+
+    public static void setNextPlayer(int val){
+        nextPlayer += val;
+    }
 
     private GameHandler(){
         logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
@@ -41,7 +45,7 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
         handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
         handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
-        handlers.put("SPAWN_MONSTER", new SpawnMonsterHandler());
+        handlers.put("SPAWN_MONSTER", new SpawnMonsterHandler(new SecureRandom()));
     }
 
     public static GameHandler getInstance(){
@@ -54,19 +58,19 @@ public class GameHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        connectionOrder.add(session.getId());
-        sessions.put(session.getId(), session);
-        logger.info("Connection established");
-        movePlayerToLobby(session, lobby);
-       /* if(connectionOrder.size() >= 4){
+        connectionOrder.add(session);
+        logger.info("Connection established; SessionID: " + session.getId());
+       if(connectionOrder.size() >= 4){
             Lobby lobby = createLobby();
             for(int i = 0; i < 4; i++){
-                movePlayerToLobby(sessions.get(connectionOrder.remove(0)), lobby);
+                // session basierend auf ID ausgeben
+                movePlayerToLobby(connectionOrder.get(nextPlayer), lobby);
+                setNextPlayer(1);
             }
         }
         else {
             session.sendMessage(new TextMessage("Waiting for other players to connect."));
-        }*/
+        }
     }
 
     @Override
@@ -100,16 +104,18 @@ public class GameHandler implements WebSocketHandler {
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
-        logger.info("Connection closed");
-        /*Lobby lobby = UtilityMethods.findLobby(session, players);
+        logger.info("Connection closed, SessionID: " + session.getId());
+        Lobby lobby = UtilityMethods.findLobby(session, players);
         if(lobby != null){
             for(Player player : lobby.getPlayers()){
+                connectionOrder.remove(player.getSession());
+                setNextPlayer(-1);
                 player.getSession().sendMessage(new TextMessage("The game has finished, you will be disconnected"));
                 player.getSession().close();
-                sessions.remove(player.getPlayerID());
+
                 players.remove(player);
             }
-        }*/
+        }
     }
 
     @Override
@@ -118,11 +124,9 @@ public class GameHandler implements WebSocketHandler {
     }
 
     public void broadcastChangedGameState(WebSocketSession session) throws IOException, LobbyNotFoundException {
-        //String gameStateJson = gameStateToJson()
         Lobby lobby = UtilityMethods.findLobby(session, players);
         if(lobby != null) {
             for (Player player : lobby.getPlayers()) {
-                //player.getSession().sendMessage(new TextMessage(gameStateJson));
                 player.getSession().sendMessage(new TextMessage(lobby.getGameState().convertToJson()));
             }
         }

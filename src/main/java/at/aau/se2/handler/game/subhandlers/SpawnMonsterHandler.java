@@ -6,19 +6,22 @@ import at.aau.se2.model.monsters.Slime;
 import at.aau.se2.model.monsters.Sphinx;
 import at.aau.se2.utils.Lobby;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.Getter;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import java.security.SecureRandom;
 import java.util.logging.Logger;
 
-
-
 public class SpawnMonsterHandler implements ActionHandler {
     private final SecureRandom rn;
-    public static int monsterId = 0;
+    @Getter
+    private static int monsterId = 0;
 
-    public SpawnMonsterHandler(){
-        rn = new SecureRandom();
+    public static void increaseMonsterId(){
+        monsterId++;
+    }
+    public SpawnMonsterHandler(SecureRandom rn){
+        this.rn = rn;
     }
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
@@ -41,9 +44,11 @@ public class SpawnMonsterHandler implements ActionHandler {
             case 2 -> new Sphinx(zone, 0, monsterId++);
             default -> new Bullrog(zone, 0, monsterId++);
         };
+        increaseMonsterId();
         lobby.getGameState().getMonsters().add(monster);
         return monster;
     }
+
 
     public String convertToJson(Monster monster) {
         return "{ 'type':'SPAWN_MONSTER', 'monster': " + monster.convertToJson() + "}";
