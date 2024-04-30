@@ -36,7 +36,7 @@ public class SpawnMonsterHandler implements ActionHandler {
         }
     }
 
-    private Monster spawnRandomMonster(int zone,Lobby lobby){
+    public Monster spawnRandomMonster(int zone,Lobby lobby){
         int monstertype = rn.nextInt(1,3);
 
         Monster monster = switch(monstertype){

@@ -15,6 +15,8 @@ import static org.mockito.Mockito.*;
 
 public class SpawnMonsterHandlerTest {
     private Lobby lobby;
+
+    private int zone;
     private SecureRandom rn;
     private SpawnMonsterHandler sph;
     @BeforeEach
@@ -27,11 +29,11 @@ public class SpawnMonsterHandlerTest {
     @Test
     public void testSpawnRandomMonster(){
         when(rn.nextInt(1,3)).thenReturn(1);
-        assertEquals(Slime.class, sph.spawnRandomMonster(lobby).getClass());
+        assertEquals(Slime.class, sph.spawnRandomMonster(1,lobby).getClass());
         when(rn.nextInt(1,3)).thenReturn(2);
-        assertEquals(Sphinx.class, sph.spawnRandomMonster(lobby).getClass());
+        assertEquals(Sphinx.class, sph.spawnRandomMonster(2,lobby).getClass());
         when(rn.nextInt(1,3)).thenReturn(3);
-        assertEquals(Bullrog.class, sph.spawnRandomMonster(lobby).getClass());
+        assertEquals(Bullrog.class, sph.spawnRandomMonster(3,lobby).getClass());
         verify(lobby, times(3)).getGameState();
         verify(rn, times(3)).nextInt(1,3);
     }
