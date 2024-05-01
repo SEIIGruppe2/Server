@@ -15,16 +15,17 @@ import java.util.logging.Logger;
 
 public class RequestUsernamesForSwitchHandler extends RequestUsernamesHandler{
 
-    ArrayList<String> usernames = new ArrayList<String>();
+    public ArrayList<String> usernames = new ArrayList<String>();
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
         try{
             List<Player> players = List.copyOf(GameHandler.getPlayersofGame());
 
             for(Player a:players){
-                if(!a.getSession().equals(session)){
-                    usernames.add(a.getUsername());
+                if(a.getSession().equals(session)){
+
                 }
+                else{usernames.add(a.getUsername());}
             }
             session.sendMessage(new TextMessage(convertToJson()));
         }catch(IOException i){
