@@ -40,9 +40,9 @@ public class SpawnMonsterHandler implements ActionHandler {
         int monstertype = rn.nextInt(1,3);
 
         Monster monster = switch(monstertype){
-            case 1 -> new Slime(zone, 0, monsterId++);
-            case 2 -> new Sphinx(zone, 0, monsterId++);
-            default -> new Bullrog(zone, 0, monsterId++);
+            case 1 -> new Slime(zone, 0, monsterId);
+            case 2 -> new Sphinx(zone, 0, monsterId);
+            default -> new Bullrog(zone, 0, monsterId);
         };
         increaseMonsterId();
         lobby.getGameState().getMonsters().add(monster);
