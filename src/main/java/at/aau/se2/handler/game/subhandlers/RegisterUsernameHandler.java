@@ -17,8 +17,10 @@ public class RegisterUsernameHandler implements ActionHandler{
 
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
-        try {String username = msg.path("username").asText();
-        String response;
+        try {
+
+            String username = msg.path("username").asText();
+            String response;
         if(!UtilityMethods.checkUsername(username)) {
             GameHandler.getUsernames().add(username);
            List<Player> players=GameHandler.getPlayersofGame();

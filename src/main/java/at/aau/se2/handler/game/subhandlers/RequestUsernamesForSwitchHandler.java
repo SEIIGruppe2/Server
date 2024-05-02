@@ -22,10 +22,9 @@ public class RequestUsernamesForSwitchHandler extends RequestUsernamesHandler{
             List<Player> players = List.copyOf(GameHandler.getPlayersofGame());
 
             for(Player a:players){
-                if(a.getSession().equals(session)){
-
+                if(!a.getSession().equals(session)){
+                    usernames.add(a.getUsername());
                 }
-                else{usernames.add(a.getUsername());}
             }
             session.sendMessage(new TextMessage(convertToJson()));
         }catch(IOException i){

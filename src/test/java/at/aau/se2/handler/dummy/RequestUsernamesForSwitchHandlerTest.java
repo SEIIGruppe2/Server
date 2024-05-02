@@ -30,15 +30,12 @@ import static org.mockito.Mockito.when;
 
 public class RequestUsernamesForSwitchHandlerTest {
 
-    private Lobby lobby;
+
     private RequestUsernamesForSwitchHandler rufs;
-    WebSocketSession session;
+
 
     @BeforeEach
     public void setup(){
-        session = mock(WebSocketSession.class);
-        lobby = mock(Lobby.class);
-        when(lobby.getGameState()).thenReturn(new GameState());
         rufs = new RequestUsernamesForSwitchHandler();
     }
 
@@ -49,7 +46,6 @@ public class RequestUsernamesForSwitchHandlerTest {
 
         rufs.usernames.add("123");
         rufs.usernames.add("456");
-
 
         assertEquals(test,rufs.convertToJson());
 

@@ -39,9 +39,6 @@ public class Player {
         return cards;
     }
 
-    public String getUsername() {
-        return username;
-    }
 
 
 }

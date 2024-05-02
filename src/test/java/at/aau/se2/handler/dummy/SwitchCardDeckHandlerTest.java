@@ -17,15 +17,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class SwitchCardDeckHandlerTest {
-    private Lobby lobby;
+
     private SwitchCardDeckHandler test;
-    private SecureRandom rn;
+
 
     @BeforeEach
     public void setup(){
-        lobby = mock(Lobby.class);
-        when(lobby.getGameState()).thenReturn(new GameState());
-        rn = mock(SecureRandom.class);
         test = new SwitchCardDeckHandler();
     }
 
