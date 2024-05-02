@@ -16,9 +16,9 @@ import static org.mockito.Mockito.when;
 
 public class UtilityMethodsTest {
 
-    private static List<Lobby> lobbies = new ArrayList<>();
-    private static List<Player> players = new ArrayList<>();
-    private static List<WebSocketSession> sessions = new ArrayList<>();
+    private final static List<Lobby> lobbies = new ArrayList<>();
+    private final static List<Player> players = new ArrayList<>();
+    private final static List<WebSocketSession> sessions = new ArrayList<>();
 
     @BeforeAll
     public static void setup(){
@@ -47,12 +47,8 @@ public class UtilityMethodsTest {
 
     @Test
     void testFindPlayerInLobbyExceptionThrown(){
-        assertThrows(PlayerNotFoundException.class, () -> {
-           UtilityMethods.findPlayer(sessions.get(1), lobbies.get(1));
-        });
-        assertThrows(PlayerNotFoundException.class, () -> {
-           UtilityMethods.findPlayer(mock(WebSocketSession.class), lobbies.get(0));
-        });
+        assertThrows(PlayerNotFoundException.class, () -> UtilityMethods.findPlayer(sessions.get(1), lobbies.get(1)));
+        assertThrows(PlayerNotFoundException.class, () -> UtilityMethods.findPlayer(mock(WebSocketSession.class), lobbies.get(0)));
     }
 
     @Test
@@ -64,9 +60,7 @@ public class UtilityMethodsTest {
 
     @Test
     void testFindPlayerOnServerExceptionThrown(){
-        assertThrows(PlayerNotFoundException.class, () -> {
-            UtilityMethods.findPlayer(mock(WebSocketSession.class), players);
-        });
+        assertThrows(PlayerNotFoundException.class, () -> UtilityMethods.findPlayer(mock(WebSocketSession.class), players));
     }
 
     @Test
@@ -78,9 +72,7 @@ public class UtilityMethodsTest {
 
     @Test
     void testFindLobbyExceptionThrown(){
-        assertThrows(LobbyNotFoundException.class, () -> {
-           UtilityMethods.findLobby(mock(WebSocketSession.class), players);
-        });
+        assertThrows(LobbyNotFoundException.class, () -> UtilityMethods.findLobby(mock(WebSocketSession.class), players));
     }
 
     @Test
