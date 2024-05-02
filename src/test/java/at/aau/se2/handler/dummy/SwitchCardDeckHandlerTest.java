@@ -1,8 +1,7 @@
 package at.aau.se2.handler.dummy;
 import at.aau.se2.handler.game.subhandlers.SwitchCardDeckHandler;
 import at.aau.se2.model.characters.Knight;
-import at.aau.se2.utils.GameState;
-import at.aau.se2.utils.Lobby;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
@@ -10,11 +9,8 @@ import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 
-import java.security.SecureRandom;
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
+
 
 public class SwitchCardDeckHandlerTest {
 
@@ -31,7 +27,7 @@ public class SwitchCardDeckHandlerTest {
 
         Knight actioncard = new Knight(2,5);
         String json= "{'type':'SWITCH_CARD_DECK_RESPONSE', "+
-                actioncard.convertToJson() + "}";;
+                actioncard.convertToJson() + "}";
         assertEquals(json,test.convertToJson(actioncard));
     }
 
@@ -44,7 +40,6 @@ public class SwitchCardDeckHandlerTest {
         json.put("type","SWITCH_CARD_DECK");
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.valueToTree(json);
-        String jsonmsg = "{ 'type':'SWITCH_CARD_DECK', 'id': '"+actioncard.getId()+"'}";
         String[] result = new String[2];
         result[0] = "SWITCH_CARD_DECK";
         result[1] = "23";
