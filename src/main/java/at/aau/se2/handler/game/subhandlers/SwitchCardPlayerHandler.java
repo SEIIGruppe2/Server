@@ -76,10 +76,6 @@ public class SwitchCardPlayerHandler implements ActionHandler {
                 card.convertToJson() + "}";
     }
 
-    public String[][] readInfosFromMessage(JsonNode msg){
-        return new String[0][0];
-    }
-
     public int getIdOfCard(String[] meassage){
 
         if(meassage[2].equals("null")){
