@@ -5,6 +5,7 @@ import at.aau.se2.model.monsters.Bullrog;
 import at.aau.se2.model.monsters.Slime;
 import at.aau.se2.model.monsters.Sphinx;
 import at.aau.se2.utils.Lobby;
+import at.aau.se2.utils.Player;
 import com.fasterxml.jackson.databind.JsonNode;
 import lombok.Getter;
 import org.springframework.web.socket.TextMessage;
@@ -28,11 +29,17 @@ public class SpawnMonsterHandler implements ActionHandler {
         try {
             int zone = msg.path("zone").asInt();
             Logger.getLogger("global").info("Received zone: " + zone);
-            Monster monster = spawnRandomMonster(zone,lobby);
-            session.sendMessage(new TextMessage(convertToJson(monster)));
-        }catch (Exception e){
-            Logger.getLogger("global")
-                    .info("SPAWN_MONSTER: " + e.getMessage());
+            Monster monster = spawnRandomMonster(zone, lobby);
+
+            String monsterJson = convertToJson(monster);
+
+            for (Player player : lobby.getPlayers()) {
+                if (player.getSession().isOpen()) {
+                    player.getSession().sendMessage(new TextMessage(monsterJson));
+                }
+            }
+        } catch (Exception e) {
+            Logger.getLogger("global").info("SPAWN_MONSTER: " + e.getMessage());
         }
     }
 
@@ -48,6 +55,7 @@ public class SpawnMonsterHandler implements ActionHandler {
         lobby.getGameState().getMonsters().add(monster);
         return monster;
     }
+
 
 
     public String convertToJson(Monster monster) {
