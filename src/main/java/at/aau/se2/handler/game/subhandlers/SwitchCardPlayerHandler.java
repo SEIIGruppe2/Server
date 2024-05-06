@@ -39,7 +39,7 @@ public class SwitchCardPlayerHandler implements ActionHandler {
             }
 
 
-            List<Player> players = GameHandler.getPlayersofGame();
+            List<Player> players = GameHandler.getPlayers();
             for(Player p : players){
                 if(p.getUsername().equals(usernametoswitchwith)){
                     p.getCards().add(currentcard);

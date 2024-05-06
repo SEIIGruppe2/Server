@@ -20,7 +20,7 @@ public class RegisterUsernameHandler implements ActionHandler{
         String response;
         if(!UtilityMethods.checkUsername(username)) {
             GameHandler.getUsernames().add(username);
-           List<Player> players=GameHandler.getPlayersofGame();
+           List<Player> players=GameHandler.getPlayers();
            for(Player a:players){
                if(a.getSession()==session){
                    System.out.println("Username wurde zum Player hinzugefügt");

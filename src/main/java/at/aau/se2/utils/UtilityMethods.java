@@ -25,7 +25,7 @@ public class UtilityMethods {
     }
 
     public static String findusernameofPlayer(WebSocketSession session){
-        for(Player a: GameHandler.getPlayersofGame()){
+        for(Player a: GameHandler.getPlayers()){
             if(a.getSession().equals(session)){
                 return a.getUsername();
 
