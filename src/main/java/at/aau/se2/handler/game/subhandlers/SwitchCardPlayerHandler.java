@@ -16,33 +16,33 @@ import java.util.logging.Logger;
 
 public class SwitchCardPlayerHandler implements ActionHandler {
 
-    int passiveanswer;
+    int passiveAnswer;
 
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         try {
-            String[] textfrommessage= messageContent(msg);
-            String usernametoswitchwith=textfrommessage[1];
+            String[] msgContent= messageContent(msg);
+            String switchUsername=msgContent[1];
             List<Actioncard> cards = UtilityMethods.findPlayer(session, lobby).getCards();
-            Actioncard currentcard = null;
+            Actioncard currentCard = null;
 
-            int cardid=getIdOfCard(textfrommessage);
+            int cardid=getIdOfCard(msgContent);
 
             for(Actioncard c : cards){
                 if(c.getId() == cardid){
 
                     cards.remove(c);
-                    currentcard=c;
+                    currentCard=c;
                     break;
                 }
             }
 
             List<Player> players = GameHandler.getPlayersofGame();
             for(Player p : players){
-                if(p.getUsername().equals(usernametoswitchwith)){
-                    p.getCards().add(currentcard);
-                    WebSocketSession sessionofusertoswitchwith= p.getSession();
-                    sessionofusertoswitchwith.sendMessage(new TextMessage(convertToJSONrequest(currentcard, UtilityMethods.findUsernameOfPlayer(session))));
+                if(p.getUsername().equals(switchUsername)){
+                    p.getCards().add(currentCard);
+                    WebSocketSession switchSession= p.getSession();
+                    switchSession.sendMessage(new TextMessage(convertToJSONrequest(currentCard, UtilityMethods.findUsernameOfPlayer(session))));
                     break;
                 }
             }
@@ -76,15 +76,15 @@ public class SwitchCardPlayerHandler implements ActionHandler {
                 card.convertToJson() + "}";
     }
 
-    public int getIdOfCard(String[] meassage){
+    public int getIdOfCard(String[] message){
 
-        if(meassage[2].equals("null")){
-            passiveanswer=1;
-            return Integer.parseInt(meassage[3]);
+        if(message[2].equals("null")){
+            passiveAnswer =1;
+            return Integer.parseInt(message[3]);
         }
         else{
-            passiveanswer=0;
-            return Integer.parseInt(meassage[2]);
+            passiveAnswer =0;
+            return Integer.parseInt(message[2]);
         }
 
     }

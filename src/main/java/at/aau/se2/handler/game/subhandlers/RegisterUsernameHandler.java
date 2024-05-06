@@ -24,8 +24,8 @@ public class RegisterUsernameHandler implements ActionHandler{
         if(!UtilityMethods.checkUsername(username)) {
             GameHandler.getUsernames().add(username);
            List<Player> players=GameHandler.getPlayersofGame();
-           Player currentplayer= UtilityMethods.findPlayer(session,players);
-           currentplayer.setUsername(username);
+           Player currentPlayer= UtilityMethods.findPlayer(session,players);
+           currentPlayer.setUsername(username);
 
 
             response = "accepted";
