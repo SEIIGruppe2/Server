@@ -28,7 +28,7 @@ public class GameHandler implements WebSocketHandler {
     private static GameHandler GAMEHANDLER;
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     private final List<WebSocketSession> connectionOrder = new ArrayList<>();
-    private final List<Player> players = new ArrayList<>();
+    private final static List<Player> players = new ArrayList<>();
     @Getter
     private final static List<String> usernames = new ArrayList<>();
     private static int nextPlayer = 0;
@@ -39,8 +39,8 @@ public class GameHandler implements WebSocketHandler {
 
     private GameHandler(){
         logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-        handlers.put("DRAW_CARD", new DrawCardHandler());
-        handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler());
+        handlers.put("DRAW_CARD", new DrawCardHandler(new SecureRandom()));
+        handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler(new SecureRandom()));
         handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayerHandler());
         handlers.put("PLAYER_ATTACK", new PlayerAttackHandler());
         handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
@@ -49,6 +49,7 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("SPAWN_MONSTER", new SpawnMonsterHandler(new SecureRandom()));
         handlers.put("PLAYER_ROLL_DICE", new PlayerRollsDiceHandler());
         handlers.put("ROUND_COUNTER", new GameRoundHandler());
+        handlers.put("REQUEST_USERNAMES_SWITCH", new RequestUsernamesForSwitchHandler());
     }
 
     public static GameHandler getInstance(){
@@ -82,6 +83,7 @@ public class GameHandler implements WebSocketHandler {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(msg);
         String type = node.path("type").asText();
+
         type = type.toUpperCase();
         if(type.equals("DRAW_CARD")){
             for(int i = findPlayer(session, players).getCards().size()-1;i < 5; i++) {
@@ -158,4 +160,12 @@ public class GameHandler implements WebSocketHandler {
 
 
 
+
+    public static List<String> getUsernames() {
+        return usernames;
+    }
+
+    public static List<Player> getPlayersofGame() {
+        return players;
+    }
 }

@@ -9,16 +9,23 @@ import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.logging.Logger;
 
 public class SwitchCardDeckHandler extends DrawCardHandler implements ActionHandler {
+
+    public SwitchCardDeckHandler(SecureRandom rn){
+        super(rn);
+    }
+
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         try {
             String[] infos = readInfosFromMessage(msg);
             List<Actioncard> cards = UtilityMethods.findPlayer(session, lobby).getCards();
             Actioncard newCard = drawRandomCard(lobby);
+            System.out.println("Test in der handlemessage"+infos[1]);
             for(Actioncard c : cards){
                 if(c.getId() == Integer.parseInt(infos[1])){
                     cards.add(cards.indexOf(c), newCard);

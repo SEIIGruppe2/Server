@@ -21,10 +21,15 @@ import java.util.logging.Logger;
 public class DrawCardHandler implements ActionHandler {
     private WebSocketSession session;
     private static int cardId = 0;
+    private SecureRandom rn;
 
+    public DrawCardHandler(SecureRandom rn){
+        this.rn = rn;
+    }
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         // generate a new card and send it to client
+
         try {
             Actioncard card = drawRandomCard(lobby);
             UtilityMethods.findPlayer(session, lobby).getCards().add(card);
@@ -46,7 +51,6 @@ public class DrawCardHandler implements ActionHandler {
     }
 
     public Actioncard drawRandomCard(Lobby lobby){
-        SecureRandom rn = new SecureRandom();
         int i = lobby.getGameState().getIndexMinimumCardAmount();
         Actioncard card = switch(i){
             case 0 -> new Archer(rn.nextInt(1,4), cardId++);
