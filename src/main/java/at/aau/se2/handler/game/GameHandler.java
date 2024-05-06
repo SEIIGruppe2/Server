@@ -1,11 +1,10 @@
 package at.aau.se2.handler.game;
 
 import at.aau.se2.exceptions.LobbyNotFoundException;
-import at.aau.se2.utils.GameState;
+import at.aau.se2.handler.game.subhandlers.*;
 import at.aau.se2.utils.Lobby;
 import at.aau.se2.utils.Player;
 import at.aau.se2.utils.UtilityMethods;
-import at.aau.se2.handler.game.subhandlers.*;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
@@ -19,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import static at.aau.se2.utils.LobbyCreation.makeLobby;
 import static at.aau.se2.utils.UtilityMethods.findPlayer;
 
 
@@ -27,6 +27,7 @@ public class GameHandler implements WebSocketHandler {
     private static GameHandler GAMEHANDLER;
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     private final List<WebSocketSession> connectionOrder = new ArrayList<>();
+    @Getter
     private final static List<Player> players = new ArrayList<>();
     @Getter
     private final static List<String> usernames = new ArrayList<>();
@@ -62,12 +63,7 @@ public class GameHandler implements WebSocketHandler {
         connectionOrder.add(session);
         logger.info("Connection established; SessionID: " + session.getId());
        if(connectionOrder.size() >= 4){
-            Lobby lobby = createLobby();
-            for(int i = 0; i < 4; i++){
-                // session basierend auf ID ausgeben
-                movePlayerToLobby(connectionOrder.get(nextPlayer), lobby);
-                setNextPlayer(1);
-            }
+           setNextPlayer(makeLobby(connectionOrder, nextPlayer, players));
         }
         else {
             session.sendMessage(new TextMessage("Waiting for other players to connect."));
@@ -136,22 +132,7 @@ public class GameHandler implements WebSocketHandler {
             session.sendMessage(new TextMessage("GameStatus Update nicht möglich"));
     }
 
-    public Lobby createLobby(){
-        return new Lobby(new GameState());
-    }
 
-    public void movePlayerToLobby(WebSocketSession session, Lobby lobby) throws IOException {
-        Player player = new Player(session, lobby);
-        players.add(player);
-        lobby.getPlayers().add(player);
-        session.sendMessage(new TextMessage("{ 'type':'LOBBY_ASSIGNED' }"));
-    }
 
-    public static List<String> getUsernames() {
-        return usernames;
-    }
 
-    public static List<Player> getPlayersofGame() {
-        return players;
-    }
 }
