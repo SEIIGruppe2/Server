@@ -22,7 +22,7 @@ public class TurnHandler implements ActionHandler {
         if ("END_TURN".equals(type)) {
             endCurrentTurn();
             startNextTurn();
-            notifyNextPlayerIndex(session);
+            notifyAllPlayers(lobby);
         }
     }
 
@@ -34,19 +34,23 @@ public class TurnHandler implements ActionHandler {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerCount;
     }
 
-    private void notifyNextPlayerIndex(WebSocketSession session) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            ObjectNode messageNode = objectMapper.createObjectNode();
-            String currentPlayerIndexString = String.valueOf(currentPlayerIndex);
-            messageNode.put("type", "CURRENT_PLAYER");
-            messageNode.put("index", currentPlayerIndexString);
-            session.sendMessage(new TextMessage(messageNode.toString()));
-        } catch (IOException e) {
-            logger.severe("Failed to send next player index: " + e.getMessage());
+    private void notifyAllPlayers(Lobby lobby) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode messageNode = objectMapper.createObjectNode();
+        String currentPlayerIndexString = String.valueOf(currentPlayerIndex);
+        messageNode.put("type", "CURRENT_PLAYER");
+        messageNode.put("index", currentPlayerIndexString);
+        String message = messageNode.toString();
+
+        for (Player player : lobby.getPlayers()) {
+            try {
+                player.getSession().sendMessage(new TextMessage(message));
+
+            } catch (IOException e) {
+                logger.severe("Failed to notify player " + ": " + e.getMessage());
+            }
         }
     }
-
 }
 
 
