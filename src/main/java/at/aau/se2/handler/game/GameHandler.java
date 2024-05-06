@@ -28,6 +28,7 @@ public class GameHandler implements WebSocketHandler {
     private static GameHandler GAMEHANDLER;
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     private final List<WebSocketSession> connectionOrder = new ArrayList<>();
+    @Getter
     private final List<Player> players = new ArrayList<>();
     @Getter
     private final static List<String> usernames = new ArrayList<>();
