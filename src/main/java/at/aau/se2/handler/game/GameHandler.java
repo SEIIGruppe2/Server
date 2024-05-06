@@ -25,7 +25,6 @@ import static at.aau.se2.utils.UtilityMethods.findPlayer;
 public class GameHandler implements WebSocketHandler {
     private final Logger logger;
     private static GameHandler GAMEHANDLER;
-    private final Map<String, WebSocketSession> sessions = new HashMap<>();
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     private final List<WebSocketSession> connectionOrder = new ArrayList<>();
     private final static List<Player> players = new ArrayList<>();
