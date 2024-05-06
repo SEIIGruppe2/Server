@@ -10,6 +10,7 @@ public class MonsterAttackRequestHandler implements ActionHandler {
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
        String cardid = readInfosFromMessage(msg);
+       
 
     }
 
