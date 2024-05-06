@@ -2,30 +2,36 @@ package at.aau.se2.utils;
 
 import at.aau.se2.model.Actioncard;
 import lombok.Getter;
-import lombok.Setter;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class Player {
     @Getter
     private final Lobby lobby;
+
     @Getter
     private final WebSocketSession session;
+
     @Getter
-    @Setter
     private int points;
+
+    @Getter
     private String username;
-    // TODO username
-//    @Getter
-//    private final String username;
+
+    @Getter
+    private boolean usernameSet;
+
     @Getter
     private final String playerID; // Session ID
+
     @Getter
     private final List<Actioncard> cards;
     public Player(WebSocketSession session, Lobby lobby){
-        //this.username = username;
+        this.username = "";
+        this.usernameSet = false;
         this.playerID = session.getId();
         this.session = session;
         this.lobby = lobby;
@@ -33,20 +39,20 @@ public class Player {
         this.cards = new ArrayList<>();
     }
 
-    public List<Actioncard> getCards() {
-        return cards;
+    public void setPoints(int points){
+        this.points += points;
     }
 
-    public void setusername(String username){
-        this.username = username;
+    public void setUsername(String username){
+        if(!usernameSet){
+            this.username = username;
+            this.usernameSet = true;
+        }
+        else{
+            Logger.getLogger("global")
+                    .info("Username has already been set!");
+        }
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public WebSocketSession getSession() {
-        return session;
-    }
 
 }
