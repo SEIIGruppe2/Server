@@ -38,8 +38,8 @@ public class GameHandler implements WebSocketHandler {
 
     private GameHandler(){
         logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-        handlers.put("DRAW_CARD", new DrawCardHandler());
-        handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler());
+        handlers.put("DRAW_CARD", new DrawCardHandler(new SecureRandom()));
+        handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler(new SecureRandom()));
         handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayerHandler());
         handlers.put("PLAYER_ATTACK", new PlayerAttackHandler());
         handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
