@@ -27,9 +27,6 @@ public class SwitchCardPlayerHandler implements ActionHandler {
             List<Actioncard> cards = UtilityMethods.findPlayer(session, lobby).getCards();
             Actioncard currentcard = null;
 
-
-
-            // TODO: karte aus handkarten von spieler entfernen
             int cardid=getidofcard(textfrommessage);
 
             for(Actioncard c : cards){
