@@ -16,6 +16,7 @@ public class Player {
     @Getter
     @Setter
     private int points;
+    private String username;
     // TODO username
 //    @Getter
 //    private final String username;
@@ -31,4 +32,21 @@ public class Player {
         this.points = 0;
         this.cards = new ArrayList<>();
     }
+
+    public List<Actioncard> getCards() {
+        return cards;
+    }
+
+    public void setusername(String username){
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public WebSocketSession getSession() {
+        return session;
+    }
+
 }

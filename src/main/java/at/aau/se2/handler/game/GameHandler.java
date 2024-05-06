@@ -25,9 +25,10 @@ import static at.aau.se2.utils.UtilityMethods.findPlayer;
 public class GameHandler implements WebSocketHandler {
     private final Logger logger;
     private static GameHandler GAMEHANDLER;
+    private final Map<String, WebSocketSession> sessions = new HashMap<>();
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     private final List<WebSocketSession> connectionOrder = new ArrayList<>();
-    private final List<Player> players = new ArrayList<>();
+    private final static List<Player> players = new ArrayList<>();
     @Getter
     private final static List<String> usernames = new ArrayList<>();
     private static int nextPlayer = 0;
@@ -46,6 +47,7 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
         handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
         handlers.put("SPAWN_MONSTER", new SpawnMonsterHandler(new SecureRandom()));
+        handlers.put("REQUEST_USERNAMES_SWITCH", new RequestUsernamesForSwitchHandler());
     }
 
     public static GameHandler getInstance(){
@@ -79,6 +81,7 @@ public class GameHandler implements WebSocketHandler {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode node = mapper.readTree(msg);
         String type = node.path("type").asText();
+
         type = type.toUpperCase();
         if(type.equals("DRAW_CARD")){
             for(int i = findPlayer(session, players).getCards().size()-1;i < 5; i++) {
@@ -143,5 +146,13 @@ public class GameHandler implements WebSocketHandler {
         players.add(player);
         lobby.getPlayers().add(player);
         session.sendMessage(new TextMessage("{ 'type':'LOBBY_ASSIGNED' }"));
+    }
+
+    public static List<String> getUsernames() {
+        return usernames;
+    }
+
+    public static List<Player> getPlayersofGame() {
+        return players;
     }
 }
