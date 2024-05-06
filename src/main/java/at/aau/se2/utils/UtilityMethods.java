@@ -24,6 +24,16 @@ public class UtilityMethods {
         throw new PlayerNotFoundException();
     }
 
+    public static String findUsernameOfPlayer(WebSocketSession session){
+        for(Player a: GameHandler.getPlayersofGame()){
+            if(a.getSession().equals(session)){
+                return a.getUsername();
+
+            }
+        }
+        return "Player not found";
+    }
+
     public static Lobby findLobby(WebSocketSession session, List<Player> players) throws LobbyNotFoundException {
         for(Player player : players){
             if(player.getSession() == session){

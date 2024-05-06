@@ -1,7 +1,9 @@
 package at.aau.se2.handler.game.subhandlers;
 
 import at.aau.se2.exceptions.PlayerNotFoundException;
+
 import at.aau.se2.utils.Lobby;
+
 import at.aau.se2.utils.UtilityMethods;
 import at.aau.se2.model.Actioncard;
 import at.aau.se2.model.characters.Archer;
@@ -25,6 +27,7 @@ public class DrawCardHandler implements ActionHandler {
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         // generate a new card and send it to client
+
         try {
             Actioncard card = drawRandomCard(lobby);
             UtilityMethods.findPlayer(session, lobby).getCards().add(card);
