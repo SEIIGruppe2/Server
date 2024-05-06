@@ -46,7 +46,6 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
         handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
         handlers.put("REQUEST_USERNAMES_SWITCH", new RequestUsernamesForSwitchHandler());
-        handlers.put("MONSTER_ATTACK_REQUEST", new MonsterAttackRequestHandler());
         handlers.put("SPAWN_MONSTER", new SpawnMonsterHandler(new SecureRandom()));
     }
 
