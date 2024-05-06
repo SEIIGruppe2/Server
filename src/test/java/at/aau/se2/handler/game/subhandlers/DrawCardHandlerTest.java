@@ -27,7 +27,7 @@ public class DrawCardHandlerTest {
         this.lobby = mock(Lobby.class);
         this.rn = mock(SecureRandom.class);
         this.gs = mock(GameState.class);
-        this.dch = new DrawCardHandler();
+        this.dch = new DrawCardHandler(rn);
     }
 
     @Test
