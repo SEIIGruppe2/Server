@@ -42,7 +42,7 @@ public class SwitchCardPlayerHandler implements ActionHandler {
                 if(p.getUsername().equals(switchUsername)){
                     p.getCards().add(currentCard);
                     WebSocketSession switchSession= p.getSession();
-                    switchSession.sendMessage(new TextMessage(convertToJSONrequest(currentCard, UtilityMethods.findUsernameofPlayer(session))));
+                    switchSession.sendMessage(new TextMessage(convertToJSONrequest(currentCard, UtilityMethods.findUsernameOfPlayer(session))));
                     break;
                 }
             }
