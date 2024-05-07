@@ -26,15 +26,6 @@ public class RequestUsernamesHandler implements ActionHandler, JsonSerializable 
         StringBuilder builder = new StringBuilder();
         builder.append("{ 'type': 'REQUEST_USERNAMES', 'usernames': [");
 
-        /*nur zu testzwecken bis lobby wieder geht
-        String u = "Test1";
-        builder.append("'").append(u).append("',");
-        String v = "Test2";
-        builder.append("'").append(v).append("',");
-        String w = "Test3";
-        builder.append("'").append(w).append("']}");
-        //testzweck ende*/
-
         for(String u : GameHandler.getUsernames()){
             if(GameHandler.getUsernames().get(GameHandler.getUsernames().size()-1).equals(u))
                   builder.append("'").append(u).append("']}");

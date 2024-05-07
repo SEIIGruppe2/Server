@@ -25,7 +25,7 @@ public class SwitchCardDeckHandler extends DrawCardHandler implements ActionHand
             String[] infos = readInfosFromMessage(msg);
             List<Actioncard> cards = UtilityMethods.findPlayer(session, lobby).getCards();
             Actioncard newCard = drawRandomCard(lobby);
-            System.out.println("Test in der handlemessage"+infos[1]);
+
             for(Actioncard c : cards){
                 if(c.getId() == Integer.parseInt(infos[1])){
                     cards.add(cards.indexOf(c), newCard);
