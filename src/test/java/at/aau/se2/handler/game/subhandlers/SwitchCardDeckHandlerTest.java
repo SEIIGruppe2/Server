@@ -1,5 +1,4 @@
-package at.aau.se2.handler.dummy;
-import at.aau.se2.handler.game.subhandlers.SwitchCardDeckHandler;
+package at.aau.se2.handler.game.subhandlers;
 import at.aau.se2.model.characters.Knight;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -8,18 +7,26 @@ import net.minidev.json.JSONObject;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.mockito.Mock;
+
+import java.security.SecureRandom;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 
 
 public class SwitchCardDeckHandlerTest {
 
     private SwitchCardDeckHandler test;
 
+    private SecureRandom secureRandom;
+
 
     @BeforeEach
     public void setup(){
-        test = new SwitchCardDeckHandler();
+
+        this.secureRandom = mock(SecureRandom.class);
+        test = new SwitchCardDeckHandler(secureRandom);
     }
 
     @Test
