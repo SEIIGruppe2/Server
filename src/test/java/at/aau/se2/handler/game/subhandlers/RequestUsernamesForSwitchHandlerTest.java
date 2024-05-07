@@ -1,7 +1,5 @@
-package at.aau.se2.handler.dummy;
+package at.aau.se2.handler.game.subhandlers;
 
-
-import at.aau.se2.handler.game.subhandlers.RequestUsernamesForSwitchHandler;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
