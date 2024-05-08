@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.socket.TextMessage;
 
 public class DrawCardDTO extends ParentDTO{
-    private Actioncard card;
+    private final Actioncard card;
 
     public DrawCardDTO(Actioncard card){
         super("DRAW_CARD");
