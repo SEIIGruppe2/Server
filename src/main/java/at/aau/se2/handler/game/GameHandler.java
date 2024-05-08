@@ -40,8 +40,8 @@ public class GameHandler implements WebSocketHandler {
 
     private GameHandler(){
         logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-        handlers.put("DRAW_CARD", new DrawCardHandler(new SecureRandom()));
-        handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler(new SecureRandom()));
+        handlers.put("DRAW_CARD", new DrawCardHandler());
+        handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler());
         handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayerHandler());
         handlers.put("PLAYER_ATTACK", new PlayerAttackHandler());
         handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
@@ -135,9 +135,6 @@ public class GameHandler implements WebSocketHandler {
         else
             sendMessage(session, "ERROR_GAMESTATUS", "GameStatus Update nicht möglich");
     }
-
-
-
     private void sendMessage(WebSocketSession session, String type, String content) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         ObjectNode messageNode = mapper.createObjectNode();
