@@ -6,18 +6,19 @@ import at.aau.se2.utils.Lobby;
 import at.aau.se2.utils.Player;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
-import java.util.List;
-import java.util.logging.Logger;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.io.IOException;
 
+import java.io.IOException;
+import java.util.List;
+
+import static at.aau.se2.utils.UtilityMethods.logd;
+import static at.aau.se2.utils.UtilityMethods.logs;
 
 
 public class PlayerRollsDiceHandler implements ActionHandler {
-    private static final Logger logger = Logger.getLogger(PlayerRollsDiceHandler.class.getName());
-    private ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
@@ -30,7 +31,7 @@ public class PlayerRollsDiceHandler implements ActionHandler {
             }
         }
         catch (Exception e){
-            logger.warning("No players available to roll the dice.");
+            logd("No players available to roll the dice.");
         }
     }
 
@@ -54,7 +55,7 @@ public class PlayerRollsDiceHandler implements ActionHandler {
         try {
             session.sendMessage(new TextMessage(messageNode.toString()));
         } catch (IOException e) {
-            logger.severe("Failed to send dice roll request: " + e.getMessage());
+            logs("Failed to send dice roll request: " + e.getMessage());
         }
     }
 }

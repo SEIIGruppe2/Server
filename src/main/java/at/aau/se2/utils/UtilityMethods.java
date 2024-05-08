@@ -3,15 +3,13 @@ package at.aau.se2.utils;
 import at.aau.se2.exceptions.LobbyNotFoundException;
 import at.aau.se2.exceptions.PlayerNotFoundException;
 import at.aau.se2.handler.game.GameHandler;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.List;
 import java.util.logging.Logger;
 
 public class UtilityMethods {
-    private static ObjectMapper mapper = new ObjectMapper();
-    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+    private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static Player findPlayer(WebSocketSession session, Lobby lobby) throws PlayerNotFoundException {
         for(Player player : lobby.getPlayers()){
             if(player.getSession() == session) return player;
@@ -41,7 +39,7 @@ public class UtilityMethods {
         logger.info(msg);
     }
     public static void logd(String msg){
-        logger.info(msg);
+        logger.warning(msg);
     }
     public static void logs(String msg) {
         logger.severe(msg);
