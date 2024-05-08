@@ -16,35 +16,33 @@ import java.util.logging.Logger;
 
 public class SwitchCardPlayerHandler implements ActionHandler {
 
-    int passiveanswer;
+    int passiveAnswer;
 
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         try {
-            String[] textfrommessage= inhaltvonnachricht(msg);
-            System.out.println("String handle message ausgeführt");
-            String usernametoswitchwith=textfrommessage[1];
+            String[] msgContent= messageContent(msg);
+            String switchUsername=msgContent[1];
             List<Actioncard> cards = UtilityMethods.findPlayer(session, lobby).getCards();
-            Actioncard currentcard = null;
+            Actioncard currentCard = null;
 
-            int cardid=getidofcard(textfrommessage);
+            int cardid=getIdOfCard(msgContent);
 
             for(Actioncard c : cards){
                 if(c.getId() == cardid){
 
                     cards.remove(c);
-                    currentcard=c;
+                    currentCard=c;
                     break;
                 }
             }
 
-
             List<Player> players = GameHandler.getPlayers();
             for(Player p : players){
-                if(p.getUsername().equals(usernametoswitchwith)){
-                    p.getCards().add(currentcard);
-                    WebSocketSession sessionofusertoswitchwith= p.getSession();
-                    sessionofusertoswitchwith.sendMessage(new TextMessage(convertToJSONrequest(currentcard, UtilityMethods.findusernameofPlayer(session))));
+                if(p.getUsername().equals(switchUsername)){
+                    p.getCards().add(currentCard);
+                    WebSocketSession switchSession= p.getSession();
+                    switchSession.sendMessage(new TextMessage(convertToJSONrequest(currentCard, UtilityMethods.findUsernameOfPlayer(session))));
                     break;
                 }
             }
@@ -59,7 +57,7 @@ public class SwitchCardPlayerHandler implements ActionHandler {
         }
 
     }
-    public String[]  inhaltvonnachricht(JsonNode msg){
+    public String[] messageContent(JsonNode msg){
         String[] infos = new String[4];
         infos[0] = msg.path("type").asText();
         infos[1] = msg.path("switchedWith").asText();
@@ -78,14 +76,14 @@ public class SwitchCardPlayerHandler implements ActionHandler {
                 card.convertToJson() + "}";
     }
 
-    public int getidofcard(String[] message){
+    public int getIdOfCard(String[] message){
 
         if(message[2].equals("null")){
-            passiveanswer=1;
+            passiveAnswer =1;
             return Integer.parseInt(message[3]);
         }
         else{
-            passiveanswer=0;
+            passiveAnswer =0;
             return Integer.parseInt(message[2]);
         }
 

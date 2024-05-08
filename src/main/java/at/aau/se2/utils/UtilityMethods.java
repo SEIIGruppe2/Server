@@ -24,7 +24,7 @@ public class UtilityMethods {
         throw new PlayerNotFoundException();
     }
 
-    public static String findusernameofPlayer(WebSocketSession session){
+    public static String findUsernameOfPlayer(WebSocketSession session){
         for(Player a: GameHandler.getPlayers()){
             if(a.getSession().equals(session)){
                 return a.getUsername();

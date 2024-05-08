@@ -7,6 +7,7 @@ import at.aau.se2.utils.Player;
 import at.aau.se2.utils.UtilityMethods;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import org.springframework.web.socket.*;
 
@@ -47,6 +48,9 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
         handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
         handlers.put("SPAWN_MONSTER", new SpawnMonsterHandler(new SecureRandom()));
+        handlers.put("PLAYER_ROLL_DICE", new PlayerRollsDiceHandler());
+        handlers.put("ROUND_COUNTER", new GameRoundHandler());
+        handlers.put("END_TURN", new TurnHandler());
         handlers.put("REQUEST_USERNAMES_SWITCH", new RequestUsernamesForSwitchHandler());
     }
 
@@ -66,7 +70,7 @@ public class GameHandler implements WebSocketHandler {
            setNextPlayer(makeLobby(connectionOrder, nextPlayer, players));
         }
         else {
-            session.sendMessage(new TextMessage("Waiting for other players to connect."));
+           sendMessage(session, "WAITING_FOR_PLAYERS", "Waiting for other players to connect.");
         }
     }
 
@@ -108,7 +112,7 @@ public class GameHandler implements WebSocketHandler {
             for(Player player : lobby.getPlayers()){
                 connectionOrder.remove(player.getSession());
                 setNextPlayer(-1);
-                player.getSession().sendMessage(new TextMessage("The game has finished, you will be disconnected"));
+                sendMessage(player.getSession(), "GAME_FINISHED", "The game has finished, you will be disconnected");
                 player.getSession().close();
 
                 players.remove(player);
@@ -129,10 +133,16 @@ public class GameHandler implements WebSocketHandler {
             }
         }
         else
-            session.sendMessage(new TextMessage("GameStatus Update nicht möglich"));
+            sendMessage(session, "ERROR_GAMESTATUS", "GameStatus Update nicht möglich");
     }
 
 
 
-
+    private void sendMessage(WebSocketSession session, String type, String content) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        ObjectNode messageNode = mapper.createObjectNode();
+        messageNode.put("type", type);
+        messageNode.put("content", content);
+        session.sendMessage(new TextMessage(messageNode.toString()));
+    }
 }

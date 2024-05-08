@@ -1,4 +1,4 @@
-package at.aau.se2.handler.dummy;
+package at.aau.se2.handler.game.subhandlers;
 
 import at.aau.se2.client.WebSocketClientImpl;
 import org.junit.jupiter.api.Test;
