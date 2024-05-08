@@ -1,12 +1,15 @@
-package at.aau.se2.utils;
+package at.aau.se2.service;
 
+import at.aau.se2.utils.GameState;
+import at.aau.se2.utils.Lobby;
+import at.aau.se2.utils.Player;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
 import java.util.List;
 
-public class LobbyCreation {
+public class LobbyService {
     public static Lobby createLobby(){
         return new Lobby(new GameState());
     }

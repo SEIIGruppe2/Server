@@ -26,7 +26,9 @@ public class GameState implements JsonSerializable{
     public void increaseCardAmount(int i){
         cardTypeAmount[i] += 1;
     }
-    public void decreaseCardAmount(int i){cardTypeAmount[i] -= 1;}
+    public void decreaseCardAmount(int i){
+        cardTypeAmount[i] -= 1;
+    }
 
     public int getIndexMinimumCardAmount(){
         int min = Integer.MAX_VALUE;
