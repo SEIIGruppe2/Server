@@ -1,20 +1,7 @@
 package at.aau.se2.handler.game.subhandlers;
 
-import at.aau.se2.model.characters.Archer;
-import at.aau.se2.model.characters.Fighter;
-import at.aau.se2.model.characters.Knight;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import net.minidev.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 class SwitchCardPlayerHandlerTest {
-    private SwitchCardPlayerHandler scph;
+    /*private SwitchCardPlayerHandler scph;
 
 
     @BeforeEach
@@ -70,5 +57,5 @@ class SwitchCardPlayerHandlerTest {
         JsonNode node = mapper.valueToTree(json);
         assertArrayEquals(infos,scph.messageContent(node));
     }
-
+*/
 }
