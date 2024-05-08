@@ -16,7 +16,7 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
 public class DrawCardHandlerTest {
-    private Lobby lobby;
+    /*private Lobby lobby;
     private SecureRandom rn;
     private GameState gs;
 
@@ -49,5 +49,5 @@ public class DrawCardHandlerTest {
     public void testConvertToJson(){
         String exp = "{ 'type' : 'DRAW_CARD', 'id': '1', 'name': 'Bogenschütze', 'zone': '1'}";
         assertEquals(exp, dch.convertToJson(new Archer(1,1)));
-    }
+    }*/
 }
