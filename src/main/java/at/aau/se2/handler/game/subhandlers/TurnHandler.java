@@ -14,7 +14,10 @@ public class TurnHandler implements ActionHandler {
 
     private static final Logger logger = Logger.getLogger(TurnHandler.class.getName());
     private int currentPlayerIndex = 0;
-    private int playerCount = 4; // Anzahl der Spieler
+    private int playerCount = 4;
+    private int turnCount = 0;
+
+
 
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
@@ -32,6 +35,12 @@ public class TurnHandler implements ActionHandler {
 
     private void startNextTurn() {
         currentPlayerIndex = (currentPlayerIndex + 1) % playerCount;
+        logger.info("Starting next turn for player index " + currentPlayerIndex);
+        if(turnCount == 4){
+            turnCount=1;
+        }else {
+            turnCount++;
+        }
     }
 
     private void notifyAllPlayers(Lobby lobby) {
@@ -40,6 +49,7 @@ public class TurnHandler implements ActionHandler {
         String currentPlayerIndexString = String.valueOf(currentPlayerIndex);
         messageNode.put("type", "CURRENT_PLAYER");
         messageNode.put("index", currentPlayerIndexString);
+        messageNode.put("turnCount", turnCount);
         String message = messageNode.toString();
 
         for (Player player : lobby.getPlayers()) {
