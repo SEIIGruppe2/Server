@@ -1,59 +1,41 @@
 package at.aau.se2.handler.game.subhandlers;
 
+import at.aau.se2.exceptions.CardNotFoundException;
 import at.aau.se2.exceptions.PlayerNotFoundException;
 import at.aau.se2.model.Actioncard;
 import at.aau.se2.utils.Lobby;
-import at.aau.se2.utils.UtilityMethods;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
-import java.security.SecureRandom;
-import java.util.List;
-import java.util.logging.Logger;
 
-public class SwitchCardDeckHandler extends DrawCardHandler implements ActionHandler {
+import static at.aau.se2.service.SCDHService.*;
+import static at.aau.se2.utils.UtilityMethods.findPlayer;
+import static at.aau.se2.utils.UtilityMethods.logi;
 
-    public SwitchCardDeckHandler(SecureRandom rn){
-        super(rn);
-    }
-
+public class SwitchCardDeckHandler implements ActionHandler {
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         try {
-            String[] infos = readInfosFromMessage(msg);
-            List<Actioncard> cards = UtilityMethods.findPlayer(session, lobby).getCards();
-            Actioncard newCard = drawRandomCard(lobby);
-
-            for(Actioncard c : cards){
-                if(c.getId() == Integer.parseInt(infos[1])){
-                    cards.add(cards.indexOf(c), newCard);
-                    break;
-                }
-            }
+            Actioncard newCard = addCard(
+                    Integer.parseInt(readCardId(msg)),
+                    drawRandomCard(lobby),
+                    findPlayer(session, lobby).getCards()
+            );
             session.sendMessage(new TextMessage(convertToJson(newCard)));
 
         }
+        catch (CardNotFoundException e) {
+            logi("CARD NOT FOUND (SwitchCardDeckHandler) " + e.getMessage());
+        }
         catch(PlayerNotFoundException p){
-            Logger.getLogger("global")
-                    .info("PLAYER NOT IN LOBBY (SwitchCardDeckHandler)");
+            logi("PLAYER NOT IN LOBBY (SwitchCardDeckHandler)");
         }
         catch(IOException i){
-            Logger.getLogger("global")
-                    .info(i.getMessage() + " (SwitchCardDeckHandler)");
+            logi(i.getMessage() + " (SwitchCardDeckHandler)");
         }
 
     }
-    public String[]  readInfosFromMessage(JsonNode msg){
-        String[] infos = new String[2];
-        infos[0] = msg.path("type").asText();
-        infos[1] = msg.path("cardid").asText();
-        return infos;
-    }
-    @Override
-    public String convertToJson(Actioncard card){
-        return "{'type':'SWITCH_CARD_DECK_RESPONSE', " +
-                card.convertToJson() + "}";
-    }
+
 }
