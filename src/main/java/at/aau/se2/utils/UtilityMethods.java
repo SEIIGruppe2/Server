@@ -3,11 +3,15 @@ package at.aau.se2.utils;
 import at.aau.se2.exceptions.LobbyNotFoundException;
 import at.aau.se2.exceptions.PlayerNotFoundException;
 import at.aau.se2.handler.game.GameHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.util.List;
+import java.util.logging.Logger;
 
 public class UtilityMethods {
+    private static ObjectMapper mapper = new ObjectMapper();
+    private static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     public static Player findPlayer(WebSocketSession session, Lobby lobby) throws PlayerNotFoundException {
         for(Player player : lobby.getPlayers()){
             if(player.getSession() == session) return player;
@@ -24,16 +28,6 @@ public class UtilityMethods {
         throw new PlayerNotFoundException();
     }
 
-    public static String findUsernameOfPlayer(WebSocketSession session){
-        for(Player a: GameHandler.getPlayers()){
-            if(a.getSession().equals(session)){
-                return a.getUsername();
-
-            }
-        }
-        return "Player not found";
-    }
-
     public static Lobby findLobby(WebSocketSession session, List<Player> players) throws LobbyNotFoundException {
         for(Player player : players){
             if(player.getSession() == session){
@@ -41,6 +35,16 @@ public class UtilityMethods {
             }
         }
         throw new LobbyNotFoundException();
+    }
+
+    public static void logi(String msg){
+        logger.info(msg);
+    }
+    public static void logd(String msg){
+        logger.info(msg);
+    }
+    public static void logs(String msg) {
+        logger.severe(msg);
     }
 
     public static boolean checkUsername(String username){
