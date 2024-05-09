@@ -98,7 +98,7 @@ public class GameHandler implements WebSocketHandler {
             ActionHandler handler = handlers.get(type);
             handler.handleMessage(session, node, UtilityMethods.findLobby(session, players));
         }
-        broadcastChangedGameState(session);
+        //broadcastChangedGameState(session);
         logger.info("HandleMessage processed");
     }
 
