@@ -7,6 +7,8 @@ import at.aau.se2.utils.Lobby;
 import java.util.List;
 import java.util.logging.Logger;
 
+import static at.aau.se2.utils.UtilityMethods.*;
+
 public class MAHService {
     private static final Logger logger = Logger.getLogger(MAHService.class.getName());
 
@@ -20,15 +22,15 @@ public class MAHService {
                 if (attackResult == 0) {
                     monster.takeDamage(1);
 
-                    logger.info("Monster " + monsterId + " attacked Tower and took 1 damage. Tower HP: " + tower.getLifepoints() + ", Monster HP: " + monster.getLifepoints());
+                    logi("Monster " + monsterId + " attacked Tower " + towerId + " and booth took 1 damage.\nTower HP: " + tower.getLifepoints() + ",\nMonster HP: " + monster.getLifepoints());
                 } else {
-                    logger.warning("Tower could not be damaged. No damage taken by Monster.");
+                    logd("Tower could not be damaged. No damage taken by Monster.");
                 }
             } else {
-                logger.severe("Invalid Monster ID or no Tower found for attack.");
+                logs("Invalid MonsterID or invalid TowerID.");
             }
         } catch (NumberFormatException e) {
-            logger.severe("Error parsing IDs: " + e.getMessage());
+            logs("Error parsing IDs: " + e.getMessage());
         }
     }
     // Helper methods to find a monster or tower by ID from a list
