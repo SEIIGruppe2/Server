@@ -14,7 +14,7 @@ public class MonsterAttackHandler implements ActionHandler {
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
         try {
-            if (isMessageTypeValid(msg, "MONSTER_ATTACK")) {
+            if (isMessageTypeValid(msg)) {
                 String monsterId = msg.path("monsterid").asText();
                 String towerId = msg.path("towerid").asText();
 
@@ -29,8 +29,8 @@ public class MonsterAttackHandler implements ActionHandler {
         }
     }
 
-    private boolean isMessageTypeValid(JsonNode msg, String type) {
-        return type.equals(msg.path("type").asText());
+    private boolean isMessageTypeValid(JsonNode msg) {
+        return "MONSTER_ATTACK".equals(msg.path("type").asText());
     }
 
     private boolean validateEntities(String monsterId, String towerId, Lobby lobby) {

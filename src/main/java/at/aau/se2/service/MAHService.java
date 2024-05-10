@@ -5,12 +5,12 @@ import at.aau.se2.model.Tower;
 import at.aau.se2.utils.Lobby;
 
 import java.util.List;
-import java.util.logging.Logger;
+
 
 import static at.aau.se2.utils.UtilityMethods.*;
 
 public class MAHService {
-    private static final Logger logger = Logger.getLogger(MAHService.class.getName());
+
 
     public static void triggerMonsterAttack(String monsterId, String towerId, Lobby lobby) {
         try {
