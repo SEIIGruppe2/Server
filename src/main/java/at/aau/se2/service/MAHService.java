@@ -4,6 +4,7 @@ import at.aau.se2.model.Monster;
 import at.aau.se2.model.Tower;
 import at.aau.se2.utils.Lobby;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 public class MAHService {
@@ -29,5 +30,13 @@ public class MAHService {
         } catch (NumberFormatException e) {
             logger.severe("Error parsing IDs: " + e.getMessage());
         }
+    }
+    // Helper methods to find a monster or tower by ID from a list
+    static Monster findMonsterById(List<Monster> monsters, int id) {
+        return monsters.stream().filter(m -> m.getId() == id).findFirst().orElse(null);
+    }
+
+    static Tower findTowerById(List<Tower> towers, int id) {
+        return towers.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
 }
