@@ -46,8 +46,8 @@ class MAHServiceTest {
 
         MAHService.triggerMonsterAttack("1", "1", lobby);
 
-        assertEquals(0, monster.getLifepoints());  // Assuming initial lifepoints are > 1
-        assertEquals(2, tower.getLifepoints());   // Assuming tower takes 1 damage
+        assertEquals(0, monster.getLifepoints());
+        assertEquals(2, tower.getLifepoints());
     }
 
     @Test
@@ -65,8 +65,8 @@ class MAHServiceTest {
 
         MAHService.triggerMonsterAttack("1", "1", lobby);
 
-        assertEquals(1, monster.getLifepoints());  // Assuming initial lifepoints are > 1
-        assertEquals(2, tower.getLifepoints());   // Assuming tower takes 1 damage
+        assertEquals(1, monster.getLifepoints());
+        assertEquals(2, tower.getLifepoints());
     }
     @Test
     protected void testTriggerMonsterAttack_Bullrog_Tower() {
@@ -83,8 +83,8 @@ class MAHServiceTest {
 
         MAHService.triggerMonsterAttack("1", "1", lobby);
 
-        assertEquals(2, monster.getLifepoints());  // Assuming initial lifepoints are > 1
-        assertEquals(2, tower.getLifepoints());   // Assuming tower takes 1 damage
+        assertEquals(2, monster.getLifepoints());
+        assertEquals(2, tower.getLifepoints());
     }
     @Test
     protected void testTriggerMonsterAttack_Slime_Wall() {
@@ -101,8 +101,8 @@ class MAHServiceTest {
 
         MAHService.triggerMonsterAttack("1", "1", lobby);
 
-        assertEquals(0, monster.getLifepoints());  // Assuming initial lifepoints are > 1
-        assertEquals(1, tower.getLifepoints());   // Assuming tower takes 1 damage
+        assertEquals(0, monster.getLifepoints());
+        assertEquals(1, tower.getLifepoints());
     }
     @Test
     protected void testTriggerMonsterAttack_Sphinx_Wall() {
@@ -119,8 +119,8 @@ class MAHServiceTest {
 
         MAHService.triggerMonsterAttack("1", "1", lobby);
 
-        assertEquals(1, monster.getLifepoints());  // Assuming initial lifepoints are > 1
-        assertEquals(1, tower.getLifepoints());   // Assuming tower takes 1 damage
+        assertEquals(1, monster.getLifepoints());
+        assertEquals(1, tower.getLifepoints());
     }
     @Test
     protected void testTriggerMonsterAttack_Bullrog_Wall() {
@@ -137,8 +137,8 @@ class MAHServiceTest {
 
         MAHService.triggerMonsterAttack("1", "1", lobby);
 
-        assertEquals(2, monster.getLifepoints());  // Assuming initial lifepoints are > 1
-        assertEquals(1, tower.getLifepoints());   // Assuming tower takes 1 damage
+        assertEquals(2, monster.getLifepoints());
+        assertEquals(1, tower.getLifepoints());
     }
 
     @Test
@@ -164,18 +164,18 @@ class MAHServiceTest {
     protected void testTriggerMonsterAttack_TowerCannotBeDamaged() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = mock(Monster.class);
-        when(monster.getId()).thenReturn(1);  // Set the monster ID to match the test case
+        when(monster.getId()).thenReturn(1);
         monsters.add(monster);
 
         List<Tower> towers = new ArrayList<>();
         Tower tower = mock(Tower.class);
-        when(tower.getId()).thenReturn(1);  // Set the tower ID to match the test case
+        when(tower.getId()).thenReturn(1);
         towers.add(tower);
 
         when(gameState.getMonsters()).thenReturn(monsters);
         when(gameState.getTowers()).thenReturn(towers);
 
-        when(monster.doesDmg(tower)).thenReturn(-1);  // No damage to the tower
+        when(monster.doesDmg(tower)).thenReturn(-1);
 
         MAHService.triggerMonsterAttack("1", "1", lobby);
 
