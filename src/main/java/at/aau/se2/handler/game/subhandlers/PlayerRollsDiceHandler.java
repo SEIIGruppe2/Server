@@ -24,8 +24,9 @@ public class PlayerRollsDiceHandler implements ActionHandler {
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
         try {
             Player playerToRoll = selectPlayerToRoll(lobby);
+            logd("Rquest dice excecuted.");
             if (playerToRoll != null) {
-                String username = GameHandler.getUsernames().get(0);
+                String username = playerToRoll.getUsername();
                 sendDiceRollRequest(playerToRoll.getSession(), username);
                 movePlayerToEndOfQueue(lobby, playerToRoll);
             }
@@ -37,6 +38,8 @@ public class PlayerRollsDiceHandler implements ActionHandler {
 
 
     private Player selectPlayerToRoll(Lobby lobby) {
+
+
         List<Player> players = lobby.getPlayers();
         return !players.isEmpty() ? players.get(0) : null;
     }
