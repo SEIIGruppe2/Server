@@ -4,46 +4,53 @@ import at.aau.se2.dto.MonsterAttackDTO;
 import at.aau.se2.utils.Lobby;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.socket.WebSocketSession;
-
 import java.util.logging.Logger;
-
 import static at.aau.se2.service.MAHService.triggerMonsterAttack;
+import static at.aau.se2.utils.UtilityMethods.logd;
+import static at.aau.se2.utils.UtilityMethods.logs;
 
 public class MonsterAttackHandler implements ActionHandler {
-    private static final Logger logger = Logger.getLogger(MonsterAttackHandler.class.getName());
+
 
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
         try {
-            String messageType = msg.path("type").asText();
-
-            if ("MONSTER_ATTACK".equals(messageType)) {
-                // Extract monster and tower IDs from the message
+            if (isMessageTypeValid(msg, "MONSTER_ATTACK")) {
                 String monsterId = msg.path("monsterid").asText();
                 String towerId = msg.path("towerid").asText();
 
-                // Trigger the monster attack (this is a static call)
-                triggerMonsterAttack(monsterId, towerId, lobby);
-
-                // Retrieve monster and tower data from the lobby to construct the DTO
-                var monster = lobby.getGameState().getMonsters().get(Integer.parseInt(monsterId));
-                var tower = lobby.getGameState().getTowers().get(Integer.parseInt(towerId));
-
-                // Create the MonsterAttackDTO based on the results of the attack
-                String attackStatus = (monster.getLifepoints() > 0) ? "success" : "failed";
-                MonsterAttackDTO dto = new MonsterAttackDTO(
-                        monsterId,
-                        monster.getLifepoints(),
-                        tower.getLifepoints(),
-                        attackStatus
-                );
-
-                // Send the DTO as a message to the client
-                session.sendMessage(dto.makeMessage());
+                if (validateEntities(monsterId, towerId, lobby)) {
+                    processMonsterAttack(monsterId, towerId, lobby, session);
+                } else {
+                    logd("Invalid entities provided for MONSTER_ATTACK.");
+                }
             }
-
         } catch (Exception e) {
-            logger.severe("Error processing MONSTER_ATTACK message: " + e.getMessage());
+            logs("Error processing MONSTER_ATTACK message: " + e.getMessage());
         }
     }
+
+    private boolean isMessageTypeValid(JsonNode msg, String type) {
+        return type.equals(msg.path("type").asText());
+    }
+
+    private boolean validateEntities(String monsterId, String towerId, Lobby lobby) {
+        try {
+            int mId = Integer.parseInt(monsterId);
+            int tId = Integer.parseInt(towerId);
+            return (mId >= 0 && mId < lobby.getGameState().getMonsters().size()) &&
+                    (tId >= 0 && tId < lobby.getGameState().getTowers().size());
+        } catch (NumberFormatException e) {
+            logs("Invalid number format for entity IDs.");
+            return false;
+        }
+    }
+
+    private void processMonsterAttack(String monsterId, String towerId, Lobby lobby, WebSocketSession session) {
+        triggerMonsterAttack(monsterId, towerId, lobby);
+        MonsterAttackDTO dto = buildAttackDTO(monsterId, towerId, lobby);
+        sendMessage(session, dto);
+    }
+
+
 }
