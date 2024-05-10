@@ -4,7 +4,6 @@ import at.aau.se2.dto.MonsterAttackDTO;
 import at.aau.se2.utils.Lobby;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.socket.WebSocketSession;
-import java.util.logging.Logger;
 import static at.aau.se2.service.MAHService.triggerMonsterAttack;
 import static at.aau.se2.utils.UtilityMethods.logd;
 import static at.aau.se2.utils.UtilityMethods.logs;
@@ -51,6 +50,23 @@ public class MonsterAttackHandler implements ActionHandler {
         MonsterAttackDTO dto = buildAttackDTO(monsterId, towerId, lobby);
         sendMessage(session, dto);
     }
+    private void sendMessage(WebSocketSession session, MonsterAttackDTO dto) {
+        try {
+            session.sendMessage(dto.makeMessage());
+        } catch (Exception e) {
+            logs("Error sending message to client: " + e.getMessage());
+        }
+    }
 
-
+    private MonsterAttackDTO buildAttackDTO(String monsterId, String towerId, Lobby lobby) {
+        var monster = lobby.getGameState().getMonsters().get(Integer.parseInt(monsterId));
+        var tower = lobby.getGameState().getTowers().get(Integer.parseInt(towerId));
+        String attackStatus = (monster.getLifepoints() > 0) ? "success" : "failed";
+        return new MonsterAttackDTO(
+                monsterId,
+                monster.getLifepoints(),
+                tower.getLifepoints(),
+                attackStatus
+        );
+    }
 }
