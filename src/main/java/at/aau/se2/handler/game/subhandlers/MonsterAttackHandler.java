@@ -1,6 +1,8 @@
 package at.aau.se2.handler.game.subhandlers;
 
 import at.aau.se2.dto.MonsterAttackDTO;
+import at.aau.se2.model.Tower;
+import at.aau.se2.model.towers.TowerImpl;
 import at.aau.se2.utils.Lobby;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.socket.WebSocketSession;
@@ -13,6 +15,9 @@ public class MonsterAttackHandler implements ActionHandler {
 
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
+        lobby.getGameState().getTowers().add(new TowerImpl(0));
+        lobby.getGameState().getTowers().add(new TowerImpl(1));
+
         try {
             if (isMessageTypeValid(msg)) {
                 String monsterId = msg.path("monsterid").asText();
@@ -37,10 +42,10 @@ public class MonsterAttackHandler implements ActionHandler {
         try {
             int mId = Integer.parseInt(monsterId);
             int tId = Integer.parseInt(towerId);
-            return (mId >= 0 && mId < lobby.getGameState().getMonsters().size()) &&
-                    (tId >= 0 && tId < lobby.getGameState().getTowers().size());
+            return (mId >= 0 && mId <= lobby.getGameState().getMonsters().size()) && //Eventuell anpassen die Bedingungen
+                    (tId >= 0 && tId <= lobby.getGameState().getTowers().size()); //Kommt auf die Implementierung an
         } catch (NumberFormatException e) {
-            logs("Invalid number format for entity IDs.");
+            logs("Invalid number format for entity IDs. " + e.getMessage());
             return false;
         }
     }
@@ -59,11 +64,12 @@ public class MonsterAttackHandler implements ActionHandler {
     }
 
     private MonsterAttackDTO buildAttackDTO(String monsterId, String towerId, Lobby lobby) {
-        var monster = lobby.getGameState().getMonsters().get(Integer.parseInt(monsterId));
-        var tower = lobby.getGameState().getTowers().get(Integer.parseInt(towerId));
+        var monster = lobby.getGameState().getMonsters().get(Integer.parseInt(monsterId)); //hier auch aufpassen, wie werden die listen behandelt
+        var tower = lobby.getGameState().getTowers().get(Integer.parseInt(towerId));        //wenn ein objekt zerstört oder getötet wird?
         String attackStatus = (monster.getLifepoints() > 0) ? "success" : "failed";
         return new MonsterAttackDTO(
                 monsterId,
+                towerId,
                 monster.getLifepoints(),
                 tower.getLifepoints(),
                 attackStatus
