@@ -19,20 +19,20 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MAHServiceTest {
+class MAHServiceTest {
     @Mock
     private Lobby lobby;
     @Mock
     private GameState gameState;
 
     @BeforeEach
-    public void setup() {
+    protected void setup() {
         MockitoAnnotations.openMocks(this);
         when(lobby.getGameState()).thenReturn(gameState);
     }
 
     @Test
-    public void testTriggerMonsterAttack_Slime_Tower() {
+    protected void testTriggerMonsterAttack_Slime_Tower() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Slime(1,1,1);
         monsters.add(monster);
@@ -51,7 +51,7 @@ public class MAHServiceTest {
     }
 
     @Test
-    public void testTriggerMonsterAttack_Sphinx_Tower() {
+    protected void testTriggerMonsterAttack_Sphinx_Tower() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Sphinx(1,1,1);
         monsters.add(monster);
@@ -69,7 +69,7 @@ public class MAHServiceTest {
         assertEquals(2, tower.getLifepoints());   // Assuming tower takes 1 damage
     }
     @Test
-    public void testTriggerMonsterAttack_Bullrog_Tower() {
+    protected void testTriggerMonsterAttack_Bullrog_Tower() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Bullrog(1,1,1);
         monsters.add(monster);
@@ -87,7 +87,7 @@ public class MAHServiceTest {
         assertEquals(2, tower.getLifepoints());   // Assuming tower takes 1 damage
     }
     @Test
-    public void testTriggerMonsterAttack_Slime_Wall() {
+    protected void testTriggerMonsterAttack_Slime_Wall() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Slime(1,1,1);
         monsters.add(monster);
@@ -105,7 +105,7 @@ public class MAHServiceTest {
         assertEquals(1, tower.getLifepoints());   // Assuming tower takes 1 damage
     }
     @Test
-    public void testTriggerMonsterAttack_Sphinx_Wall() {
+    protected void testTriggerMonsterAttack_Sphinx_Wall() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Sphinx(1,1,1);
         monsters.add(monster);
@@ -123,7 +123,7 @@ public class MAHServiceTest {
         assertEquals(1, tower.getLifepoints());   // Assuming tower takes 1 damage
     }
     @Test
-    public void testTriggerMonsterAttack_Bullrog_Wall() {
+    protected void testTriggerMonsterAttack_Bullrog_Wall() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Bullrog(1,1,1);
         monsters.add(monster);
@@ -142,7 +142,7 @@ public class MAHServiceTest {
     }
 
     @Test
-    public void testTriggerMonsterAttack_MonsterOrTowerNotFound() {
+    protected void testTriggerMonsterAttack_MonsterOrTowerNotFound() {
         List<Monster> monsters = new ArrayList<>();
         List<Tower> towers = new ArrayList<>();
 
@@ -156,12 +156,12 @@ public class MAHServiceTest {
     }
 
     @Test
-    void testTriggerMonsterAttack_ErrorParsingIds() {
+    protected void testTriggerMonsterAttack_ErrorParsingIds() {
         MAHService.triggerMonsterAttack("abc", "def", lobby);
     }
 
     @Test
-    void testTriggerMonsterAttack_TowerCannotBeDamaged() {
+    protected void testTriggerMonsterAttack_TowerCannotBeDamaged() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = mock(Monster.class);
         when(monster.getId()).thenReturn(1);  // Set the monster ID to match the test case
