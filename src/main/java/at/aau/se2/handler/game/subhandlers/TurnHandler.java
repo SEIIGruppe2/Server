@@ -40,11 +40,6 @@ public class TurnHandler implements ActionHandler {
 
         turnCount++;
 
-        //1==0
-        //2==1
-        //3==2
-        //4==3
-        //5==0
         currentPlayerIndex = (turnCount + 3) % playerCount;
         logger.info("Starting next turn for player index " + currentPlayerIndex+ "turn"+turnCount);
 
