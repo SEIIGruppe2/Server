@@ -16,8 +16,7 @@ public class RequestUsernamesHandler implements ActionHandler, JsonSerializable 
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
         try{
-            session.sendMessage(new TextMessage(convertToJson()));
-            updateOtherUser(lobby);
+            notifyAllUsers(lobby);
         }catch(IOException i){
             Logger.getLogger("global")
                     .info(i.getMessage() + "(RequestUsernamesHandler)");
@@ -36,9 +35,8 @@ public class RequestUsernamesHandler implements ActionHandler, JsonSerializable 
         }
         return builder.toString();
     }
-    public void updateOtherUser(Lobby lobby) throws IOException {
-        List<Player> players=lobby.getPlayers();
-        for(Player a:players){
+    public void notifyAllUsers(Lobby lobby) throws IOException {
+        for(Player a: lobby.getPlayers()){
             a.getSession().sendMessage(new TextMessage(convertToJson()));
         }
     }
