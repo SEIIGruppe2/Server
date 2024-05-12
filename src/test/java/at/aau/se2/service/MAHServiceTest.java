@@ -15,6 +15,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -190,5 +192,121 @@ class MAHServiceTest {
         verify(monster, times(1)).doesDmg(tower);
         verify(tower, never()).takeDamage(anyInt());
         verify(monster, never()).takeDamage(anyInt());
+
+    }
+
+
+    @Test
+    protected void testIsMessageTypeValid_ValidType() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree("{\"type\":\"MONSTER_ATTACK\"}");
+        assertTrue(MAHService.isMessageTypeValid(jsonNode));
+    }
+
+    @Test
+    protected void testIsMessageTypeValid_InvalidType() throws Exception {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode = mapper.readTree("{\"type\":\"INVALID_TYPE\"}");
+        assertFalse(MAHService.isMessageTypeValid(jsonNode));
+    }
+
+    @Test
+    protected void testValidateEntities_ValidEntities() {
+        List<Monster> monsters = new ArrayList<>();
+        monsters.add(new Slime(1, 1, 1));
+        monsters.add(new Bullrog(2, 1, 1));
+
+        List<Tower> towers = new ArrayList<>();
+        towers.add(new TowerImpl(1));
+        towers.add(new Wall(2));
+
+        when(gameState.getMonsters()).thenReturn(monsters);
+        when(gameState.getTowers()).thenReturn(towers);
+
+        assertTrue(MAHService.validateEntities("1", "1", lobby));
+    }
+
+    @Test
+    protected void testValidateEntities_InvalidEntities() {
+        List<Monster> monsters = new ArrayList<>();
+        monsters.add(new Slime(1, 1, 1));
+
+        List<Tower> towers = new ArrayList<>();
+        towers.add(new TowerImpl(1));
+
+        when(gameState.getMonsters()).thenReturn(monsters);
+        when(gameState.getTowers()).thenReturn(towers);
+
+        assertFalse(MAHService.validateEntities("2", "2", lobby));
+    }
+
+    @Test
+    protected void testFindMonsterById_Found() {
+        List<Monster> monsters = new ArrayList<>();
+        Monster monster = new Slime(1, 1, 1);
+        monsters.add(monster);
+
+        assertEquals(monster, MAHService.findMonsterById(monsters, 1));
+    }
+
+    @Test
+    protected void testFindMonsterById_NotFound() {
+        List<Monster> monsters = new ArrayList<>();
+        Monster monster = new Slime(1, 1, 1);
+        monsters.add(monster);
+
+        assertNull(MAHService.findMonsterById(monsters, 2));
+    }
+
+    @Test
+    protected void testFindTowerById_Found() {
+        List<Tower> towers = new ArrayList<>();
+        Tower tower = new TowerImpl(1);
+        towers.add(tower);
+
+        assertEquals(tower, MAHService.findTowerById(towers, 1));
+    }
+
+    @Test
+    protected void testFindTowerById_NotFound() {
+        List<Tower> towers = new ArrayList<>();
+        Tower tower = new TowerImpl(1);
+        towers.add(tower);
+
+        assertNull(MAHService.findTowerById(towers, 2));
+    }
+
+    @Test
+    protected void testTriggerMonsterAttack_TowerNull() {
+        List<Monster> monsters = new ArrayList<>();
+        Monster monster = new Slime(1, 1, 1);
+        monsters.add(monster);
+
+        List<Tower> towers = new ArrayList<>();
+
+        when(gameState.getMonsters()).thenReturn(monsters);
+        when(gameState.getTowers()).thenReturn(towers);
+
+        MAHService.triggerMonsterAttack("1", "1", lobby);
+
+        assertEquals(1, monster.getLifepoints());
+        assertTrue(towers.isEmpty());
+    }
+
+    @Test
+    protected void testTriggerMonsterAttack_MonsterNull() {
+        List<Monster> monsters = new ArrayList<>();
+
+        List<Tower> towers = new ArrayList<>();
+        Tower tower = new TowerImpl(1);
+        towers.add(tower);
+
+        when(gameState.getMonsters()).thenReturn(monsters);
+        when(gameState.getTowers()).thenReturn(towers);
+
+        MAHService.triggerMonsterAttack("1", "1", lobby);
+
+        assertTrue(monsters.isEmpty());
+        assertEquals(3, tower.getLifepoints()); // Assuming initial lifepoints are 3
     }
 }
