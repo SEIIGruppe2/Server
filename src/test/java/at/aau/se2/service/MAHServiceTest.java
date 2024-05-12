@@ -9,17 +9,21 @@ import at.aau.se2.model.towers.TowerImpl;
 import at.aau.se2.model.towers.Wall;
 import at.aau.se2.utils.GameState;
 import at.aau.se2.utils.Lobby;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import static org.mockito.Mockito.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
 class MAHServiceTest {
+
     @Mock
     private Lobby lobby;
     @Mock
@@ -34,7 +38,7 @@ class MAHServiceTest {
     @Test
     protected void testTriggerMonsterAttack_Slime_Tower() {
         List<Monster> monsters = new ArrayList<>();
-        Monster monster = new Slime(1,1,1);
+        Monster monster = new Slime(1, 1, 1);
         monsters.add(monster);
 
         List<Tower> towers = new ArrayList<>();
@@ -47,13 +51,13 @@ class MAHServiceTest {
         MAHService.triggerMonsterAttack("1", "1", lobby);
 
         assertEquals(0, monster.getLifepoints());
-        assertEquals(2, tower.getLifepoints());
+        assertEquals(9, tower.getLifepoints());
     }
 
     @Test
     protected void testTriggerMonsterAttack_Sphinx_Tower() {
         List<Monster> monsters = new ArrayList<>();
-        Monster monster = new Sphinx(1,1,1);
+        Monster monster = new Sphinx(1, 1, 1);
         monsters.add(monster);
 
         List<Tower> towers = new ArrayList<>();
@@ -66,12 +70,13 @@ class MAHServiceTest {
         MAHService.triggerMonsterAttack("1", "1", lobby);
 
         assertEquals(1, monster.getLifepoints());
-        assertEquals(2, tower.getLifepoints());
+        assertEquals(9, tower.getLifepoints());
     }
+
     @Test
     protected void testTriggerMonsterAttack_Bullrog_Tower() {
         List<Monster> monsters = new ArrayList<>();
-        Monster monster = new Bullrog(1,1,1);
+        Monster monster = new Bullrog(1, 1, 1);
         monsters.add(monster);
 
         List<Tower> towers = new ArrayList<>();
@@ -84,12 +89,13 @@ class MAHServiceTest {
         MAHService.triggerMonsterAttack("1", "1", lobby);
 
         assertEquals(2, monster.getLifepoints());
-        assertEquals(2, tower.getLifepoints());
+        assertEquals(9, tower.getLifepoints());
     }
+
     @Test
     protected void testTriggerMonsterAttack_Slime_Wall() {
         List<Monster> monsters = new ArrayList<>();
-        Monster monster = new Slime(1,1,1);
+        Monster monster = new Slime(1, 1, 1);
         monsters.add(monster);
 
         List<Tower> towers = new ArrayList<>();
@@ -104,10 +110,11 @@ class MAHServiceTest {
         assertEquals(0, monster.getLifepoints());
         assertEquals(1, tower.getLifepoints());
     }
+
     @Test
     protected void testTriggerMonsterAttack_Sphinx_Wall() {
         List<Monster> monsters = new ArrayList<>();
-        Monster monster = new Sphinx(1,1,1);
+        Monster monster = new Sphinx(1, 1, 1);
         monsters.add(monster);
 
         List<Tower> towers = new ArrayList<>();
@@ -122,10 +129,11 @@ class MAHServiceTest {
         assertEquals(1, monster.getLifepoints());
         assertEquals(1, tower.getLifepoints());
     }
+
     @Test
     protected void testTriggerMonsterAttack_Bullrog_Wall() {
         List<Monster> monsters = new ArrayList<>();
-        Monster monster = new Bullrog(1,1,1);
+        Monster monster = new Bullrog(1, 1, 1);
         monsters.add(monster);
 
         List<Tower> towers = new ArrayList<>();
@@ -182,6 +190,5 @@ class MAHServiceTest {
         verify(monster, times(1)).doesDmg(tower);
         verify(tower, never()).takeDamage(anyInt());
         verify(monster, never()).takeDamage(anyInt());
-
     }
 }

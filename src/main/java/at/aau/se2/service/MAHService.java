@@ -1,5 +1,3 @@
-// File path: at/aau/se2/service/MAHService.java
-
 package at.aau.se2.service;
 
 import at.aau.se2.utils.Lobby;
