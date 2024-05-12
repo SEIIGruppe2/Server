@@ -307,6 +307,36 @@ class MAHServiceTest {
         MAHService.triggerMonsterAttack("1", "1", lobby);
 
         assertTrue(monsters.isEmpty());
-        assertEquals(3, tower.getLifepoints()); // Assuming initial lifepoints are 3
+        assertEquals(10, tower.getLifepoints());
+    }
+
+    @Test
+    protected void testValidateEntities_InvalidNumberFormatForMonsterId() {
+        List<Monster> monsters = new ArrayList<>();
+        monsters.add(new Slime(1, 1, 1));
+
+        List<Tower> towers = new ArrayList<>();
+        towers.add(new TowerImpl(1));
+
+        when(gameState.getMonsters()).thenReturn(monsters);
+        when(gameState.getTowers()).thenReturn(towers);
+
+        // Pass non-integer value for monsterId
+        assertFalse(MAHService.validateEntities("one", "1", lobby));
+    }
+
+    @Test
+    protected void testValidateEntities_InvalidNumberFormatForTowerId() {
+        List<Monster> monsters = new ArrayList<>();
+        monsters.add(new Slime(1, 1, 1));
+
+        List<Tower> towers = new ArrayList<>();
+        towers.add(new TowerImpl(1));
+
+        when(gameState.getMonsters()).thenReturn(monsters);
+        when(gameState.getTowers()).thenReturn(towers);
+
+        // Pass non-integer value for towerId
+        assertFalse(MAHService.validateEntities("1", "one", lobby));
     }
 }
