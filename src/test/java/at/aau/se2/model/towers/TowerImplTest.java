@@ -14,21 +14,21 @@ public class TowerImplTest {
 
     @Test
     public void testSetup(){
-        assertEquals(3, tower.getLifepoints());
+        assertEquals(10, tower.getLifepoints());
     }
 
     @Test
     public void testTakeDamage(){
         assertEquals(0, tower.takeDamage(1));
-        assertEquals(2, tower.getLifepoints());
-        assertEquals(-1, tower.takeDamage(2));
+        assertEquals(9, tower.getLifepoints());
+        assertEquals(-1, tower.takeDamage(9));
         assertEquals(0, tower.getLifepoints());
         assertEquals(1, tower.getId());
     }
 
     @Test
     public void testConvertToJson(){
-        String res = "{ 'id': '1','lifepoints':'3'}";
+        String res = "{ 'id': '1','lifepoints':'10'}";
         assertEquals(res, tower.convertToJson());
     }
 }
