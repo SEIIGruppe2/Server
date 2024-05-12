@@ -38,8 +38,6 @@ public class PlayerRollsDiceHandler implements ActionHandler {
 
 
     private Player selectPlayerToRoll(Lobby lobby) {
-
-
         List<Player> players = lobby.getPlayers();
         return !players.isEmpty() ? players.get(0) : null;
     }
