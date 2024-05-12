@@ -44,12 +44,13 @@ public class SpawnMonsterHandler implements ActionHandler {
     }
 
     public Monster spawnRandomMonster(int zone,Lobby lobby){
-        int monstertype = rn.nextInt(1,3);
+        int monstertype = rn.nextInt(1,4);
 
         Monster monster = switch(monstertype){
             case 1 -> new Slime(zone, 0, monsterId);
             case 2 -> new Sphinx(zone, 0, monsterId);
-            default -> new Bullrog(zone, 0, monsterId);
+            case 3 -> new Bullrog(zone, 0, monsterId);
+            default -> throw new IllegalStateException("Unexpected value: " + monstertype);
         };
         increaseMonsterId();
         lobby.getGameState().getMonsters().add(monster);
