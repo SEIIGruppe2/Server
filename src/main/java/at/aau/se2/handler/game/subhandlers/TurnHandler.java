@@ -1,5 +1,6 @@
 package at.aau.se2.handler.game.subhandlers;
 
+import at.aau.se2.model.Monster;
 import at.aau.se2.utils.Lobby;
 import at.aau.se2.utils.Player;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -28,6 +29,7 @@ public class TurnHandler implements ActionHandler {
         if ("END_TURN".equals(type)) {
             endCurrentTurn();
             startNextTurn();
+            movemonsters(lobby);
             notifyAllPlayers(lobby);
         }
     }
@@ -44,6 +46,13 @@ public class TurnHandler implements ActionHandler {
         logger.info("Starting next turn for player index " + currentPlayerIndex+ "turn"+turnCount);
 
 
+    }
+    private void movemonsters(Lobby lobby){
+        List<Monster> monsters= lobby.getGameState().getMonsters();
+        for(Monster m:monsters){
+            int currentring = m.getRing()+1;
+            m.setRing(currentring);
+        }
     }
 
     private void notifyAllPlayers(Lobby lobby) {
