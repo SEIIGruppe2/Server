@@ -7,7 +7,7 @@ import at.aau.se2.model.Tower;
 
 import java.util.List;
 
-import static at.aau.se2.utils.UtilityMethods.logs;
+import static at.aau.se2.utils.UtilityMethods.*;
 
 public class MAHService {
 
@@ -36,11 +36,12 @@ public class MAHService {
                 int attackResult = monster.doesDmg(tower);
                 if (attackResult == 0) {
                     monster.takeDamage(1);
+                    logi("MonsterID " + monsterId + " damaged Tower. MonsterHP: " + monster.getLifepoints() + " TowerHP: " + tower.getLifepoints());
                 } else {
                     logs("Tower could not be damaged. No damage taken by Monster.");
                 }
             } else {
-                logs("Invalid MonsterID or invalid TowerID.");
+                logd("Invalid MonsterID or invalid TowerID.");
             }
         } catch (NumberFormatException e) {
             logs("Error parsing IDs: " + e.getMessage());

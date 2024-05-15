@@ -2,6 +2,7 @@ package at.aau.se2.utils;
 
 import at.aau.se2.model.Monster;
 import at.aau.se2.model.Tower;
+import at.aau.se2.model.towers.TowerImpl;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class GameState implements JsonSerializable{
     public GameState(){
         monsters = new ArrayList<>();
         towers = new ArrayList<>();
+        towers.add(new TowerImpl(0));
         cardTypeAmount = new int[4];
         this.round = 0;
     }
