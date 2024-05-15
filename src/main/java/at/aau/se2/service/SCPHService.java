@@ -11,6 +11,8 @@ import org.springframework.web.socket.WebSocketSession;
 import java.util.List;
 
 public class SCPHService {
+
+    public static int passiveSwitch=0;
     public static String findUsernameOfPlayer(WebSocketSession session) throws PlayerNotFoundException {
         for(Player a: GameHandler.getPlayers()){
             if(a.getSession().equals(session)){
@@ -54,14 +56,27 @@ public class SCPHService {
                 Integer.parseInt(content[3])
                 : Integer.parseInt(content[2]);
     }
+    public static void setPassiveSwitch(String[] content){
+        if(content[2].equals("null")){
+            passiveSwitch=1;
+        }else{
+            passiveSwitch=0;
+        }
+    }
 
     public static String convertToJson(Actioncard card){
+        System.out.println("");
         return "{'type':'SWITCH_CARD_PLAYER_RESPONSE', " +
                 card.convertToJson() + "}";
+
     }
 
     public static String convertToJSONrequest(Actioncard card, String username){
-        return "{'type':'SWITCH_CARD_PLAYER_RESPONSE', 'switchedWith':'"+username+"', " +
+        if(passiveSwitch==0) {
+            return "{'type':'SWITCH_CARD_PLAYER_RESPONSE1', 'switchedWith':'" + username + "', " +
+                    card.convertToJson() + "}";
+        }
+        return "{'type':'SWITCH_CARD_PLAYER_RESPONSE', 'switchedWith':'" + username + "', " +
                 card.convertToJson() + "}";
     }
 }

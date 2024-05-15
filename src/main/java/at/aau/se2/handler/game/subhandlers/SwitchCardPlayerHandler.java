@@ -27,9 +27,11 @@ public class SwitchCardPlayerHandler implements ActionHandler {
 
 
             Actioncard currentCard = cardRemoval(getCardId(msgContent), cards);
+            setPassiveSwitch(msgContent);
 
             Player switchPlayer = findPlayerByUsername(switchUsername);
             switchPlayer.getCards().add(currentCard);
+            System.out.println(SCPHService.convertToJSONrequest(currentCard,findUsernameOfPlayer(session)));
             switchPlayer.getSession()
                     .sendMessage(
                             new TextMessage(
