@@ -1,11 +1,13 @@
 package at.aau.se2.handler.game.subhandlers;
 
 import at.aau.se2.dto.MonsterAttackDTO;
-import at.aau.se2.model.towers.TowerImpl;
 import at.aau.se2.service.MAHService;
 import at.aau.se2.utils.Lobby;
+import at.aau.se2.utils.Player;
 import org.springframework.web.socket.WebSocketSession;
 import com.fasterxml.jackson.databind.JsonNode;
+
+import java.io.IOException;
 
 import static at.aau.se2.utils.UtilityMethods.logd;
 import static at.aau.se2.utils.UtilityMethods.logs;
@@ -14,7 +16,6 @@ public class MonsterAttackHandler implements ActionHandler {
 
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
-        lobby.getGameState().getTowers().add(new TowerImpl(0));
 
         try {
             // Validate message type using MAHService
@@ -38,9 +39,17 @@ public class MonsterAttackHandler implements ActionHandler {
                             tower.getLifepoints(),
                             attackStatus
                     );
+                    for (Player player : lobby.getPlayers()) {
+                        try {
+                            synchronized(player.getSession()) {
+                                player.getSession().sendMessage(dto.makeMessage());
+                            }
+                        } catch (IOException e) {
+                            logs("Failed to send message to player " + player.getUsername() + ": " + e.getMessage());
+                        }
+                    }
 
-                    // Send message to client
-                    session.sendMessage(dto.makeMessage());
+
                 } else {
                     logd("Invalid entities provided for MONSTER_ATTACK.");
                 }
