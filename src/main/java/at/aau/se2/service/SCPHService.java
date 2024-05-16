@@ -65,7 +65,7 @@ public class SCPHService {
     }
 
     public static String convertToJson(Actioncard card){
-        System.out.println("");
+
         return "{'type':'SWITCH_CARD_PLAYER_RESPONSE', " +
                 card.convertToJson() + "}";
 
