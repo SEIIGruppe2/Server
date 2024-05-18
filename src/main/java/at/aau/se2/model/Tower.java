@@ -2,10 +2,12 @@ package at.aau.se2.model;
 
 import at.aau.se2.utils.JsonSerializable;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public abstract class Tower  implements JsonSerializable {
     protected final int id;
+    @Setter
     protected int lifepoints;
     protected Tower(int id){
         this.id = id;
