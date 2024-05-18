@@ -33,7 +33,6 @@ public class ShowMonstersHandler implements ActionHandler {
                searchedzone= c.getZone();
             }
             addSearchedMonstersToList(monsters);
-            System.out.println(convertToJSON());
             session.sendMessage(new TextMessage(convertToJSON()));
 
         }catch (PlayerNotFoundException e) {
@@ -80,7 +79,6 @@ public class ShowMonstersHandler implements ActionHandler {
             for(Monster m:monsters){
                 if(m.getZone()-1==searchedzone){
                     monsterids.add(String.valueOf(m.getId()));
-                    System.out.println("monster added");
 
                 }
             }
@@ -88,7 +86,6 @@ public class ShowMonstersHandler implements ActionHandler {
             for(Monster m:monsters){
                 if(m.getZone()-1==searchedzone&&m.getRing()==searchedring){
                     monsterids.add(String.valueOf(m.getId()));
-                    System.out.println("monster added");
 
 
                 }

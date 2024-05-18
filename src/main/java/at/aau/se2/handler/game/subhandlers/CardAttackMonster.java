@@ -30,12 +30,18 @@ public class CardAttackMonster implements ActionHandler {
         try{
             String cardid = msg.path("cardid").asText();
             this.monsterId = msg.path("monsterid").asText();
+            System.out.println(msg.toString());
             removeCard(Integer.parseInt(cardid), UtilityMethods.findPlayer(session, lobby).getCards());
             List<Monster> monsters =lobby.getGameState().getMonsters();
             Monster m = findmonster(Integer.parseInt(monsterId), monsters);
             this.lifepoints = String.valueOf(decreaseLifePoints(m));
             if(lifepoints.equals("-1")){
                 monsters.remove(m);
+            }
+            for(Monster a: monsters){
+
+                System.out.println(String.valueOf(a.getId()));
+                System.out.println(a.getLifepoints());
             }
             updateOtherUser(lobby);
 
@@ -50,9 +56,9 @@ public class CardAttackMonster implements ActionHandler {
     }
 
     private void removeCard(int id, List<Actioncard> cards) {
-        for (Actioncard c : cards) {
-            if (c.getId() == id) {
-                cards.remove(c);
+        for (int i = 0; i < cards.size(); i++) {
+            if ( cards.get(i).getId()==id) {
+                cards.remove(cards.get(i));
             }
         }
     }
@@ -71,7 +77,7 @@ public class CardAttackMonster implements ActionHandler {
             return -1;
         }else{
             m.setLifepoints(currentlifepoints--);
-            return currentlifepoints--;
+            return currentlifepoints-1;
         }
     }
 
