@@ -1,8 +1,7 @@
 package at.aau.se2.handler.game.subhandlers;
 
-import at.aau.se2.exceptions.CardNotFoundException;
 import at.aau.se2.exceptions.PlayerNotFoundException;
-import at.aau.se2.handler.game.GameHandler;
+
 import at.aau.se2.model.Actioncard;
 import at.aau.se2.model.Monster;
 import at.aau.se2.utils.Lobby;
@@ -18,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 
-import static at.aau.se2.utils.UtilityMethods.findLobby;
+
 import static at.aau.se2.utils.UtilityMethods.logi;
 
 public class CardAttackMonster implements ActionHandler {
