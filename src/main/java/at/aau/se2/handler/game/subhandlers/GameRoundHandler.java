@@ -39,9 +39,8 @@ public class GameRoundHandler implements ActionHandler {
         roundNumber++;
         for (Player player : lobby.getPlayers()) {
             sendStartRoundMessage(player.getSession());
-            logger.info("Starting round " + roundNumber);
         }
-
+        logger.info("Starting round " + roundNumber);
     }
 
     private void sendStartRoundMessage(WebSocketSession session) {
