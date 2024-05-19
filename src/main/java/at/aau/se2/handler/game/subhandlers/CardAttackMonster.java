@@ -76,7 +76,7 @@ public class CardAttackMonster implements ActionHandler {
 
             return -1;
         }else{
-            m.setLifepoints(currentlifepoints--);
+            m.setLifepoints(currentlifepoints-1);
             return currentlifepoints-1;
         }
     }
