@@ -150,4 +150,20 @@ public class SCPHServiceTest {
                 actioncard.convertToJson() + "}";
         assertEquals(json, convertToJSONrequest(actioncard, "username"));
     }
+
+
+    @Test
+    void testSetPassiveSwitchWithNull() {
+        String[] content = {"type", "switchedWith", "null", "cardGivenP"};
+        SCPHService.setPassiveSwitch(content);
+        assertEquals(1, SCPHService.passiveSwitch);
+    }
+
+    @Test
+    void testSetPassiveSwitchWithNonNull() {
+        String[] content = {"type", "switchedWith", "cardGiven", "cardGivenP"};
+        SCPHService.setPassiveSwitch(content);
+        assertEquals(0, SCPHService.passiveSwitch);
+    }
+
 }
