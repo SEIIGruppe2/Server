@@ -31,4 +31,13 @@ public class TowerImplTest {
         String res = "{ 'id': '1','lifepoints':'10'}";
         assertEquals(res, tower.convertToJson());
     }
+
+
+    @Test
+    public void testSetterMethod(){
+        tower.setLifepoints(10);
+        assertEquals(10, tower.getLifepoints());
+    }
+
+
 }
