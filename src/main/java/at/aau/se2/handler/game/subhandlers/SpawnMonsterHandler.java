@@ -14,6 +14,7 @@ import java.security.SecureRandom;
 import java.util.logging.Logger;
 
 public class SpawnMonsterHandler implements ActionHandler {
+    // TODO: Refactor to Service, DTO and Handler
     private final SecureRandom rn;
     @Getter
     private static int monsterId = 0;

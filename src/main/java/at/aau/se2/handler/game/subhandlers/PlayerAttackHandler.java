@@ -15,6 +15,8 @@ import java.util.logging.Logger;
 
 
 public class PlayerAttackHandler implements ActionHandler {
+    // TODO: refactor on functionality of CardAttackMonster
+    // TODO: Refactor to Service, DTO and Handler
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         String[] m = readInfosFromMessage(msg);
