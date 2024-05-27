@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import static at.aau.se2.utils.UtilityMethods.logi;
 
 public class ShowMonstersHandler implements ActionHandler {
+    // TODO: Refactor to Service, DTO and Handler
     public ArrayList<String> monsterids;
     int searchedring;
     int searchedzone;

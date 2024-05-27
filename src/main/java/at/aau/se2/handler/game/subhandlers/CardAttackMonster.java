@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import static at.aau.se2.utils.UtilityMethods.logi;
 
 public class CardAttackMonster implements ActionHandler {
+    // TODO: Umlagern in PlayerAttack und erstellen von einem Service und einer DTO
     private static final Logger logger = Logger.getLogger(GameRoundHandler.class.getName());
     private String monsterId;
     private String lifepoints;

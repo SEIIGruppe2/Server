@@ -1,7 +1,9 @@
 package at.aau.se2.handler.game.subhandlers;
 
+import at.aau.se2.exceptions.CardCannotAttackException;
 import at.aau.se2.exceptions.PlayerNotFoundException;
 import at.aau.se2.model.Actioncard;
+import at.aau.se2.model.Monster;
 import at.aau.se2.model.characters.Archer;
 import at.aau.se2.model.characters.Fighter;
 import at.aau.se2.model.characters.Hero;
@@ -13,8 +15,12 @@ import org.springframework.web.socket.WebSocketSession;
 
 import java.util.logging.Logger;
 
+import static at.aau.se2.utils.UtilityMethods.logs;
+
 
 public class PlayerAttackHandler implements ActionHandler {
+    // TODO: refactor on functionality of CardAttackMonster
+    // TODO: Refactor to Service, DTO and Handler
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         String[] m = readInfosFromMessage(msg);
@@ -23,7 +29,25 @@ public class PlayerAttackHandler implements ActionHandler {
                                 .findPlayer(session, lobby)
                                 .getCards()
                                 .get(Integer.parseInt(m[1]));
-            card.doesDmg(lobby.getGameState().getMonsters().get(Integer.parseInt(m[0])));
+            Monster monster = lobby
+                                .getGameState()
+                                .getMonsters()
+                                .get(Integer.parseInt(m[0]));
+            
+            if(card.doesDmg(monster) == 0){
+                UtilityMethods
+                        .findPlayer(session, lobby)
+                        .getCards()
+                        .remove(card);
+            }
+            else {
+                throw new CardCannotAttackException();
+            }
+
+            if(monster.getLifepoints() == -1){
+                lobby.getGameState().getMonsters().remove(monster);
+            }
+
             if(card instanceof Archer)
                 lobby.getGameState().decreaseCardAmount(0);
             else if(card instanceof Fighter)
@@ -32,6 +56,9 @@ public class PlayerAttackHandler implements ActionHandler {
                 lobby.getGameState().decreaseCardAmount(2);
             else if(card instanceof Hero)
                 lobby.getGameState().decreaseCardAmount(3);
+        }
+        catch(CardCannotAttackException c){
+            logs("Card could not attack the monster (PlayerAttackHandler)");
         }
         catch(PlayerNotFoundException p){
             Logger.getLogger("global")
