@@ -43,7 +43,6 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("DRAW_CARD", new DrawCardHandler());
         handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler());
         handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayerHandler());
-        handlers.put("PLAYER_ATTACK", new PlayerAttackHandler());
         handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
         handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
         handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
@@ -52,7 +51,7 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("ROUND_COUNTER", new GameRoundHandler());
         handlers.put("END_TURN", new TurnHandler());
         handlers.put("SHOW_MONSTERS", new ShowMonstersHandler());
-        handlers.put("CARD_ATTACK_MONSTER", new CardAttackMonster());
+        handlers.put("CARD_ATTACK_MONSTER", new PlayerAttackHandler());
         handlers.put("REQUEST_USERNAMES_SWITCH", new RequestUsernamesForSwitchHandler());
         handlers.put("END_GAME",new EndGameHandler());
     }

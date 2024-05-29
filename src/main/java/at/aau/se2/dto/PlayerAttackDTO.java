@@ -6,7 +6,7 @@ import org.springframework.web.socket.TextMessage;
 public class PlayerAttackDTO extends ParentDTO{
     private final String monsterId;
     private final int lp;
-    public PlayerAttackDTO(String type, String monsterId, int lp) {
+    public PlayerAttackDTO(String monsterId, int lp) {
         super("CARD_ATTACK_MONSTER");
         this.monsterId = monsterId;
         this.lp = lp;
