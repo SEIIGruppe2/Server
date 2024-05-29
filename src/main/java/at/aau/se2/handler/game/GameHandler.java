@@ -12,7 +12,6 @@ import lombok.Getter;
 import org.springframework.web.socket.*;
 
 import java.io.IOException;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +45,7 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
         handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
         handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
-        handlers.put("SPAWN_MONSTER", new SpawnMonsterHandler(new SecureRandom()));
+        handlers.put("SPAWN_MONSTER", new SpawnMonsterHandler());
         handlers.put("PLAYER_ROLL_DICE", new PlayerRollsDiceHandler());
         handlers.put("ROUND_COUNTER", new GameRoundHandler());
         handlers.put("END_TURN", new TurnHandler());
