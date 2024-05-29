@@ -17,8 +17,6 @@ import static org.mockito.Mockito.*;
 
 public class SMHServiceTest {
     private Lobby lobby;
-
-    private int zone;
     private SecureRandom rn;
     @BeforeEach
     public void setup(){
