@@ -16,7 +16,6 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,12 +27,14 @@ public class GHService {
     private final GameHandler handler;
     private final List<Player> players;
     private static int nextPlayer = 0;
+    private final Map<String, ActionHandler> handlers;
 
     // endregion
 
     // region Constructor
     public GHService(GameHandler handler){
         this.handler = handler;
+        this.handlers = handler.getHandlers();
         this.players = GameHandler.getPlayers();
         fillHandlerMap();
     }
@@ -44,23 +45,64 @@ public class GHService {
     public static void setNextPlayer(int val){
         nextPlayer += val;
     }
-    private static final Map<String, ActionHandler> handlers = new HashMap<>();
+
     private void fillHandlerMap(){
-        Map<String, ActionHandler> handlers = handler.getHandlers();
-        handlers.put("DRAW_CARD", new DrawCardHandler());
-        handlers.put("SWITCH_CARD_DECK", new SwitchCardDeckHandler());
-        handlers.put("SWITCH_CARD_PLAYER", new SwitchCardPlayerHandler());
-        handlers.put("MONSTER_ATTACK", new MonsterAttackHandler());
-        handlers.put("REGISTER_USERNAME", new RegisterUsernameHandler());
-        handlers.put("REQUEST_USERNAMES", new RequestUsernamesHandler());
-        handlers.put("SPAWN_MONSTER", new SpawnMonsterHandler());
-        handlers.put("PLAYER_ROLL_DICE", new PlayerRollsDiceHandler());
-        handlers.put("ROUND_COUNTER", new GameRoundHandler());
-        handlers.put("END_TURN", new TurnHandler());
-        handlers.put("SHOW_MONSTERS", new ShowMonstersHandler());
-        handlers.put("CARD_ATTACK_MONSTER", new PlayerAttackHandler());
-        handlers.put("REQUEST_USERNAMES_SWITCH", new RequestUsernamesForSwitchHandler());
-        handlers.put("END_GAME",new EndGameHandler());
+        this.handlers.put(
+                "DRAW_CARD",
+                new DrawCardHandler()
+        );
+        this.handlers.put(
+                "SWITCH_CARD_DECK",
+                new SwitchCardDeckHandler()
+        );
+        this.handlers.put(
+                "SWITCH_CARD_PLAYER",
+                new SwitchCardPlayerHandler()
+        );
+        this.handlers.put(
+                "MONSTER_ATTACK",
+                new MonsterAttackHandler()
+        );
+        this.handlers.put(
+                "REGISTER_USERNAME",
+                new RegisterUsernameHandler()
+        );
+        this.handlers.put(
+                "REQUEST_USERNAMES",
+                new RequestUsernamesHandler()
+        );
+        this.handlers.put(
+                "SPAWN_MONSTER",
+                new SpawnMonsterHandler()
+        );
+        this.handlers.put(
+                "PLAYER_ROLL_DICE",
+                new PlayerRollsDiceHandler()
+        );
+        this.handlers.put(
+                "ROUND_COUNTER",
+                new GameRoundHandler()
+        );
+        this.handlers.put(
+                "END_TURN",
+                new TurnHandler()
+        );
+        this.handlers.put(
+                "SHOW_MONSTERS",
+                new ShowMonstersHandler()
+        );
+        this.handlers.put(
+                "CARD_ATTACK_MONSTER",
+                new PlayerAttackHandler()
+        );
+        this.handlers.put(
+                "REQUEST_USERNAMES_SWITCH",
+                new RequestUsernamesForSwitchHandler()
+        );
+        this.handlers.put(
+                "END_GAME",
+                new EndGameHandler()
+        );
     }
 
     public JsonNode getMessage(WebSocketMessage<?> message)
