@@ -48,7 +48,6 @@ public class GameHandler implements WebSocketHandler {
     // region Communication Methods
     @Override
     public void afterConnectionEstablished(WebSocketSession session) throws Exception {
-        connectionOrder.add(session);
         logger.info("Connection established; SessionID: " + session.getId());
         service.helpAfterConnectionEstablished(session);
     }

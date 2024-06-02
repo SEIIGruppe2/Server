@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.List;
 
 public class LobbyService {
+    public static Lobby currentlobby;
+
     public static Lobby createLobby(){
         return new Lobby(new GameState());
     }
@@ -19,12 +21,12 @@ public class LobbyService {
         lobby.getPlayers().add(player);
         session.sendMessage(new TextMessage("{ 'type':'LOBBY_ASSIGNED' }"));
     }
-    public static int makeLobby(List<WebSocketSession> connectionOrder, int nextPlayer, List<Player> players) throws IOException {
-        Lobby lobby = createLobby();
-        for(int i = 0; i < 4; i++){
-            // session basierend auf ID ausgeben
-            movePlayerToLobby(connectionOrder.get(nextPlayer++), lobby, players);
+
+    public static void moveToLobby(WebSocketSession session, List<Player> players) throws IOException {
+        if(currentlobby == null|| currentlobby.getPlayers().size()==4){
+            currentlobby = createLobby();
         }
-        return nextPlayer;
+        movePlayerToLobby(session,currentlobby,players);
     }
+
 }

@@ -19,7 +19,8 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static at.aau.se2.service.LobbyService.makeLobby;
+
+import static at.aau.se2.service.LobbyService.moveToLobby;
 import static at.aau.se2.utils.UtilityMethods.findPlayer;
 
 public class GHService {
@@ -148,15 +149,11 @@ public class GHService {
         session.sendMessage(new TextMessage(messageNode.toString()));
     }
 
+
     public void helpAfterConnectionEstablished(WebSocketSession session)
             throws IOException {
-        List<WebSocketSession> connectionOrder = this.handler.getConnectionOrder();
-        if(connectionOrder.size() >= 4){
-            setNextPlayer(makeLobby(connectionOrder, nextPlayer, players));
-        }
-        else {
-            this.sendMessage(session, "WAITING_FOR_PLAYERS", "Waiting for other players to connect.");
-        }
+        moveToLobby(session, players);
+        this.sendMessage(session, "WAITING_FOR_PLAYERS", "Waiting for other players to connect.");
     }
 
     public void helpAfterConnectionClosed(WebSocketSession session)
