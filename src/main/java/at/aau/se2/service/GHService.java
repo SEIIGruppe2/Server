@@ -27,7 +27,6 @@ public class GHService {
     // region Members
     private final GameHandler handler;
     private final List<Player> players;
-    private static int nextPlayer = 0;
     private final Map<String, ActionHandler> handlers;
 
     // endregion
