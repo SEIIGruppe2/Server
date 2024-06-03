@@ -54,6 +54,7 @@ public class GameHandler implements WebSocketHandler {
         handlers.put("SHOW_MONSTERS", new ShowMonstersHandler());
         handlers.put("CARD_ATTACK_MONSTER", new CardAttackMonster());
         handlers.put("REQUEST_USERNAMES_SWITCH", new RequestUsernamesForSwitchHandler());
+        handlers.put("PLAYER_TROPHIES", new PlayerTrophiesHandler());
     }
 
     public static GameHandler getInstance(){
