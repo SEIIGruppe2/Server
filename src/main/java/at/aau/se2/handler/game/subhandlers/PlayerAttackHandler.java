@@ -32,11 +32,12 @@ public class PlayerAttackHandler implements ActionHandler {
             Actioncard card =player
                                 .getCards()
                                 .get(Integer.parseInt(m[1]));
+            logi(card.convertToJson());
             Monster monster = lobby
                                 .getGameState()
                                 .getMonsters()
                                 .get(Integer.parseInt(m[0]));
-            
+            logi(monster.convertToJson());
             if(card.doesDmg(monster) == 0){
                 player.getCards().remove(card);
             }
