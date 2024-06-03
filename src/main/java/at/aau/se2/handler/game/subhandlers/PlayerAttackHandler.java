@@ -16,6 +16,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import static at.aau.se2.service.PAHService.readInfosFromMessage;
 import static at.aau.se2.service.PTService.updatePlayerPoints;
@@ -28,6 +29,7 @@ public class PlayerAttackHandler implements ActionHandler {
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         String[] m = readInfosFromMessage(msg);
         try{
+            logi(Arrays.toString(m));
             Player player = UtilityMethods.findPlayer(session, lobby);
             Actioncard card =player
                                 .getCards()
