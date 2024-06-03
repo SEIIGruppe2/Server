@@ -45,8 +45,8 @@ public class PlayerAttackHandler implements ActionHandler {
             }
 
             if(monster.getLifepoints() == -1){
-                logi("MOSNTER DEAD, ADD POINTS"); //DEBUG
-                updatePlayerPoints(player, m.getName());
+                logi("MONSTER DEAD, ADD POINTS"); //DEBUG
+                updatePlayerPoints(player, monster.getName());
                 lobby.getGameState().getMonsters().remove(monster);
             }
 
@@ -68,7 +68,7 @@ public class PlayerAttackHandler implements ActionHandler {
             logs("Card could not attack the monster (PlayerAttackHandler)");
         }
         catch(PlayerNotFoundException p){
-            logi("PLAYERN NOT IN LOBBY (PlayerAttackHandler)");
+            logi("PLAYER NOT IN LOBBY (PlayerAttackHandler)");
         } catch (IOException e) {
             logi("Failed to send CARD_ATTACK Message");
         }
