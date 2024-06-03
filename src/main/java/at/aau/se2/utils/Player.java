@@ -16,13 +16,13 @@ public class Player {
     private final WebSocketSession session;
 
     @Getter
-    private int points;
+    private int points, cheatingRoundsLeft;
 
     @Getter
     private String username;
 
     @Getter
-    private boolean usernameSet;
+    private boolean usernameSet, isCheatToggleOn, isCheating;
 
     @Getter
     private final String playerID; // Session ID
@@ -37,6 +37,9 @@ public class Player {
         this.lobby = lobby;
         this.points = 0;
         this.cards = new ArrayList<>();
+        this.isCheatToggleOn = false;
+        this.cheatingRoundsLeft = 0;
+        this.isCheating = false;
     }
 
     public void setPoints(int points){
@@ -51,6 +54,27 @@ public class Player {
         else{
             Logger.getLogger("global")
                     .info("Username has already been set!");
+        }
+    }
+
+
+    public void setCheatingRoundsLeft(int cheatingRoundsLeft) {
+        this.cheatingRoundsLeft = cheatingRoundsLeft;
+    }
+
+    public void setCheatToggleOn(boolean cheatToggleOn) {
+        isCheatToggleOn = cheatToggleOn;
+    }
+
+    public void setCheating(boolean cheating) {
+        isCheating = cheating;
+    }
+    public void decrementCheatingRounds() {
+        if (isCheating) {
+            cheatingRoundsLeft--;
+            if (cheatingRoundsLeft == 0) {
+                isCheating = false;
+            }
         }
     }
 
