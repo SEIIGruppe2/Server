@@ -103,6 +103,10 @@ public class GHService {
                 "END_GAME",
                 new EndGameHandler()
         );
+        this.handlers.put(
+                "PLAYER_TROPHIES",
+                new PlayerTrophiesHandler()
+        );
 
     }
 
