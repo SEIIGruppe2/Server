@@ -18,6 +18,7 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 import java.util.Arrays;
 
+import static at.aau.se2.service.PAHService.getCard;
 import static at.aau.se2.service.PAHService.readInfosFromMessage;
 import static at.aau.se2.service.PTService.updatePlayerPoints;
 import static at.aau.se2.utils.UtilityMethods.logi;
@@ -31,9 +32,7 @@ public class PlayerAttackHandler implements ActionHandler {
         try{
             logi(Arrays.toString(m));
             Player player = UtilityMethods.findPlayer(session, lobby);
-            Actioncard card =player
-                                .getCards()
-                                .get(Integer.parseInt(m[1]));
+            Actioncard card = getCard(Integer.parseInt(m[0]), player.getCards());
             logi(card.convertToJson());
             Monster monster = lobby
                                 .getGameState()
