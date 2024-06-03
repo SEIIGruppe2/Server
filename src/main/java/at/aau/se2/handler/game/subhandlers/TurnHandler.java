@@ -71,6 +71,7 @@ public class TurnHandler implements ActionHandler {
         for (Player player : lobby.getPlayers()) {
             try {
                 synchronized( player.getSession()) {
+                    player.decrementCheatingRounds();
                     player.getSession().sendMessage(new TextMessage(message));
 
                 }
