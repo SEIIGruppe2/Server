@@ -32,7 +32,7 @@ public class PlayerAttackHandler implements ActionHandler {
         try{
             logi(Arrays.toString(m));
             Player player = UtilityMethods.findPlayer(session, lobby);
-            Actioncard card = getCard(Integer.parseInt(m[0]), player.getCards());
+            Actioncard card = getCard(Integer.parseInt(m[1]), player.getCards());
             logi(card.convertToJson());
             Monster monster = lobby
                                 .getGameState()
