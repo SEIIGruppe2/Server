@@ -24,10 +24,10 @@ public class DCHService {
     public static Actioncard drawRandomCard(Lobby lobby){
         int i = lobby.getGameState().getIndexMinimumCardAmount();
         Actioncard card = switch(i){
-            case 0 -> new Archer(rn.nextInt(0,4), cardId++);
-            case 1 -> new Fighter(rn.nextInt(0,4), cardId++);
-            case 2 -> new Knight(rn.nextInt(0,4), cardId++);
-            default -> new Hero(rn.nextInt(0,4), cardId++);
+            case 0 -> new Archer(rn.nextInt(1,5), cardId++);
+            case 1 -> new Fighter(rn.nextInt(1,5), cardId++);
+            case 2 -> new Knight(rn.nextInt(1,5), cardId++);
+            default -> new Hero(rn.nextInt(1,5), cardId++);
         };
         lobby.getGameState().increaseCardAmount(i);
         return card;
