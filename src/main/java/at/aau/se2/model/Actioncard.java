@@ -10,7 +10,7 @@ public abstract class Actioncard implements JsonSerializable {
     protected int zone;
     protected final int id;
     protected Actioncard(int zone, int id){
-        this.zone = zone % 4;
+        this.zone = zone;
         this.id = id;
     }
     public abstract int doesDmg(Monster monster);
