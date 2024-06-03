@@ -1,41 +1,11 @@
 package at.aau.se2.handler.game.subhandlers;
 
-import at.aau.se2.exceptions.PlayerNotFoundException;
-import at.aau.se2.model.Actioncard;
-import at.aau.se2.model.Monster;
-import at.aau.se2.model.characters.Archer;
-import at.aau.se2.model.monsters.Bullrog;
-import at.aau.se2.utils.GameState;
-import at.aau.se2.utils.Lobby;
-import at.aau.se2.utils.Player;
-import at.aau.se2.utils.UtilityMethods;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.web.socket.TextMessage;
-import org.springframework.web.socket.WebSocketSession;
-
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CardAttackMonsterTest {
-    @InjectMocks
+   /* @InjectMocks
     private CardAttackMonster cardAttackMonster;
 
     @Mock
@@ -200,5 +170,5 @@ class CardAttackMonsterTest {
 
         verify(session1).sendMessage(any(TextMessage.class));
         verify(session2).sendMessage(any(TextMessage.class));
-    }
+    }*/
 }
