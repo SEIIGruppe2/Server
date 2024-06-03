@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 
+import static at.aau.se2.service.PTService.updatePlayerPoints;
 import static at.aau.se2.utils.UtilityMethods.logi;
 
 public class CardAttackMonster implements ActionHandler {
@@ -35,7 +36,10 @@ public class CardAttackMonster implements ActionHandler {
             List<Monster> monsters =lobby.getGameState().getMonsters();
             Monster m = findmonster(Integer.parseInt(monsterId), monsters);
             this.lifepoints = String.valueOf(decreaseLifePoints(m));
+            Player player = UtilityMethods.findPlayer(session, lobby);
             if(lifepoints.equals("-1")){
+                logi("MOSNTER DEAD, ADD POINTS"); //DEBUG
+                updatePlayerPoints(player, m.getName());
                 monsters.remove(m);
             }
             for(Monster a: monsters){
