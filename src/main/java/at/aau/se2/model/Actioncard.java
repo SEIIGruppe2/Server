@@ -16,7 +16,7 @@ public abstract class Actioncard implements JsonSerializable {
     public abstract int doesDmg(Monster monster);
     public void setZone(int zone){
         // Modulo 4 als Sicherstellung das nur 0-3 zugewiesen werden kann
-        this.zone = zone % 4;
+        this.zone = zone;
     }
 
     @Override
