@@ -76,4 +76,55 @@ public class PlayerTest {
         assertTrue(player.getCards().isEmpty());
     }
 
+    @Test
+    public void testGetSetCheatingRoundsLeft() {
+        assertEquals(0, player.getCheatingRoundsLeft());
+        player.setCheatingRoundsLeft(5);
+        assertEquals(5, player.getCheatingRoundsLeft());
+    }
+
+    @Test
+    public void testGetSetCheatToggleOn() {
+        assertFalse(player.isCheatToggleOn());
+        player.setCheatToggleOn(true);
+        assertTrue(player.isCheatToggleOn());
+        player.setCheatToggleOn(false);
+        assertFalse(player.isCheatToggleOn());
+    }
+
+    @Test
+    public void testGetSetCheating() {
+        assertFalse(player.isCheating());
+        player.setCheating(true);
+        assertTrue(player.isCheating());
+        player.setCheating(false);
+        assertFalse(player.isCheating());
+    }
+
+    @Test
+    public void testDecrementCheatingRounds() {
+        player.setCheating(true);
+        player.setCheatingRoundsLeft(3);
+        player.decrementCheatingRounds();
+        assertEquals(2, player.getCheatingRoundsLeft());
+        assertTrue(player.isCheating());
+
+        player.decrementCheatingRounds();
+        assertEquals(1, player.getCheatingRoundsLeft());
+        assertTrue(player.isCheating());
+
+        player.decrementCheatingRounds();
+        assertEquals(0, player.getCheatingRoundsLeft());
+        assertFalse(player.isCheating());
+    }
+
+    @Test
+    public void testDecrementCheatingRoundsWhenNotCheating() {
+        player.setCheating(false);
+        player.setCheatingRoundsLeft(3);
+        player.decrementCheatingRounds();
+        assertEquals(3, player.getCheatingRoundsLeft());
+        assertFalse(player.isCheating());
+    }
+
 }
