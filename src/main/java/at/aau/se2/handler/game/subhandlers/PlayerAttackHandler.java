@@ -45,6 +45,8 @@ public class PlayerAttackHandler implements ActionHandler {
             }
 
             if(monster.getLifepoints() == -1){
+                logi("MOSNTER DEAD, ADD POINTS"); //DEBUG
+                updatePlayerPoints(player, m.getName());
                 lobby.getGameState().getMonsters().remove(monster);
             }
 
