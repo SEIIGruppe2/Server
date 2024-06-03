@@ -104,8 +104,16 @@ public class GHService {
                 new EndGameHandler()
         );
         this.handlers.put(
+                    "CHEAT_MODE",
+                new CheatModeHandler()
+        );
+        this.handlers.put(
                 "PLAYER_TROPHIES",
                 new PlayerTrophiesHandler()
+        );
+        this.handlers.put(
+                "ACCUSATION_MSG",
+                new AccusationHandler()
         );
 
     }
