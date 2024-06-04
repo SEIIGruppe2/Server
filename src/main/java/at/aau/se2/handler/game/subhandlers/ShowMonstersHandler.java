@@ -30,6 +30,8 @@ public class ShowMonstersHandler implements ActionHandler {
             List<Actioncard> cards = UtilityMethods.findPlayer(session,lobby.getPlayers()).getCards();
             for(Actioncard c:cards)
             if(c.getId() == Integer.parseInt(cardid)){
+                System.out.println("Searchedring" + getRing(c));
+                System.out.println("Searchedzone" + c.getZone());
                searchedring = getRing(c);
                searchedzone= c.getZone();
             }
@@ -57,6 +59,7 @@ public class ShowMonstersHandler implements ActionHandler {
             else
                 builder.append("'").append(m).append("',");
         }
+        System.out.println(builder.toString());
         return builder.toString();
     }
 
@@ -76,16 +79,19 @@ public class ShowMonstersHandler implements ActionHandler {
     }
 
     private void addSearchedMonstersToList(List<Monster> monsters){
+
         if(searchedring==4){
             for(Monster m:monsters){
-                if(m.getZone()-1==searchedzone){
+                System.out.println("Monster"+m.getId()+m.getName()+m.getZone()+m.getRing());
+                if(m.getZone()==searchedzone){
                     monsterids.add(String.valueOf(m.getId()));
 
                 }
             }
         } else {
             for(Monster m:monsters){
-                if(m.getZone()-1==searchedzone&&m.getRing()==searchedring){
+                System.out.println("Monster"+m.getRing()+m.getZone());
+                if(m.getZone()==searchedzone&&m.getRing()==searchedring){
                     monsterids.add(String.valueOf(m.getId()));
 
 
