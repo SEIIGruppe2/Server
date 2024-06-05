@@ -46,7 +46,7 @@ public class PlayerAttackHandler implements ActionHandler {
                 throw new CardCannotAttackException();
             }
 
-            if(monster.getLifepoints() == -1){
+            if(monster.getLifepoints() <= 0){
                 logi("MONSTER DEAD, ADD POINTS"); //DEBUG
                 updatePlayerPoints(player, monster.getName());
                 lobby.getGameState().getMonsters().remove(monster);
