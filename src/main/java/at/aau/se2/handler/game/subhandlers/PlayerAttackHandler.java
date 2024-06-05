@@ -40,6 +40,11 @@ public class PlayerAttackHandler implements ActionHandler {
                                 .get(Integer.parseInt(m[0]));
             logi(monster.convertToJson());
             if(card.doesDmg(monster) == 0){
+                if(player.isCheatToggleOn()){
+                    card.doesDmg(monster);
+                    player.setCheating(true);
+                    player.setCheatingRoundsLeft(4);
+                }
                 player.getCards().remove(card);
             }
             else {
