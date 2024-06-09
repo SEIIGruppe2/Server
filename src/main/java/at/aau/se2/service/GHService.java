@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 
-import static at.aau.se2.service.LobbyService.moveToLobby;
+import static at.aau.se2.service.LobbyService.findLobby;
 import static at.aau.se2.utils.UtilityMethods.findPlayer;
 
 public class GHService {
@@ -152,7 +152,7 @@ public class GHService {
 
     public void helpAfterConnectionEstablished(WebSocketSession session)
             throws IOException {
-        moveToLobby(session, players);
+        findLobby(session, players);
         this.sendMessage(session, "WAITING_FOR_PLAYERS", "Waiting for other players to connect.");
     }
 

@@ -22,7 +22,7 @@ public class LobbyService {
         session.sendMessage(new TextMessage("{ 'type':'LOBBY_ASSIGNED' }"));
     }
 
-    public static void moveToLobby(WebSocketSession session, List<Player> players) throws IOException {
+    public static void findLobby(WebSocketSession session, List<Player> players) throws IOException {
         if(currentlobby == null|| currentlobby.getPlayers().size()==4){
             currentlobby = createLobby();
         }
