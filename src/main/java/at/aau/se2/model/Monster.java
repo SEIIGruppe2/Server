@@ -25,21 +25,22 @@ public abstract class Monster extends Tower implements JsonSerializable {
     @Override
     public String convertToJson(){
         StringBuilder builder = new StringBuilder();
-        builder.append("{ 'id': '")
+        builder.append("{")
+                .append("\"id\":")
                 .append(this.id)
-                .append("', ")
-                .append("'zone': '")
+                .append(", ")
+                .append("\"zone\":")
                 .append(this.zone)
-                .append("', ")
-                .append("'ring': '")
+                .append(", ")
+                .append("\"ring\":")
                 .append(this.ring)
-                .append("', ")
-                .append("'name': '")
+                .append(", ")
+                .append("\"name\":\"")
                 .append(this.name)
-                .append("', ")
-                .append("'lifepoints': '")
+                .append("\", ")
+                .append("\"lifepoints\":")
                 .append(this.lifepoints)
-                .append("'}");
+                .append("}");
         return builder.toString();
     }
 }

@@ -23,6 +23,7 @@ public class DrawCardHandler implements ActionHandler {
             Actioncard card = drawRandomCard(lobby);
             UtilityMethods.findPlayer(session, lobby).getCards().add(card);
             DrawCardDTO dto = new DrawCardDTO(card);
+            logi(card.convertToJson());
             session.sendMessage(dto.makeMessage());
         }
         catch(PlayerNotFoundException p){

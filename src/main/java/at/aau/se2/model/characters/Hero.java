@@ -10,7 +10,7 @@ public final class Hero extends Actioncard {
     }
     @Override
     public int doesDmg(Monster monster){
-        if(monster.getZone() == this.zone && monster.getRing() > 0 && monster.getRing() < 4) {
+        if(monster.getZone() == this.zone && monster.getRing() >= 0 && monster.getRing() < 4) {
             monster.takeDamage(dmg);
             return 0;
         }
