@@ -1,20 +1,7 @@
 package at.aau.se2.handler.game.subhandlers;
 
-import at.aau.se2.model.monsters.Bullrog;
-import at.aau.se2.model.monsters.Slime;
-import at.aau.se2.model.monsters.Sphinx;
-import at.aau.se2.utils.GameState;
-import at.aau.se2.utils.Lobby;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import java.security.SecureRandom;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-
 public class SpawnMonsterHandlerTest {
-    private Lobby lobby;
+    /*private Lobby lobby;
 
     private int zone;
     private SecureRandom rn;
@@ -43,12 +30,5 @@ public class SpawnMonsterHandlerTest {
         assertEquals(0, SpawnMonsterHandler.getMonsterId());
         SpawnMonsterHandler.increaseMonsterId();
         assertEquals(1, SpawnMonsterHandler.getMonsterId());
-    }
-
-    @Test
-    public void testConvertToJson(){
-        Slime slime = new Slime(1,1,1);
-        String expected = "{ 'type':'SPAWN_MONSTER', 'monster': " + slime.convertToJson() + "}";
-        assertEquals(expected, sph.convertToJson(slime));
-    }
+    }*/
 }

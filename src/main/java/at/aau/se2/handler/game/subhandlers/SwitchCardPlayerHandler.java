@@ -27,6 +27,7 @@ public class SwitchCardPlayerHandler implements ActionHandler {
 
 
             Actioncard currentCard = cardRemoval(getCardId(msgContent), cards);
+            setPassiveSwitch(msgContent);
 
             Player switchPlayer = findPlayerByUsername(switchUsername);
             switchPlayer.getCards().add(currentCard);

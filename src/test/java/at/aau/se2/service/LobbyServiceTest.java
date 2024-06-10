@@ -40,10 +40,10 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void testMakeLobby() throws IOException{
-        assertTrue(players.isEmpty());
-        assertEquals(4, makeLobby(conOrder, 0, players));
-        assertFalse(players.isEmpty());
-        assertEquals(4, players.size());
+    public void testFindLobby() throws IOException{
+      assertTrue(players.isEmpty());
+      findLobby(mock(WebSocketSession.class), players);
+      assertFalse(players.isEmpty());
+      assertEquals(1, players.size());
     }
 }

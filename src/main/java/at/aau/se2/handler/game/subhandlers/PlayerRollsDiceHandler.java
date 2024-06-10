@@ -1,7 +1,6 @@
 package at.aau.se2.handler.game.subhandlers;
 
 
-import at.aau.se2.handler.game.GameHandler;
 import at.aau.se2.utils.Lobby;
 import at.aau.se2.utils.Player;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -19,7 +18,7 @@ import static at.aau.se2.utils.UtilityMethods.logs;
 
 public class PlayerRollsDiceHandler implements ActionHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
-
+    // TODO: Refactor to Service, DTO and Handler
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
         try {

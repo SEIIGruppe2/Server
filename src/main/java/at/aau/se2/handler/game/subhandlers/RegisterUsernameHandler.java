@@ -14,7 +14,6 @@ import static at.aau.se2.utils.UtilityMethods.findPlayer;
 import static at.aau.se2.utils.UtilityMethods.logi;
 
 public class RegisterUsernameHandler implements ActionHandler{
-
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
         try {

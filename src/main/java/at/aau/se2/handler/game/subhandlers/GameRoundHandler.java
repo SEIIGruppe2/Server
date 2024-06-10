@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class GameRoundHandler implements ActionHandler {
+
+    // TODO: Refactor to Service, DTO and Handler
     private static final Logger logger = Logger.getLogger(GameRoundHandler.class.getName());
     private ObjectMapper objectMapper = new ObjectMapper();
     private int roundNumber = 0;
