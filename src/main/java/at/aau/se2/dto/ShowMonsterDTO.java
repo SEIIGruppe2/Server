@@ -17,23 +17,23 @@ public class ShowMonsterDTO extends ParentDTO{
     }
     @Override
     public TextMessage makeMessage() {
-        ObjectNode node = this.getMapper().createObjectNode();
-        node.put("type", getType());
-        node.put("monstersid", listToJsonArray());
-        logi(node.toString());
-        return new TextMessage(node.toString());
+
+        StringBuilder builder = new StringBuilder();
+        builder.append("{ 'type': 'SHOW_MONSTERS', 'monstersid': [");
+        builder.append(listToJsonArray());
+
+        return new TextMessage(builder.toString());
     }
 
     private String listToJsonArray(){
-        StringBuilder builder = new StringBuilder();
-        builder.append("[");
-        String arr = "[";
+        StringBuilder monster = new StringBuilder();
         for(String m : monsters){
             if(monsters.get(monsters.size()-1).equals(m))
-                builder.append("'").append(m).append("']}");
+                monster.append("'").append(m).append("']}");
             else
-                builder.append("'").append(m).append("',");
+                monster.append("'").append(m).append("',");
         }
-        return builder.toString();
+
+        return monster.toString();
     }
 }

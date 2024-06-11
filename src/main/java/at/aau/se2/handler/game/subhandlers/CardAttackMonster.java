@@ -1,8 +1,25 @@
 package at.aau.se2.handler.game.subhandlers;
 
-public class CardAttackMonster /*implements ActionHandler*/ {
-   /*
-    private static final Logger logger = Logger.getLogger(GameRoundHandler.class.getName());
+import at.aau.se2.exceptions.PlayerNotFoundException;
+import at.aau.se2.model.Actioncard;
+import at.aau.se2.model.Monster;
+import at.aau.se2.utils.Lobby;
+import at.aau.se2.utils.Player;
+import at.aau.se2.utils.UtilityMethods;
+import ch.qos.logback.classic.Logger;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+import org.springframework.web.socket.TextMessage;
+import org.springframework.web.socket.WebSocketSession;
+
+import java.io.IOException;
+import java.util.List;
+
+import static at.aau.se2.utils.UtilityMethods.logi;
+
+public class CardAttackMonster implements ActionHandler {
+
     private String monsterId;
     private String lifepoints;
     private ObjectMapper objectMapper = new ObjectMapper();
@@ -11,18 +28,13 @@ public class CardAttackMonster /*implements ActionHandler*/ {
         try{
             String cardid = msg.path("cardid").asText();
             this.monsterId = msg.path("monsterid").asText();
-            System.out.println(msg.toString());
+
             removeCard(Integer.parseInt(cardid), UtilityMethods.findPlayer(session, lobby).getCards());
             List<Monster> monsters =lobby.getGameState().getMonsters();
             Monster m = findmonster(Integer.parseInt(monsterId), monsters);
             this.lifepoints = String.valueOf(decreaseLifePoints(m));
             if(lifepoints.equals("-1")){
                 monsters.remove(m);
-            }
-            for(Monster a: monsters){
-
-                System.out.println(String.valueOf(a.getId()));
-                System.out.println(a.getLifepoints());
             }
             updateOtherUser(lobby);
 
@@ -32,7 +44,7 @@ public class CardAttackMonster /*implements ActionHandler*/ {
         catch(PlayerNotFoundException p){
             logi("PLAYER NOT IN LOBBY (SwitchCardDeckHandler)");
         } catch (IOException e) {
-            logger.severe("Failed to send cardattackmessage: " + e.getMessage());
+
         }
     }
 
@@ -74,9 +86,9 @@ public class CardAttackMonster /*implements ActionHandler*/ {
                 a.getSession().sendMessage(new TextMessage(messageNode.toString()));
             }
         }catch (IOException e) {
-            logger.severe("Failed to send cardattackmessage: " + e.getMessage());
+
         }
     }
 
-*/
+
 }

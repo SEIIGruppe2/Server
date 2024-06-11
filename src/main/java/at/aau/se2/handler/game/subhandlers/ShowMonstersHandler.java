@@ -21,30 +21,30 @@ import static at.aau.se2.utils.UtilityMethods.logi;
 
 public class ShowMonstersHandler implements ActionHandler {
     // TODO: Refactor to Service, DTO and Handler
-    @Override
+   @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
-        try{
+       try {
 
-            String cardid =  readInfosFromMessage(msg);
-            List<Monster> monsters= lobby.getGameState().getMonsters();
-            Player player = UtilityMethods.findPlayer(session, lobby.getPlayers());
-            int searchedring = getRing(getCard(Integer.parseInt(cardid), player.getCards()));
-            int searchedzone = getCard(Integer.parseInt(cardid),player.getCards()).getZone();
-            logi("Monsters"+searchedring+searchedzone);
-            List<String> monsterids = addSearchedMonstersToList(monsters, searchedring,searchedzone);
-            logi("Monsters"+monsterids.size());
-            ShowMonsterDTO showMonsterDTO = new ShowMonsterDTO(monsterids);
-            session.sendMessage(showMonsterDTO.makeMessage());
+           String cardid = readInfosFromMessage(msg);
+           List<Monster> monsters = lobby.getGameState().getMonsters();
+           Player player = UtilityMethods.findPlayer(session, lobby.getPlayers());
+           int searchedring = getRing(getCard(Integer.parseInt(cardid), player.getCards()));
+           int searchedzone = getCard(Integer.parseInt(cardid), player.getCards()).getZone();
+           logi("Monsters" + searchedring + searchedzone);
+           List<String> monsterids = addSearchedMonstersToList(monsters, searchedring, searchedzone);
+           logi("Monsters" + monsterids.size());
+           ShowMonsterDTO showMonsterDTO = new ShowMonsterDTO(monsterids);
+           session.sendMessage(showMonsterDTO.makeMessage());
 
-        }catch (PlayerNotFoundException e) {
-            logi("PLAYER NOT FOUND (ShowMonstersHandler)");
-        }catch(IOException i){
-            Logger.getLogger("global")
-                    .info(i.getMessage() + "(ShowMonstersHandler)");
-        }
+       } catch (PlayerNotFoundException e) {
+           logi("PLAYER NOT FOUND (ShowMonstersHandler)");
+       } catch (IOException i) {
+           Logger.getLogger("global")
+                   .info(i.getMessage() + "(ShowMonstersHandler)");
+       }
+   }
 
 
-    }
 
 
 
