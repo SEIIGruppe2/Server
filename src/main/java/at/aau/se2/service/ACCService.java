@@ -9,7 +9,9 @@ import static at.aau.se2.utils.UtilityMethods.logs;
  * This class provides a method to check if a player is cheating and apply penalties accordingly.
  */
 public class ACCService {
-
+    private ACCService() {
+        // Prevents instantiation
+    }
     /**
      * Checks if the accused player is cheating and applies the appropriate penalty.
      * If the accused player is found cheating, they receive a penalty. If not, the accuser receives a penalty.
