@@ -10,7 +10,9 @@ import static at.aau.se2.utils.UtilityMethods.logs;
  * This class provides a method to update the player's points according to the monster's name.
  */
 public class PTService {
+private PTService(){
 
+}
     /**
      * Updates the points of the given player based on the name of the monster defeated.
      * Different monsters provide different point values.
