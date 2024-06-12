@@ -13,14 +13,34 @@ public class DCHService {
     private static int cardId = 0;
     private static SecureRandom rn = new SecureRandom();
 
+    /**
+     * Constructs a new DCHService with the specified SecureRandom instance.
+     *
+     * @param rn the SecureRandom instance to be used for generating random values
+     */
     public DCHService(SecureRandom rn){
         DCHService.rn = rn;
     }
+
+    /**
+     * Converts the given Actioncard object to a JSON string representation.
+     *
+     * @param card the Actioncard object to be converted to JSON
+     * @return a JSON string representing the Actioncard object
+     */
     public static String convertToJson(Actioncard card){
         return "{ 'type' : 'DRAW_CARD', " +
                 card.convertToJson() + "}";
     }
 
+    /**
+     * Draws a random Actioncard based on the current game state of the specified lobby.
+     * The type of card drawn depends on the index of the minimum card amount in the lobby's game state.
+     * The card drawn can be an Archer, Fighter, Knight, or Hero.
+     *
+     * @param lobby the Lobby object for which to draw the random card
+     * @return the drawn Actioncard object
+     */
     public static Actioncard drawRandomCard(Lobby lobby){
         int i = lobby.getGameState().getIndexMinimumCardAmount();
         Actioncard card = switch(i){
