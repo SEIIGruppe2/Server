@@ -14,7 +14,9 @@ import static at.aau.se2.utils.UtilityMethods.*;
  * This class provides methods to validate messages, validate entities, and trigger monster attacks.
  */
 public class MAHService {
-
+    private MAHService(){
+        // Prevents instantiation
+    }
     /**
      * Checks if the given message is of type "MONSTER_ATTACK".
      *
