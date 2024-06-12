@@ -7,11 +7,18 @@ import static at.aau.se2.utils.UtilityMethods.logs;
 /**
  * Service class for handling accusations of cheating.
  * This class provides a method to check if a player is cheating and apply penalties accordingly.
+ * <p>
+ * This class cannot be instantiated because it contains only static methods.
  */
 public class ACCService {
+
+    /**
+     * Private constructor to prevent instantiation.
+     */
     private ACCService() {
         // Prevents instantiation
     }
+
     /**
      * Checks if the accused player is cheating and applies the appropriate penalty.
      * If the accused player is found cheating, they receive a penalty. If not, the accuser receives a penalty.
@@ -21,7 +28,7 @@ public class ACCService {
      */
     public static void checkCheater(Player cheater, Player accusator) {
         int penalty = 5;
-        if(cheater.isCheating()) {
+        if (cheater.isCheating()) {
             int points = cheater.getPoints();
             if (points >= penalty) {
                 cheater.setPoints(-penalty);
