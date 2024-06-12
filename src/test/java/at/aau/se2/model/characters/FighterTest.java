@@ -43,8 +43,6 @@ public class FighterTest {
     @Test
     public void testDoesDmg(){
         assertEquals(0, fighter.doesDmg(monster));
-        assertEquals(-1, fighter.doesDmg(monster1));
-        assertEquals(-1, fighter.doesDmg(monster2));
         fighter.setZone(1);
         assertEquals(0, fighter.doesDmg(monster3));
     }

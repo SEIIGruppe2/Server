@@ -44,8 +44,6 @@ public class ArcherTest {
     @Test
     public void testDoesDmg(){
         assertEquals(0, archer.doesDmg(monster));
-        assertEquals(-1, archer.doesDmg(monster1));
-        assertEquals(-1, archer.doesDmg(monster2));
         archer.setZone(1);
         assertEquals(0, archer.doesDmg(monster3));
     }

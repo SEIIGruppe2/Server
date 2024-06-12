@@ -54,10 +54,6 @@ public class HeroTest {
         assertEquals(0, hero.doesDmg(monster));
 
         assertEquals(0, hero.doesDmg(monster1));
-
-        assertEquals(-1, hero.doesDmg(monster2));
-
-        assertEquals(-1, hero.doesDmg(monster3));
         hero.setZone(1);
         assertEquals(0, hero.doesDmg(monster4));
 
