@@ -8,11 +8,18 @@ import static at.aau.se2.utils.UtilityMethods.logs;
 /**
  * Service class for updating player points based on the monster defeated.
  * This class provides a method to update the player's points according to the monster's name.
+ * <p>
+ * This class cannot be instantiated because it contains only static methods.
  */
 public class PTService {
-private PTService(){
 
-}
+    /**
+     * Private constructor to prevent instantiation.
+     */
+    private PTService() {
+        // Prevents instantiation
+    }
+
     /**
      * Updates the points of the given player based on the name of the monster defeated.
      * Different monsters provide different point values.
