@@ -36,9 +36,7 @@ public class EndGameHandler implements ActionHandler {
         String message = messageNode.toString();
 
         try {
-            synchronized (session) {
                 session.sendMessage(new TextMessage(message));
-            }
         } catch (IOException e) {
             logger.severe("Failed to notify player: " + e.getMessage());
         }
