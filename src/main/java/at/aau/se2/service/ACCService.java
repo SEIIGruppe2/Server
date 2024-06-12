@@ -6,18 +6,25 @@ import static at.aau.se2.utils.UtilityMethods.logs;
 
 public class ACCService {
     public static void checkCheater(Player cheater, Player accusator) {
+        int penalty = 5;
         if(cheater.isCheating()) {
             int points = cheater.getPoints();
-            cheater.setPoints(-points); //Vorerst alle Punkte entfernen von Cheater. Balancing erfolgt später.
+            if (points >= penalty) {
+                cheater.setPoints(-penalty);
+            } else {
+                cheater.setPoints(-points);
+            }
             cheater.setCheatingRoundsLeft(0);
             cheater.setCheating(false);
             logs("Cheater: guilty + penalty received");
-        }
-        else{
+        } else {
             int points = accusator.getPoints();
-            accusator.setPoints(-points); //Vorerst alle Punkte entfernen von Accuser. Balancing erfolgt später.
+            if (points >= penalty) {
+                accusator.setPoints(-penalty);
+            } else {
+                accusator.setPoints(-points);
+            }
             logs("Cheater: not guilty + Accusator penalty received");
         }
     }
-
 }
