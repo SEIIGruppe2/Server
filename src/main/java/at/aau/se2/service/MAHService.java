@@ -48,11 +48,24 @@ public class MAHService {
         }
     }
 
-    // Helper methods to find monsters or towers by ID from a list
+    /**
+     * Finds a monster by its ID from a list of monsters.
+     *
+     * @param monsters the list of monsters
+     * @param id the ID of the monster to find
+     * @return the monster with the specified ID, or null if not found
+     */
     static Monster findMonsterById(List<Monster> monsters, int id) {
         return monsters.stream().filter(m -> m.getId() == id).findFirst().orElse(null);
     }
 
+    /**
+     * Finds a tower by its ID from a list of towers.
+     *
+     * @param towers the list of towers
+     * @param id the ID of the tower to find
+     * @return the tower with the specified ID, or null if not found
+     */
     static Tower findTowerById(List<Tower> towers, int id) {
         return towers.stream().filter(t -> t.getId() == id).findFirst().orElse(null);
     }
