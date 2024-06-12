@@ -11,10 +11,7 @@ public final class Archer extends Actioncard {
 
     @Override
     public int doesDmg(Monster monster){
-        if(monster.getZone() == this.zone && monster.getRing() == 1) {
-            monster.takeDamage(dmg);
-            return 0;
-        }
-        return -1;
+        monster.takeDamage(dmg);
+        return 0;
     }
 }

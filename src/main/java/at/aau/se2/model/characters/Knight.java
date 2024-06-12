@@ -10,10 +10,7 @@ public final class Knight extends Actioncard {
     }
     @Override
     public int doesDmg(Monster monster){
-        if(monster.getZone() == this.zone && monster.getRing() == 2) {
-            monster.takeDamage(dmg);
-            return 0;
-        }
-        return -1;
+        monster.takeDamage(dmg);
+        return 0;
     }
 }
