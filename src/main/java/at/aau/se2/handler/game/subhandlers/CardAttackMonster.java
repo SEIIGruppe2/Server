@@ -18,7 +18,7 @@ import java.util.List;
 
 import static at.aau.se2.utils.UtilityMethods.logi;
 
-public class CardAttackMonster implements ActionHandler {
+/*public class CardAttackMonster implements ActionHandler {
 
     private String monsterId;
     private String lifepoints;
@@ -91,4 +91,4 @@ public class CardAttackMonster implements ActionHandler {
     }
 
 
-}
+}*/

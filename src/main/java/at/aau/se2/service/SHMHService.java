@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SHMHService {
+
     public static String readInfosFromMessage(JsonNode msg){
         String arr =  msg.path("cardid").asText();
         return arr;
