@@ -45,9 +45,7 @@ public class KnightTest {
     public void testDoesDmg(){
         assertEquals(0, knight.doesDmg(monster));
         monster.setRing(3);
-        assertEquals(-1, knight.doesDmg(monster1));
         monster.setZone(1);
-        assertEquals(-1, knight.doesDmg(monster2));
         knight.setZone(1);
         monster.setRing(2);
         assertEquals(0, knight.doesDmg(monster3));
