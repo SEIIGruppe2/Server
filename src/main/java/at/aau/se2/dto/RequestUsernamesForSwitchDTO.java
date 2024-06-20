@@ -13,7 +13,7 @@ import static at.aau.se2.utils.UtilityMethods.logi;
  * It extends the ParentDTO class and encapsulates the list of usernames to be requested.
  */
 public class RequestUsernamesForSwitchDTO extends ParentDTO{
-    private List<String> usernames;
+    private final List<String> usernames;
 
     /**
      * Constructs a new RequestUsernamesForSwitchDTO object with the specified list of usernames.
