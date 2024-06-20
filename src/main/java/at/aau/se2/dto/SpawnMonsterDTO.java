@@ -4,8 +4,11 @@ import at.aau.se2.model.Monster;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.socket.TextMessage;
+
+import static at.aau.se2.utils.UtilityMethods.logs;
 
 /**
  * The SpawnMonsterDTO class represents a data transfer object (DTO) for spawning a monster.
@@ -30,9 +33,9 @@ public class SpawnMonsterDTO extends ParentDTO {
      * @return a TextMessage representing the spawned monster
      */
     @Override
-    public TextMessage makeMessage() {
+    public TextMessage makeMessage(){
         ObjectNode node = this.getMapper().createObjectNode();
-        node.put("type", this.getType());
+        node.set("type", JsonNodeFactory.instance.textNode(this.getType()));
         ObjectMapper mapper = new ObjectMapper();
 
         try {
@@ -41,7 +44,7 @@ public class SpawnMonsterDTO extends ParentDTO {
 
         } catch (JsonProcessingException e)
         {
-            throw new RuntimeException("Fehler beim Erstellen des Monster-JSON", e);
+            logs("Fehler beim Erstellen des Monster-JSON" + e.getMessage());
         }
 
 
