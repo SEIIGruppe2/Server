@@ -32,9 +32,6 @@ public class PlayerAttackDTO extends ParentDTO{
     @Override
     public TextMessage makeMessage() {
         ObjectNode node = this.getMapper().createObjectNode();
-//        node.put("type", this.getType());
-//        node.put("monsterid", this.monsterId);
-//        node.put("lifepoints", this.lp);
         node.set("type", JsonNodeFactory.instance.textNode(this.getType()));
         node.set("monsterid", JsonNodeFactory.instance.textNode(this.monsterId));
         node.set("lifepoints", JsonNodeFactory.instance.numberNode(this.lp));

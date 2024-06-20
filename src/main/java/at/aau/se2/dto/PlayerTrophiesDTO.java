@@ -33,9 +33,6 @@ public class PlayerTrophiesDTO extends ParentDTO {
     @Override
     public TextMessage makeMessage() {
         ObjectNode node = this.getMapper().createObjectNode();
-//        node.put("type", this.getType());
-//        node.put("playerName", playerName);
-//        node.put("points", points);
         node.set("type", JsonNodeFactory.instance.textNode(this.getType()));
         node.set("playerName", JsonNodeFactory.instance.textNode(this.playerName));
         node.set("points", JsonNodeFactory.instance.numberNode(this.points));

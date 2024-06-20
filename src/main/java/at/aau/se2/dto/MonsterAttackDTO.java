@@ -42,12 +42,6 @@ public class MonsterAttackDTO extends ParentDTO {
     @Override
     public TextMessage makeMessage() {
         ObjectNode node = this.getMapper().createObjectNode();
-//        node.put("type", this.getType());
-//        node.put("monsterId", monsterId);
-//        node.put("towerId", towerId);
-//        node.put("monsterHp", monsterHp);
-//        node.put("towerHp", towerHp);
-//        node.put("attackStatus", attackStatus);
         node.set("type", JsonNodeFactory.instance.textNode(this.getType()));
         node.set("monsterId", JsonNodeFactory.instance.textNode(this.monsterId));
         node.set("towerId", JsonNodeFactory.instance.textNode(this.towerId));

@@ -1,5 +1,6 @@
 package at.aau.se2.dto;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.socket.TextMessage;
 
@@ -28,8 +29,8 @@ public class RegisterUsernameDTO extends ParentDTO{
     @Override
     public TextMessage makeMessage(){
         ObjectNode node = this.getMapper().createObjectNode();
-        node.put("type", this.getType());
-        node.put("response", res);
+        node.set("type", JsonNodeFactory.instance.textNode(this.getType()));
+        node.set("response", JsonNodeFactory.instance.textNode(this.res));
         return new TextMessage(node.toString());
     }
 }

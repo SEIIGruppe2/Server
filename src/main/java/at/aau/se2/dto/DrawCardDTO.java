@@ -30,10 +30,6 @@ public class DrawCardDTO extends ParentDTO{
     @Override
     public TextMessage makeMessage(){
         ObjectNode node = this.getMapper().createObjectNode();
-//        node.put("type", this.getType());
-//        node.put("id", card.getId());
-//        node.put("name", card.getName());
-//        node.put("zone", card.getZone());
         node.set("type", JsonNodeFactory.instance.textNode(this.getType()));
         node.set("id", JsonNodeFactory.instance.numberNode(card.getId()));
         node.set("name", JsonNodeFactory.instance.textNode(card.getName()));
