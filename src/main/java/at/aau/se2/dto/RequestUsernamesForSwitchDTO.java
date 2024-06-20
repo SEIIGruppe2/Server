@@ -1,5 +1,6 @@
 package at.aau.se2.dto;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.socket.TextMessage;
 
@@ -32,8 +33,8 @@ public class RequestUsernamesForSwitchDTO extends ParentDTO{
     @Override
     public TextMessage makeMessage() {
         ObjectNode node = this.getMapper().createObjectNode();
-        node.put("type", getType());
-        node.put("usernames", listToJsonArray());
+        node.set("type", JsonNodeFactory.instance.textNode(this.getType()));
+        node.set("usernames", JsonNodeFactory.instance.textNode(listToJsonArray()));
         logi(node.toString());
         return new TextMessage(node.toString());
     }
@@ -44,14 +45,15 @@ public class RequestUsernamesForSwitchDTO extends ParentDTO{
      * @return a JSON array string representing the list of usernames
      */
     private String listToJsonArray(){
-        String arr = "[";
+        StringBuilder arr = new StringBuilder();
+        arr.append("[");
         for(String s : usernames){
             if(s.equals(usernames.get(usernames.size()-1))){
-                arr += "'" + s + "']";
+                arr.append("'").append(s).append("']");
                 break;
             }
-            arr += "'" + s + "',";
+            arr.append("'").append(s).append("',");
         }
-        return arr;
+        return arr.toString();
     }
 }
