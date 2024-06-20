@@ -1,5 +1,6 @@
 package at.aau.se2.dto;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.socket.TextMessage;
 
@@ -41,12 +42,18 @@ public class MonsterAttackDTO extends ParentDTO {
     @Override
     public TextMessage makeMessage() {
         ObjectNode node = this.getMapper().createObjectNode();
-        node.put("type", this.getType());
-        node.put("monsterId", monsterId);
-        node.put("towerId", towerId);
-        node.put("monsterHp", monsterHp);
-        node.put("towerHp", towerHp);
-        node.put("attackStatus", attackStatus);
+//        node.put("type", this.getType());
+//        node.put("monsterId", monsterId);
+//        node.put("towerId", towerId);
+//        node.put("monsterHp", monsterHp);
+//        node.put("towerHp", towerHp);
+//        node.put("attackStatus", attackStatus);
+        node.set("type", JsonNodeFactory.instance.textNode(this.getType()));
+        node.set("monsterId", JsonNodeFactory.instance.textNode(this.monsterId));
+        node.set("towerId", JsonNodeFactory.instance.textNode(this.towerId));
+        node.set("monsterHp", JsonNodeFactory.instance.numberNode(this.monsterHp));
+        node.set("towerHp", JsonNodeFactory.instance.numberNode(this.towerHp));
+        node.set("attackStatus", JsonNodeFactory.instance.textNode(this.attackStatus));
         return new TextMessage(node.toString());
     }
 }
