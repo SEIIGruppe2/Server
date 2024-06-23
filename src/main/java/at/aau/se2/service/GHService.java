@@ -233,9 +233,7 @@ public class GHService {
             for(Player player : lobby.getPlayers()){
                 this.handler.getConnectionOrder().remove(player.getSession());
                 setNextPlayer(-1);
-                this.sendMessage(player.getSession(), "GAME_FINISHED", "The game has finished, you will be disconnected");
                 player.getSession().close();
-
                 players.remove(player);
             }
         }
