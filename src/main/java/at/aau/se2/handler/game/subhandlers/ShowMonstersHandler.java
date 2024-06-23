@@ -2,17 +2,14 @@ package at.aau.se2.handler.game.subhandlers;
 
 import at.aau.se2.dto.ShowMonsterDTO;
 import at.aau.se2.exceptions.PlayerNotFoundException;
-import at.aau.se2.model.Actioncard;
 import at.aau.se2.model.Monster;
 import at.aau.se2.utils.Lobby;
 import at.aau.se2.utils.Player;
 import at.aau.se2.utils.UtilityMethods;
 import com.fasterxml.jackson.databind.JsonNode;
-import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
