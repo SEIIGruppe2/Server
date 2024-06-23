@@ -23,8 +23,9 @@ public class RequestUsernamesForSwitchHandler extends RequestUsernamesHandler{
 
             for(Player a:players){
                 if(!a.getSession().equals(session)){
-                    if(a.getCards().size()>0)
-                    usernames.add(a.getUsername());
+                    if(a.getCards().size()>0) {
+                        usernames.add(a.getUsername());
+                    }
                 }
             }
             if(usernames.size()==0){
