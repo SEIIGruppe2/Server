@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.util.logging.Logger;
 
 public class RequestUsernamesHandler implements ActionHandler, JsonSerializable {
-    // TODO: DTO
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
         try{
