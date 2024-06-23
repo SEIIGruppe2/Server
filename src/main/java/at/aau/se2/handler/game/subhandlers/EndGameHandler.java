@@ -1,12 +1,16 @@
 package at.aau.se2.handler.game.subhandlers;
 
+import at.aau.se2.exceptions.LobbyNotFoundException;
 import at.aau.se2.utils.Lobby;
+import at.aau.se2.utils.Player;
+import at.aau.se2.utils.UtilityMethods;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Logger;
 
 /**
@@ -50,9 +54,14 @@ public class EndGameHandler implements ActionHandler {
         messageNode.put("hasWinner", hasWinner);
         String message = messageNode.toString();
 
+        List<Player> players = GameHandler.getPlayers();
+
         try {
-            session.sendMessage(new TextMessage(message));
-        } catch (IOException e) {
+            Lobby lobby = UtilityMethods.findLobby(session, players);
+            for(Player pl : lobby.getPlayers()){
+                pl.getSession().sendMessage(new TextMessage(message));
+            }
+        } catch (IOException | LobbyNotFoundException e) {
             logger.severe("Failed to notify player: " + e.getMessage());
         }
     }
