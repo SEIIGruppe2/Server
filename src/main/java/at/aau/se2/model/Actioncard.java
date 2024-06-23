@@ -10,7 +10,6 @@ import lombok.Getter;
  */
 @Getter
 public abstract class Actioncard implements JsonSerializable {
-    // TODO Discuss if dmg and zonePlayed should be byte
     protected String name;
     protected final int dmg = 1;
     protected int zone;

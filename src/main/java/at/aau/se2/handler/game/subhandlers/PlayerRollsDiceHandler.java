@@ -18,7 +18,6 @@ import static at.aau.se2.utils.UtilityMethods.logs;
 
 public class PlayerRollsDiceHandler implements ActionHandler {
     private final ObjectMapper objectMapper = new ObjectMapper();
-    // TODO: Refactor to Service, DTO and Handler
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
         try {

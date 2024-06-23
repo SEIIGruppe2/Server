@@ -1,5 +1,6 @@
 package at.aau.se2.dto;
 
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.socket.TextMessage;
 
@@ -32,9 +33,9 @@ public class PlayerTrophiesDTO extends ParentDTO {
     @Override
     public TextMessage makeMessage() {
         ObjectNode node = this.getMapper().createObjectNode();
-        node.put("type", this.getType());
-        node.put("playerName", playerName);
-        node.put("points", points);
+        node.set("type", JsonNodeFactory.instance.textNode(this.getType()));
+        node.set("playerName", JsonNodeFactory.instance.textNode(this.playerName));
+        node.set("points", JsonNodeFactory.instance.numberNode(this.points));
         return new TextMessage(node.toString());
     }
 }

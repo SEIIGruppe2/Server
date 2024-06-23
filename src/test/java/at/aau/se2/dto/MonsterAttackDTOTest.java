@@ -15,7 +15,7 @@ class MonsterAttackDTOTest {
     }
 
     @Test
-    protected void testMakeMessage() {
+    void testMakeMessage() {
         String expectedJson = "{\"type\":\"MONSTER_ATTACK\",\"monsterId\":\"monster1\",\"towerId\":\"tower1\",\"monsterHp\":10,\"towerHp\":5,\"attackStatus\":\"success\"}";
         TextMessage expectedMessage = new TextMessage(expectedJson);
         assertEquals(expectedMessage, dto.makeMessage());

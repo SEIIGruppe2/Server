@@ -1,6 +1,7 @@
 package at.aau.se2.dto;
 
 import at.aau.se2.model.Actioncard;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.web.socket.TextMessage;
 
@@ -29,10 +30,10 @@ public class DrawCardDTO extends ParentDTO{
     @Override
     public TextMessage makeMessage(){
         ObjectNode node = this.getMapper().createObjectNode();
-        node.put("type", this.getType());
-        node.put("id", card.getId());
-        node.put("name", card.getName());
-        node.put("zone", card.getZone());
+        node.set("type", JsonNodeFactory.instance.textNode(this.getType()));
+        node.set("id", JsonNodeFactory.instance.numberNode(card.getId()));
+        node.set("name", JsonNodeFactory.instance.textNode(card.getName()));
+        node.set("zone", JsonNodeFactory.instance.numberNode(card.getZone()));
         return new TextMessage(node.toString());
     }
 }

@@ -12,9 +12,9 @@ import org.springframework.web.socket.WebSocketSession;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-public class GameRoundHandler implements ActionHandler {
+import static at.aau.se2.utils.UtilityMethods.logi;
 
-    // TODO: Refactor to Service, DTO and Handler
+public class GameRoundHandler implements ActionHandler {
     private static final Logger logger = Logger.getLogger(GameRoundHandler.class.getName());
     private ObjectMapper objectMapper = new ObjectMapper();
     private int roundNumber = 0;
@@ -25,7 +25,7 @@ public class GameRoundHandler implements ActionHandler {
         try {
             String type = msg.path("type").asText();
             if ("ROUND_COUNTER".equals(type)) {
-                endRound(lobby);
+                endRound();
                 startNextRound(lobby);
             }
         } catch (Exception e) {
@@ -33,8 +33,8 @@ public class GameRoundHandler implements ActionHandler {
         }
     }
 
-    private void endRound(Lobby lobby) {
-        logger.info("Ending round " + roundNumber);
+    private void endRound() {
+        logi("Ending round " + roundNumber);
     }
 
     private void startNextRound(Lobby lobby) {
@@ -42,7 +42,7 @@ public class GameRoundHandler implements ActionHandler {
         for (Player player : lobby.getPlayers()) {
             sendStartRoundMessage(player.getSession());
         }
-        logger.info("Starting round " + roundNumber);
+        logi("Starting round " + roundNumber);
     }
 
     private void sendStartRoundMessage(WebSocketSession session) {

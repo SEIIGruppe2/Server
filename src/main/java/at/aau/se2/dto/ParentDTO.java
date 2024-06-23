@@ -20,7 +20,7 @@ public abstract class ParentDTO {
      *
      * @param type the type of the DTO
      */
-    public ParentDTO(String type){
+    protected ParentDTO(String type){
         this.mapper = new ObjectMapper();
         this.type = type;
     }

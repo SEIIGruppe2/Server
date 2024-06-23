@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.List;
 import java.util.logging.Logger;
 public class TurnHandler implements ActionHandler {
-    // TODO: Refactor to Service, DTO and Handler
     private static final Logger logger = Logger.getLogger(TurnHandler.class.getName());
     private int currentPlayerIndex = 0;
     private int playerCount = 4;
