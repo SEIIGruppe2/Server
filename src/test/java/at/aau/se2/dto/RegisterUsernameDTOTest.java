@@ -5,11 +5,11 @@ import org.springframework.web.socket.TextMessage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RegisterUsernameDTOTest {
+class RegisterUsernameDTOTest {
     private RegisterUsernameDTO dto;
 
     @Test
-    public void testMakeMessage(){
+    void testMakeMessage(){
         dto = new RegisterUsernameDTO("accepted");
         String msg = "{\"type\":\"REGISTER_USERNAME\",\"response\":\"accepted\"}";
         TextMessage exp = new TextMessage(msg);

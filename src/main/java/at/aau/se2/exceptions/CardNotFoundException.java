@@ -6,7 +6,7 @@ package at.aau.se2.exceptions;
  */
 public class CardNotFoundException extends Exception{
     /** The detail message for the exception. */
-    private String msg;
+    private final String msg;
 
     /**
      * Constructs a CardNotFoundException with the specified detail message.

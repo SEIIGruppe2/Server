@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RequestUsernamesForSwitchDTOTest {
+class RequestUsernamesForSwitchDTOTest {
     private List<String> names;
     private RequestUsernamesForSwitchDTO dto;
     @BeforeEach
@@ -22,7 +22,7 @@ public class RequestUsernamesForSwitchDTOTest {
     }
 
     @Test
-    public void testMakeMessage(){
+    void testMakeMessage(){
         String msg = "{\"type\":\"REQUEST_USERNAMES_SWITCH\",\"usernames\":\"['test 0','test 1','test 2','test 3','test 4']\"}";
         TextMessage exp = new TextMessage(msg);
         assertEquals(exp, dto.makeMessage());

@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 public class RequestUsernamesForSwitchHandler extends RequestUsernamesHandler{
-    // TODO: Refactor to Service, DTO and Handler
+
     public ArrayList<String> usernames;
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby) {
@@ -27,7 +27,7 @@ public class RequestUsernamesForSwitchHandler extends RequestUsernamesHandler{
                     usernames.add(a.getUsername());
                 }
             }
-            if(usernames.size()==0){
+            if(usernames.isEmpty()){
                 usernames.add("no users found");
             }
             session.sendMessage(new TextMessage(convertToJson()));

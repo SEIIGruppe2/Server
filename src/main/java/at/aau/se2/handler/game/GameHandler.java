@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 public class GameHandler implements WebSocketHandler {
     //region Members
     private final Logger logger;
-    private static GameHandler GAMEHANDLER;
+    private static GameHandler gameHandler;
     @Getter
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     @Getter
@@ -39,9 +39,9 @@ public class GameHandler implements WebSocketHandler {
     }
 
     public static GameHandler getInstance(){
-        if(GAMEHANDLER == null)
-            GAMEHANDLER = new GameHandler();
-        return GAMEHANDLER;
+        if(gameHandler == null)
+            gameHandler = new GameHandler();
+        return gameHandler;
     }
     //endregion
 

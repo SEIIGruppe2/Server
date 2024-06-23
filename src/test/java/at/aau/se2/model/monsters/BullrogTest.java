@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class BullrogTest {
+class BullrogTest {
     Bullrog bullrog;
     TowerImpl tower, tower2;
     @BeforeEach
@@ -21,7 +21,7 @@ public class BullrogTest {
     }
 
     @Test
-    public void testSetup(){
+    void testSetup(){
         assertEquals(3, bullrog.getLifepoints());
         assertEquals(2, bullrog.getZone());
         bullrog.setZone(3);
@@ -33,7 +33,7 @@ public class BullrogTest {
     }
 
     @Test
-    public void testTakeDamage(){
+    void testTakeDamage(){
         assertEquals(0, bullrog.takeDamage(1));
         assertEquals(2, bullrog.getLifepoints());
         assertEquals(-1, bullrog.takeDamage(2));
@@ -41,13 +41,13 @@ public class BullrogTest {
     }
 
     @Test
-    public void testDoesDamage(){
+    void testDoesDamage(){
         assertEquals(0, bullrog.doesDmg(tower));
         assertEquals(-1, bullrog.doesDmg(tower2));
     }
 
     @Test
-    public void testConvertToJson(){
+    void testConvertToJson(){
         String res = "{ 'id': '1', 'zone': '2', 'ring': '1', " +
                 "'name': 'Bullrog', 'lifepoints': '3'}";
         assertEquals(res, bullrog.convertToJson());

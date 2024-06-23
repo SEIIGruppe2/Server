@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-public class RequestUsernamesForSwitchHandlerTest {
+class RequestUsernamesForSwitchHandlerTest {
 
 
     private RequestUsernamesForSwitchHandler rufs;
@@ -22,7 +22,7 @@ public class RequestUsernamesForSwitchHandlerTest {
     }
 
     @Test
-    public void testConvertToJson(){
+     void testConvertToJson(){
 
         String test = "{ 'type': 'REQUEST_USERNAMES_SWITCH', 'usernames': ['123','456']}";
         rufs.usernames=new ArrayList<>();
