@@ -6,10 +6,10 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.socket.TextMessage;
 
-public class PlayerTrophiesDTOTest {
+class PlayerTrophiesDTOTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         String playerName = "testPlayer";
         int points = 1;
 
@@ -21,7 +21,7 @@ public class PlayerTrophiesDTOTest {
     }
 
     @Test
-    public void testMakeMessage() {
+    void testMakeMessage() {
         String playerName = "testPlayer";
         int points = 1;
 

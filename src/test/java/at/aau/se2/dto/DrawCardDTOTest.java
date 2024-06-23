@@ -14,7 +14,7 @@ public class DrawCardDTOTest {
     private Actioncard card;
 
     @BeforeEach
-    public void setup(){
+     void setup(){
         card = mock(Actioncard.class);
         when(card.getId()).thenReturn(1);
         when(card.getName()).thenReturn("Test");
@@ -23,7 +23,7 @@ public class DrawCardDTOTest {
     }
 
     @Test
-    public void testMakeMessage(){
+    void testMakeMessage(){
         String msg = "{\"type\":\"DRAW_CARD\",\"id\":1,\"name\":\"Test\",\"zone\":1}";
         TextMessage exp = new TextMessage(msg);
         assertEquals(exp, dto.makeMessage());
