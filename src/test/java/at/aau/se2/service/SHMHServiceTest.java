@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class SHMHServiceTest {
-    private Lobby lobby;
+
 
     @Test
     void testreadInfosFromMessage() {
