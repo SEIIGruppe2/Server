@@ -38,6 +38,7 @@ public class GameHandler implements WebSocketHandler {
     private GameHandler(){
         logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
         service = new GHService(this);
+        logi("GHService erstellt");
     }
 
     public static GameHandler getInstance(){
