@@ -57,11 +57,14 @@ public class UtilityMethods {
      * @throws LobbyNotFoundException if the lobby associated with the session is not found
      */
     public static Lobby findLobby(WebSocketSession session, List<Player> players) throws LobbyNotFoundException {
+        logi("findLobby is called!");
+        logi("Triggered by: " + session.getId());
         for(Player player : players){
             if(player.getSession() == session){
                 return player.getLobby();
             }
         }
+        logi("No player was found!");
         throw new LobbyNotFoundException();
     }
 

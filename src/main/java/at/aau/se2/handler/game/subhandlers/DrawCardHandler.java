@@ -19,6 +19,7 @@ import static at.aau.se2.utils.UtilityMethods.logs;
 public class DrawCardHandler implements ActionHandler {
     @Override
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
+        logi("HandleMessage DrawCardHandler is called!");
         try {
             Actioncard card = drawRandomCard(lobby);
             logi("DrawCard 1 - Karte gezogen");
