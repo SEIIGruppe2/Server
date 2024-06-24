@@ -9,6 +9,8 @@ import at.aau.se2.utils.Lobby;
 
 import java.security.SecureRandom;
 
+import static at.aau.se2.utils.UtilityMethods.logi;
+
 public class DCHService {
     private static int cardId = 0;
     private static SecureRandom rn = new SecureRandom();
@@ -42,6 +44,7 @@ public class DCHService {
      * @return the drawn Actioncard object
      */
     public static Actioncard drawRandomCard(Lobby lobby){
+        logi("drawRandomCard is called!");
         int i = lobby.getGameState().getIndexMinimumCardAmount();
         Actioncard card = switch(i){
             case 0 -> new Archer(rn.nextInt(1,5), cardId++);
@@ -49,7 +52,9 @@ public class DCHService {
             case 2 -> new Knight(rn.nextInt(1,5), cardId++);
             default -> new Hero(rn.nextInt(1,5), cardId++);
         };
+        logi("increaseCardAmount of GameState will be called!");
         lobby.getGameState().increaseCardAmount(i);
+        logi("Card will be returned!");
         return card;
     }
 }
