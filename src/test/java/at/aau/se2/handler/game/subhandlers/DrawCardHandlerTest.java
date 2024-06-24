@@ -1,19 +1,6 @@
 package at.aau.se2.handler.game.subhandlers;
 
-import at.aau.se2.model.characters.Archer;
-import at.aau.se2.model.characters.Fighter;
-import at.aau.se2.model.characters.Hero;
-import at.aau.se2.model.characters.Knight;
-import at.aau.se2.utils.GameState;
-import at.aau.se2.utils.Lobby;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
-import java.security.SecureRandom;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.*;
 
 public class DrawCardHandlerTest {
     /*private Lobby lobby;

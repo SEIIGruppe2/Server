@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SphinxTest {
+class SphinxTest {
     Sphinx sphinx;
     TowerImpl tower, tower2;
     @BeforeEach
@@ -21,7 +21,7 @@ public class SphinxTest {
     }
 
     @Test
-    public void testSetup(){
+    void testSetup(){
         assertEquals(2, sphinx.getLifepoints());
         assertEquals(2, sphinx.getZone());
         assertEquals(1, sphinx.getRing());
@@ -29,7 +29,7 @@ public class SphinxTest {
     }
 
     @Test
-    public void testTakeDamage(){
+    void testTakeDamage(){
         assertEquals(0, sphinx.takeDamage(1));
         assertEquals(1, sphinx.getLifepoints());
         assertEquals(-1, sphinx.takeDamage(1));
@@ -37,7 +37,7 @@ public class SphinxTest {
     }
 
     @Test
-    public void testDoesDamage(){
+    void testDoesDamage(){
         assertEquals(0, sphinx.doesDmg(tower));
         assertEquals(-1, sphinx.doesDmg(tower2));
     }

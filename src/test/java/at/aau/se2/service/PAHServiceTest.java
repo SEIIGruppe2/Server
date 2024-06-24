@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class PAHServiceTest {
+class PAHServiceTest {
     @Test
-    public void testReadInfosFromMessage(){
+    void testReadInfosFromMessage(){
         JSONObject json = new JSONObject();
         json.put("monsterid", 1);
         json.put("cardid", 1);

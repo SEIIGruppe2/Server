@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 
-public class ACCServiceTest {
+class ACCServiceTest {
 
     private Player cheater;
     private Player accusator;
@@ -24,7 +24,7 @@ public class ACCServiceTest {
     }
 
     @Test
-    public void testCheckCheaterTrueWithEnoughPoints() {
+    void testCheckCheaterTrueWithEnoughPoints() {
         cheater.setPoints(10);
         cheater.setCheating(true);
         cheater.setCheatingRoundsLeft(3);
@@ -37,7 +37,7 @@ public class ACCServiceTest {
     }
 
     @Test
-    public void testCheckCheaterTrueWithNotEnoughPoints() {
+    void testCheckCheaterTrueWithNotEnoughPoints() {
         cheater.setPoints(3);
         cheater.setCheating(true);
         cheater.setCheatingRoundsLeft(3);
@@ -50,7 +50,7 @@ public class ACCServiceTest {
     }
 
     @Test
-    public void testCheckCheaterFalseWithEnoughPoints() {
+    void testCheckCheaterFalseWithEnoughPoints() {
         accusator.setPoints(10);
         cheater.setCheating(false);
 
@@ -61,7 +61,7 @@ public class ACCServiceTest {
     }
 
     @Test
-    public void testCheckCheaterFalseWithNotEnoughPoints() {
+    void testCheckCheaterFalseWithNotEnoughPoints() {
         accusator.setPoints(3);
         cheater.setCheating(false);
 

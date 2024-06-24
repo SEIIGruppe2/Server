@@ -34,7 +34,7 @@ public class GameRoundHandler implements ActionHandler {
     }
 
     private void endRound(Lobby lobby) {
-        logger.info("Ending round " + roundNumber);
+        logger.info(String.format("Ending round %d", roundNumber));
     }
 
     private void startNextRound(Lobby lobby) {
@@ -42,7 +42,7 @@ public class GameRoundHandler implements ActionHandler {
         for (Player player : lobby.getPlayers()) {
             sendStartRoundMessage(player.getSession());
         }
-        logger.info("Starting round " + roundNumber);
+        logger.info(String.format("Starting round %d", roundNumber));
     }
 
     private void sendStartRoundMessage(WebSocketSession session) {

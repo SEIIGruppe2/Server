@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class WallTest {
+class WallTest {
     Wall wall;
     @BeforeEach
     public void setupTests(){
@@ -13,12 +13,12 @@ public class WallTest {
     }
 
     @Test
-    public void testSetup(){
+    void testSetup(){
         assertEquals(2, wall.getLifepoints());
     }
 
     @Test
-    public void testTakeDamage(){
+    void testTakeDamage(){
         assertEquals(0, wall.takeDamage(1));
         assertEquals(1, wall.getLifepoints());
         assertEquals(-1, wall.takeDamage(1));

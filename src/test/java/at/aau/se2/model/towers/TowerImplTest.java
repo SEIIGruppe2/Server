@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TowerImplTest {
+class TowerImplTest {
     TowerImpl tower;
     @BeforeEach
     public void setupTests(){
@@ -13,12 +13,12 @@ public class TowerImplTest {
     }
 
     @Test
-    public void testSetup(){
+    void testSetup(){
         assertEquals(10, tower.getLifepoints());
     }
 
     @Test
-    public void testTakeDamage(){
+    void testTakeDamage(){
         assertEquals(0, tower.takeDamage(1));
         assertEquals(9, tower.getLifepoints());
         assertEquals(-1, tower.takeDamage(9));
@@ -27,14 +27,14 @@ public class TowerImplTest {
     }
 
     @Test
-    public void testConvertToJson(){
+    void testConvertToJson(){
         String res = "{ 'id': '1','lifepoints':'10'}";
         assertEquals(res, tower.convertToJson());
     }
 
 
     @Test
-    public void testSetterMethod(){
+    void testSetterMethod(){
         tower.setLifepoints(10);
         assertEquals(10, tower.getLifepoints());
     }

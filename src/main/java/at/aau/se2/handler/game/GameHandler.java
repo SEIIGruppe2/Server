@@ -20,15 +20,15 @@ import java.util.logging.Logger;
 public class GameHandler implements WebSocketHandler {
     //region Members
     private final Logger logger;
-    private static GameHandler GAMEHANDLER;
+    private static GameHandler gameHandler;
     @Getter
     private final Map<String, ActionHandler> handlers = new HashMap<>();
     @Getter
     private final List<WebSocketSession> connectionOrder = new ArrayList<>();
     @Getter
-    private final static List<Player> players = new ArrayList<>();
+    private static final List<Player> players = new ArrayList<>();
     @Getter
-    private final static List<String> usernames = new ArrayList<>();
+    private static final List<String> usernames = new ArrayList<>();
     private final GHService service;
     //endregion
 
@@ -39,9 +39,9 @@ public class GameHandler implements WebSocketHandler {
     }
 
     public static GameHandler getInstance(){
-        if(GAMEHANDLER == null)
-            GAMEHANDLER = new GameHandler();
-        return GAMEHANDLER;
+        if(gameHandler == null)
+            gameHandler = new GameHandler();
+        return gameHandler;
     }
     //endregion
 
@@ -60,7 +60,6 @@ public class GameHandler implements WebSocketHandler {
                         .asText()
                         .toUpperCase();
         service.makeRouting(type, session, node);
-        //service.broadcastChangedGameState(session);
         logger.info("HandleMessage processed");
     }
 

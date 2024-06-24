@@ -9,7 +9,7 @@ import org.springframework.web.socket.WebSocketSession;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 
-public class PTServiceTest {
+class PTServiceTest {
 
     private Player player;
 
@@ -21,25 +21,25 @@ public class PTServiceTest {
     }
 
     @Test
-    public void testUpdatePlayerPointsSchleim() {
+    void testUpdatePlayerPointsSchleim() {
         PTService.updatePlayerPoints(player, "Schleim");
         assertEquals(1, player.getPoints());
     }
 
     @Test
-    public void testUpdatePlayerPointsSphinx() {
+    void testUpdatePlayerPointsSphinx() {
         PTService.updatePlayerPoints(player, "Sphinx");
         assertEquals(2, player.getPoints());
     }
 
     @Test
-    public void testUpdatePlayerPointsBullrog() {
+    void testUpdatePlayerPointsBullrog() {
         PTService.updatePlayerPoints(player, "Bullrog");
         assertEquals(3, player.getPoints());
     }
 
     @Test
-    public void testUpdatePlayerPointsUnknownMonster() {
+    void testUpdatePlayerPointsUnknownMonster() {
         PTService.updatePlayerPoints(player, "UnknownMonster");
         assertEquals(0, player.getPoints());
     }

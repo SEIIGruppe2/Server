@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.*;
 
-public class DCHServiceTest {
+class DCHServiceTest {
     private Lobby lobby;
     private SecureRandom rn;
     private GameState gs;
@@ -32,7 +32,7 @@ public class DCHServiceTest {
     }
 
     @Test
-    public void testDrawRandomCard(){
+    void testDrawRandomCard(){
         when(lobby.getGameState()).thenReturn(gs);
         when(gs.getIndexMinimumCardAmount()).thenReturn(0);
         when(rn.nextInt(anyInt(), anyInt())).thenReturn(1);
@@ -47,7 +47,7 @@ public class DCHServiceTest {
     }
 
     @Test
-    public void testConvertToJson(){
+    void testConvertToJson(){
         String exp = "{ 'type' : 'DRAW_CARD', 'id': '1', 'name': 'Bogenschütze', 'zone': '1'}";
         assertEquals(exp, convertToJson(new Archer(1,1)));
     }

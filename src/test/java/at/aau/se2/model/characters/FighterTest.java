@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class FighterTest {
+class FighterTest {
     Fighter fighter;
     Monster monster, monster1, monster2, monster3;
     @BeforeEach
@@ -34,14 +34,14 @@ public class FighterTest {
     }
 
     @Test
-    public void testSetup(){
+    void testSetup(){
         assertEquals("Schwertkämpfer", fighter.getName());
         assertEquals(2, fighter.getZone());
         assertEquals(1, fighter.getDmg());
     }
 
     @Test
-    public void testDoesDmg(){
+    void testDoesDmg(){
         assertEquals(0, fighter.doesDmg(monster));
         fighter.setZone(1);
         assertEquals(0, fighter.doesDmg(monster3));

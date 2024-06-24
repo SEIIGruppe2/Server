@@ -9,25 +9,21 @@ import at.aau.se2.model.characters.Knight;
 import at.aau.se2.model.monsters.Bullrog;
 import at.aau.se2.model.monsters.Slime;
 import at.aau.se2.model.monsters.Sphinx;
-import at.aau.se2.utils.GameState;
+
 import at.aau.se2.utils.Lobby;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.security.SecureRandom;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import static at.aau.se2.service.SHMHService.addSearchedMonstersToList;
 import static at.aau.se2.service.SHMHService.readInfosFromMessage;
-import static at.aau.se2.service.SMHService.increaseMonsterId;
-import static at.aau.se2.service.SMHService.spawnRandomMonster;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.*;
-import static org.mockito.Mockito.times;
+
 
 public class SHMHServiceTest {
     private Lobby lobby;

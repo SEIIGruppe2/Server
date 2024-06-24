@@ -14,7 +14,7 @@ import static at.aau.se2.service.LobbyService.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-public class LobbyServiceTest {
+class LobbyServiceTest {
     private List<WebSocketSession> conOrder;
     private List<Player> players;
 
@@ -28,19 +28,19 @@ public class LobbyServiceTest {
     }
 
     @Test
-    public void testCreateLobby(){
+    void testCreateLobby(){
         assertEquals(Lobby.class, createLobby().getClass());
     }
 
     @Test
-    public void testMovePlayerToLobby() throws IOException {
+    void testMovePlayerToLobby() throws IOException {
         assertTrue(players.isEmpty());
         movePlayerToLobby(mock(WebSocketSession.class), mock(Lobby.class), players);
         assertFalse(players.isEmpty());
     }
 
     @Test
-    public void testFindLobby() throws IOException{
+    void testFindLobby() throws IOException{
       assertTrue(players.isEmpty());
       findLobby(mock(WebSocketSession.class), players);
       assertFalse(players.isEmpty());

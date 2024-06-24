@@ -21,9 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
-
 class MAHServiceTest {
 
     @Mock
@@ -38,7 +35,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testTriggerMonsterAttack_Slime_Tower() {
+    void testTriggerMonsterAttack_Slime_Tower() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Slime(1, 1, 1);
         monsters.add(monster);
@@ -57,7 +54,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testTriggerMonsterAttack_Sphinx_Tower() {
+    void testTriggerMonsterAttack_Sphinx_Tower() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Sphinx(1, 1, 1);
         monsters.add(monster);
@@ -76,7 +73,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testTriggerMonsterAttack_Bullrog_Tower() {
+    void testTriggerMonsterAttack_Bullrog_Tower() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Bullrog(1, 1, 1);
         monsters.add(monster);
@@ -95,7 +92,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testTriggerMonsterAttack_Slime_Wall() {
+    void testTriggerMonsterAttack_Slime_Wall() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Slime(1, 1, 1);
         monsters.add(monster);
@@ -114,7 +111,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testTriggerMonsterAttack_Sphinx_Wall() {
+    void testTriggerMonsterAttack_Sphinx_Wall() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Sphinx(1, 1, 1);
         monsters.add(monster);
@@ -133,7 +130,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testTriggerMonsterAttack_Bullrog_Wall() {
+    void testTriggerMonsterAttack_Bullrog_Wall() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Bullrog(1, 1, 1);
         monsters.add(monster);
@@ -152,7 +149,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testTriggerMonsterAttack_MonsterOrTowerNotFound() {
+    void testTriggerMonsterAttack_MonsterOrTowerNotFound() {
         List<Monster> monsters = new ArrayList<>();
         List<Tower> towers = new ArrayList<>();
 
@@ -166,12 +163,12 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testTriggerMonsterAttack_ErrorParsingIds() {
+    void testTriggerMonsterAttack_ErrorParsingIds() {
         MAHService.triggerMonsterAttack("abc", "def", lobby);
     }
 
     @Test
-    protected void testTriggerMonsterAttack_TowerCannotBeDamaged() {
+    void testTriggerMonsterAttack_TowerCannotBeDamaged() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = mock(Monster.class);
         when(monster.getId()).thenReturn(1);
@@ -197,21 +194,21 @@ class MAHServiceTest {
 
 
     @Test
-    protected void testIsMessageTypeValid_ValidType() throws Exception {
+    void testIsMessageTypeValid_ValidType() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree("{\"type\":\"MONSTER_ATTACK\"}");
         assertTrue(MAHService.isMessageTypeValid(jsonNode));
     }
 
     @Test
-    protected void testIsMessageTypeValid_InvalidType() throws Exception {
+    void testIsMessageTypeValid_InvalidType() throws Exception {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode jsonNode = mapper.readTree("{\"type\":\"INVALID_TYPE\"}");
         assertFalse(MAHService.isMessageTypeValid(jsonNode));
     }
 
     @Test
-    protected void testValidateEntities_ValidEntities() {
+    void testValidateEntities_ValidEntities() {
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new Slime(1, 1, 1));
         monsters.add(new Bullrog(2, 1, 1));
@@ -227,7 +224,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testValidateEntities_InvalidEntities() {
+    void testValidateEntities_InvalidEntities() {
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new Slime(1, 1, 1));
 
@@ -241,7 +238,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testFindMonsterById_Found() {
+    void testFindMonsterById_Found() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Slime(1, 1, 1);
         monsters.add(monster);
@@ -250,7 +247,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testFindMonsterById_NotFound() {
+    void testFindMonsterById_NotFound() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Slime(1, 1, 1);
         monsters.add(monster);
@@ -259,7 +256,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testFindTowerById_Found() {
+    void testFindTowerById_Found() {
         List<Tower> towers = new ArrayList<>();
         Tower tower = new TowerImpl(1);
         towers.add(tower);
@@ -268,7 +265,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testFindTowerById_NotFound() {
+    void testFindTowerById_NotFound() {
         List<Tower> towers = new ArrayList<>();
         Tower tower = new TowerImpl(1);
         towers.add(tower);
@@ -277,7 +274,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testTriggerMonsterAttack_TowerNull() {
+    void testTriggerMonsterAttack_TowerNull() {
         List<Monster> monsters = new ArrayList<>();
         Monster monster = new Slime(1, 1, 1);
         monsters.add(monster);
@@ -294,7 +291,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testTriggerMonsterAttack_MonsterNull() {
+    void testTriggerMonsterAttack_MonsterNull() {
         List<Monster> monsters = new ArrayList<>();
 
         List<Tower> towers = new ArrayList<>();
@@ -311,7 +308,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testValidateEntities_InvalidNumberFormatForMonsterId() {
+    void testValidateEntities_InvalidNumberFormatForMonsterId() {
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new Slime(1, 1, 1));
 
@@ -326,7 +323,7 @@ class MAHServiceTest {
     }
 
     @Test
-    protected void testValidateEntities_InvalidNumberFormatForTowerId() {
+    void testValidateEntities_InvalidNumberFormatForTowerId() {
         List<Monster> monsters = new ArrayList<>();
         monsters.add(new Slime(1, 1, 1));
 

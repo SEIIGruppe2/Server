@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class DrawCardDTOTest {
+class DrawCardDTOTest {
     private DrawCardDTO dto;
     private Actioncard card;
 
@@ -23,7 +23,7 @@ public class DrawCardDTOTest {
     }
 
     @Test
-    public void testMakeMessage(){
+    void testMakeMessage(){
         String msg = "{\"type\":\"DRAW_CARD\",\"id\":1,\"name\":\"Test\",\"zone\":1}";
         TextMessage exp = new TextMessage(msg);
         assertEquals(exp, dto.makeMessage());

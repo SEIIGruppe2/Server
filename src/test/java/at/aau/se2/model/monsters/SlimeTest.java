@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class SlimeTest {
+class SlimeTest {
     Slime slime;
     TowerImpl tower, tower2;
     @BeforeEach
@@ -21,7 +21,7 @@ public class SlimeTest {
     }
 
     @Test
-    public void testSetup(){
+     void testSetup(){
         assertEquals(1, slime.getLifepoints());
         assertEquals(2, slime.getZone());
         assertEquals(1, slime.getRing());
@@ -29,13 +29,13 @@ public class SlimeTest {
     }
 
     @Test
-    public void testTakeDamage(){
+    void testTakeDamage(){
         assertEquals(-1, slime.takeDamage(1));
         assertEquals(0, slime.getLifepoints());
     }
 
     @Test
-    public void testDoesDamage(){
+    void testDoesDamage(){
         assertEquals(0, slime.doesDmg(tower));
         assertEquals(-1, slime.doesDmg(tower2));
     }
