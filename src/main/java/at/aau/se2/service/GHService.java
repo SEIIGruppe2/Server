@@ -22,6 +22,7 @@ import java.util.Map;
 
 import static at.aau.se2.service.LobbyService.findLobby;
 import static at.aau.se2.utils.UtilityMethods.findPlayer;
+import static at.aau.se2.utils.UtilityMethods.logi;
 
 public class GHService {
     // region Members
@@ -159,6 +160,7 @@ public class GHService {
             throws LobbyNotFoundException, PlayerNotFoundException {
         if(type.equals("DRAW_CARD")){
             for(int i = findPlayer(session, this.players).getCards().size()-1;i < 5; i++) {
+                logi("DrawCARD handler will be called");
                 handlers.get(type).handleMessage(session, node, UtilityMethods.findLobby(session, this.players));
             }
         }
