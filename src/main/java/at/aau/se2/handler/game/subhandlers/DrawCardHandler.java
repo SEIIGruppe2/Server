@@ -21,10 +21,15 @@ public class DrawCardHandler implements ActionHandler {
     public void handleMessage(WebSocketSession session, JsonNode msg, Lobby lobby){
         try {
             Actioncard card = drawRandomCard(lobby);
+            logi("DrawCard 1 - Karte gezogen");
             UtilityMethods.findPlayer(session, lobby).getCards().add(card);
+            logi("DrawCard2 - player found");
             DrawCardDTO dto = new DrawCardDTO(card);
+            logi("DrawCard3 - dto erstellt");
             logi(card.convertToJson());
             session.sendMessage(dto.makeMessage());
+            logi("DrawCard4 - message sent");
+
         }
         catch(PlayerNotFoundException p){
             logs("PLAYER NOT IN LOBBY (DrawCardHandler)");
