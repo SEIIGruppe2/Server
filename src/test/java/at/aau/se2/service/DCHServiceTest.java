@@ -21,14 +21,13 @@ class DCHServiceTest {
     private Lobby lobby;
     private SecureRandom rn;
     private GameState gs;
-    private DCHService dchs;
+
 
     @BeforeEach
     public void setup(){
         this.lobby = mock(Lobby.class);
         this.rn = mock(SecureRandom.class);
         this.gs = mock(GameState.class);
-        this.dchs = new DCHService(rn);
     }
 
     @Test
