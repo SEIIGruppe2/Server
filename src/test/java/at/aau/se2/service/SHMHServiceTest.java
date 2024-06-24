@@ -10,7 +10,6 @@ import at.aau.se2.model.monsters.Bullrog;
 import at.aau.se2.model.monsters.Slime;
 import at.aau.se2.model.monsters.Sphinx;
 
-import at.aau.se2.utils.Lobby;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
