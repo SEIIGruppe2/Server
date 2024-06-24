@@ -8,6 +8,8 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
+import static at.aau.se2.utils.UtilityMethods.logi;
+
 /**
  * The GameState class represents the state of the game and implements the JsonSerializable interface.
  * It provides methods to access and manipulate the game state, and it can be converted to JSON format.
@@ -63,14 +65,21 @@ public class GameState implements JsonSerializable{
      * @return the index of the card type with the minimum count
      */
     public int getIndexMinimumCardAmount(){
+        logi("getIndexMinimumCardAmount 1");
         int min = Integer.MAX_VALUE;
+        logi("getIndexMinimumCardAmount 2");
         int index = 0;
+        logi("getIndexMinimumCardAmount 3");
         for(int i = 0; i < this.cardTypeAmount.length; i++){
+            logi("getIndexMinimumCardAmount 4");
             if(this.cardTypeAmount[i] < min){
+                logi("getIndexMinimumCardAmount 5");
                 min = this.cardTypeAmount[i];
+                logi("getIndexMinimumCardAmount 6");
                 index = i;
             }
         }
+        logi("getIndexMinimumCardAmount 7");
         return index;
     }
 
