@@ -46,6 +46,7 @@ public class DCHService {
     public static Actioncard drawRandomCard(Lobby lobby){
         logi("drawRandomCard is called!");
         int i = lobby.getGameState().getIndexMinimumCardAmount();
+        logi("getIndexMinimumCardAmount was called!");
         Actioncard card = switch(i){
             case 0 -> new Archer(rn.nextInt(1,5), cardId++);
             case 1 -> new Fighter(rn.nextInt(1,5), cardId++);
