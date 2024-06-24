@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import static at.aau.se2.utils.UtilityMethods.logi;
+
 
 public class GameHandler implements WebSocketHandler {
     //region Members
@@ -55,6 +57,7 @@ public class GameHandler implements WebSocketHandler {
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
         JsonNode node = service.getMessage(message);
+        logi("Message received: " + message.getPayload());
         String type = node
                         .path("type")
                         .asText()
@@ -62,6 +65,8 @@ public class GameHandler implements WebSocketHandler {
         service.makeRouting(type, session, node);
         //service.broadcastChangedGameState(session);
         logger.info("HandleMessage processed");
+        logi("Following Message type was processed: " + type);
+        logi("Triggered by: " + session.getId());
     }
 
     @Override
